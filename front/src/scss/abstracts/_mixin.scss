@@ -1,0 +1,163 @@
+// posso utilizar através do @include nomeMixin
+// ex: h2 {
+//   margin-top: 1rem;
+//   @include text-style-heading-heading-2-600;
+// }
+
+@mixin text-style-heading-heading-1-700 {
+  font-size: 4.4rem;
+  font-family: "Lexend";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 56px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-2-600 {
+  font-size: 3.6rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-3-500 {
+  font-size: 3.2rem;
+  font-family: "Lexend";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-3-600 {
+  font-size: 3.2rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-4-600 {
+  font-size: 2.8rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-4-500 {
+  font-size: 2.8rem;
+  font-family: "Lexend";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-5-500 {
+  font-size: 2.4rem;
+  font-family: "Lexend";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-5-600 {
+  font-size: 2.4rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-6-500 {
+  font-size: 2rem;
+  font-family: "Lexend";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-6-600 {
+  font-size: 2rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-7-500 {
+  font-size: 1.6rem;
+  font-family: "Lexend";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-heading-heading-7-600 {
+  font-size: 1.6rem;
+  font-family: "Lexend";
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-inputs-buttons-input-label {
+  font-size: 1.4rem;
+  font-family: "Inter";
+  font-weight: 500;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-inputs-buttons-input-placeholder {
+  font-size: 1.6rem;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-inputs-buttons-button-big-text {
+  font-size: 1.6rem;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-text-body-1-400 {
+  font-size: 1.6rem;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 28px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-text-body-1-600 {
+  font-size: 1.6rem;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 28px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-text-body-2-400 {
+  font-size: 1.4rem;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 24px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-text-body-2-500 {
+  font-size: 1.4rem;
+  font-family: "Inter";
+  font-weight: 500;
+  font-style: normal;
+  line-height: 24px;
+  text-decoration: none;
+  text-transform: none;
+}
