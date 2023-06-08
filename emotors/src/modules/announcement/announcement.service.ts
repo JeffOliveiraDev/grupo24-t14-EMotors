@@ -1,26 +1,43 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable prettier/prettier */
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAnnouncementDto } from './dto/create-announcement.dto';
 import { UpdateAnnouncementDto } from './dto/update-announcement.dto';
+import { AnnouncementRepository } from './repositories/announcement.repository';
 
 @Injectable()
 export class AnnouncementService {
-  create(createAnnouncementDto: CreateAnnouncementDto) {
-    return 'This action adds a new announcement';
+  constructor(private announcementRepository: AnnouncementRepository) {}
+  async create(createAnnouncementDto: CreateAnnouncementDto) {
+    const announcement = await this.announcementRepository.create(
+      createAnnouncementDto,
+    );
+
+    return announcement;
   }
 
-  findAll() {
-    return `This action returns all announcement`;
+  async findAll() {
+    const announcement = await this.announcementRepository.findAll();
+    return announcement;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} announcement`;
+  async findOne(id: string) {
+    const announcement = await this.announcementRepository.findOne(id);
+    if (!announcement) {
+      throw new NotFoundException('User not found !');
+    }
+    return announcement;
   }
 
-  update(id: number, updateAnnouncementDto: UpdateAnnouncementDto) {
-    return `This action updates a #${id} announcement`;
+  async update(id: string, updateAnnouncementDto: UpdateAnnouncementDto) {
+    const user = await this.announcementRepository.update(
+      id,
+      updateAnnouncementDto,
+    );
+    return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} announcement`;
+  async remove(id: string) {
+    await this.announcementRepository.delete(id);
+    return;
   }
 }
