@@ -33,7 +33,9 @@ const CardAdd = () => {
           ))}
         </ul>
 
-        <span>R$ 00.000,00</span>
+        <span>
+          <strong>R$ 00.000,00</strong>
+        </span>
       </div>
     </div>
   );

@@ -15,5 +15,11 @@
   border-radius: 4px;
   padding: 4px 8px 4px 8px;
 
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.5;
+  }
+
   @include text-style-text-body-2-500;
 }
