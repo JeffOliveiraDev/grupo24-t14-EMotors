@@ -1,0 +1,25 @@
+@use "../../scss/abstracts/" as *;
+
+.conteiner {
+  background-color: $color-brand-brand-4;
+  color: $color-brand-brand-1;
+
+  border: none;
+
+  border-radius: 0.4rem;
+
+  height: 3rem;
+  width: min-content;
+  min-width: 3.2rem;
+
+  border-radius: 4px;
+  padding: 4px 8px 4px 8px;
+
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.5;
+  }
+
+  @include text-style-text-body-2-500;
+}

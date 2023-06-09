@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const { withGoogleFonts } = require("next-google-fonts");
 
-module.exports = nextConfig
+const nextConfig = {
+  images: {
+    unoptimized: true,
+  },
+};
+
+module.exports = nextConfig;
