@@ -35,10 +35,14 @@
 
       transition: 0.4s;
     }
+  }
 
-    img:hover {
+  .boxImage:hover {
+    img {
       scale: 1;
     }
+
+    outline: 2px solid $color-brand-brand-1;
   }
 
   .boxUser {
