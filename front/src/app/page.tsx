@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
+import CardAdd from "@/components/CardAdd/iindex.card-add";
 
 export default function Home() {
   const brands = [
@@ -103,6 +104,7 @@ export default function Home() {
                 </div>
               </li>
             ))} */}
+              <CardAdd />
             </ul>
           </div>
         </section>
