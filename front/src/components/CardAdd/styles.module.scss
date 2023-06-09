@@ -37,14 +37,6 @@
     }
   }
 
-  .boxImage:hover {
-    img {
-      scale: 1;
-    }
-
-    outline: 2px solid $color-brand-brand-1;
-  }
-
   .boxUser {
     display: flex;
     gap: 0.5rem;
@@ -86,5 +78,15 @@
       @include text-style-heading-heading-7-500;
       color: $color-grey-scale-grey-1;
     }
+  }
+}
+
+.container:hover {
+  .boxImage {
+    img {
+      scale: 1;
+    }
+
+    outline: 2px solid $color-brand-brand-1;
   }
 }
