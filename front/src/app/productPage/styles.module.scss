@@ -1,0 +1,34 @@
+header {
+  background-color: $color-grey-scale-grey-10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0px 60px;
+  border-bottom: 2px solid #dee2e6;
+
+  .divLeft {
+    width: 70%;
+  }
+
+  .divRight {
+    width: 30%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 44px;
+
+    border-left: 2px solid #dee2e6;
+
+    h3 {
+      @include text-style-text-body-1-600;
+      color: $color-grey-scale-grey-2;
+    }
+
+    button {
+      @include button-register;
+    }
+  }
+}

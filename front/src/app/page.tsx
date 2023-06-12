@@ -46,7 +46,7 @@ export default function Home() {
       <div className={styles.filtersAndCars}>
         <section className={styles.filters}>
           <div>
-            <div className={styles.filter}>
+            <div>
               <h4>Marca</h4>
               <ul>
                 {brands.map((brand) => (
@@ -86,29 +86,41 @@ export default function Home() {
                 ))}
               </ul>
             </div>
+            <h4>Km</h4>
+            <div className={styles.buttonsKmPrice}>
+              <button>Mínima</button>
+              <button>Máxima</button>
+            </div>
+            <h4>Preço</h4>
+            <div className={styles.buttonsKmPrice}>
+              <button>Mínimo</button>
+              <button>Máximo</button>
+            </div>
+          </div>
+          <div className={styles.btnCleanFilter}>
+            <button>Limpar Filtros</button>
           </div>
         </section>
         <section className={styles.listOfCars}>
           <div>
             <ul>
-              {/* {contactsList.map((contact) => (
-              <li key={contact.id}>
-                <img src={headerTitle} alt="" />
-                <div className="">
-                  <h3>teste</h3>
-                </div>
-                <p>teste</p>
-                <div>
-                  <h3>teste</h3>
-                  <h3>R$ teste</h3>
-                </div>
-              </li>
-            ))} */}
               <CardAdd />
             </ul>
           </div>
         </section>
       </div>
+      <footer className={styles.footer}>
+        <div className={styles.footerLeft}>
+          <h2>Motors</h2>
+          <h4>shop</h4>
+        </div>
+        <div className={styles.center}>
+          <h4>@2022 - Todos os direitos reservados</h4>
+        </div>
+        <div className={styles.footerRight}>
+          <button className={styles.btnFooter}>^</button>
+        </div>
+      </footer>
     </main>
   );
 }
