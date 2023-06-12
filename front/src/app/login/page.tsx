@@ -1,12 +1,14 @@
 import React from "react";
-import Teste from "../../components/card/teste";
+import Header from "@/components/Header/index.header";
+import FormLogin from "./components/FormLogin/index.form.login";
+import styles from "../login/styles.module.scss";
 
 const loginPage = () => {
   return (
-    <>
-      <h2>Login</h2>
-      <Teste />
-    </>
+    <div className={styles.conteiner}>
+      <Header />
+      <FormLogin />
+    </div>
   );
 };
 
