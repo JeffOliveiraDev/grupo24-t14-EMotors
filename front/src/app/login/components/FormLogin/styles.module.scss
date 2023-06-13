@@ -1,0 +1,141 @@
+@use "../../../../scss/abstracts/" as *;
+
+.conteiner {
+  width: 90%;
+  max-width: 343px;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  border-radius: 4px;
+
+  background-color: $color-grey-scale-grey-10;
+
+  h3 {
+    width: 80%;
+
+    margin-bottom: 32px;
+    @include text-style-heading-heading-5-500;
+  }
+
+  padding: 44px 0 44px 0;
+
+  form {
+    width: 80%;
+
+    small {
+      color: $color-feedback-alert-1;
+    }
+
+    display: flex;
+    flex-direction: column;
+
+    .firstInput {
+      margin-bottom: 40px;
+    }
+
+    button {
+      height: 48px;
+
+      margin: 21px 0 21px 0;
+
+      border: none;
+      background-color: $color-brand-brand-1;
+
+      @include text-style-inputs-buttons-button-big-text;
+      color: $color-grey-scale-grey-10;
+
+      border-radius: 4px;
+
+      transition: 400ms;
+    }
+
+    button:hover {
+      background-color: $color-random-profile-10;
+    }
+
+    > a {
+      width: 100%;
+
+      outline: 1px solid $color-grey-scale-grey-6;
+
+      padding: 24px 0 24px 0;
+
+      text-align: center;
+
+      color: $color-grey-scale-grey-0;
+
+      border-radius: 4px;
+
+      margin-top: 21px;
+
+      transition: 400ms;
+
+      @include text-style-inputs-buttons-button-big-text;
+    }
+
+    > a:hover {
+      border: none;
+
+      background-color: $color-grey-scale-grey-0;
+      color: $color-grey-scale-grey-10;
+    }
+
+    span {
+      width: 100%;
+
+      text-align: center;
+
+      @include text-style-text-body-2-500;
+
+      color: $color-grey-scale-grey-2;
+    }
+
+    label {
+      @include text-style-inputs-buttons-input-label;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+
+      gap: 8px;
+
+      input {
+        height: 48px;
+
+        border: 1.5px solid $color-grey-scale-grey-4;
+
+        padding-inline: 16px;
+
+        border-radius: 4px;
+
+        ::placeholder {
+          @include text-style-inputs-buttons-input-placeholder;
+        }
+      }
+
+      input:hover {
+        background-color: $color-grey-scale-grey-6;
+
+        border: none;
+      }
+
+      input:focus {
+        border: 2px solid $color-brand-brand-1;
+      }
+
+      a {
+        width: 100%;
+
+        text-align: end;
+        @include text-style-text-body-2-500;
+      }
+    }
+  }
+
+  .red {
+    border: 2px solid $color-feedback-alert-1;
+  }
+}
