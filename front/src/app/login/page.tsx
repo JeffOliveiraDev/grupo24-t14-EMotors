@@ -8,11 +8,12 @@ import Footer from "@/components/Footer/index.footer";
 const loginPage = () => {
   return (
     <>
+      <Header />
+
       <div className={styles.conteiner}>
-        <Header />
         <FormLogin />
       </div>
-      <Footer />
+      <Footer top="login" />
     </>
   );
 };
