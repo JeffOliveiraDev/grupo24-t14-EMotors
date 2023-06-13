@@ -24,6 +24,10 @@
   form {
     width: 80%;
 
+    small {
+      color: $color-feedback-alert-1;
+    }
+
     display: flex;
     flex-direction: column;
 
@@ -129,5 +133,9 @@
         @include text-style-text-body-2-500;
       }
     }
+  }
+
+  .red {
+    border: 2px solid $color-feedback-alert-1;
   }
 }

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Header from "@/components/Header/index.header";
 import FormLogin from "./components/FormLogin/index.form.login";
