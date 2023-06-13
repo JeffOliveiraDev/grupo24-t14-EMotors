@@ -1,0 +1,57 @@
+@use "../../scss/abstracts/" as *;
+
+.input {
+  height: 48px;
+
+  border: 1.5px solid $color-grey-scale-grey-4;
+
+  padding-inline: 16px;
+
+  border-radius: 4px;
+
+  ::placeholder {
+    @include text-style-inputs-buttons-input-placeholder;
+  }
+}
+
+.input:hover {
+  background-color: $color-grey-scale-grey-6;
+
+  border: none;
+}
+
+.label {
+  @include text-style-inputs-buttons-input-label;
+}
+
+.input:focus {
+  border: 2px solid $color-brand-brand-1;
+}
+
+.red {
+  border: 2px solid $color-feedback-alert-1;
+
+  height: 48px;
+
+  padding-inline: 16px;
+
+  border-radius: 4px;
+
+  ::placeholder {
+    @include text-style-inputs-buttons-input-placeholder;
+  }
+}
+
+.red:hover {
+  background-color: $color-grey-scale-grey-6;
+
+  border: none;
+}
+.red:focus {
+  border: 2px solid $color-brand-brand-1;
+}
+
+.small {
+  color: $color-feedback-alert-1;
+  font-size: 1rem;
+}
