@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SchemaLogin from "../../schema/index.schema";
 import { toast } from "react-toastify";
 import { z } from "zod";
+import Input from "../../../../components/Input/index.module";
 
 const FormLogin = () => {
   const {
@@ -31,28 +32,26 @@ const FormLogin = () => {
 
       <form onSubmit={handleSubmit(create)}>
         <div className={styles.firstInput}>
-          <label htmlFor="email">E-mail</label>
-          <input
-            className={error.email ? styles.red : ""}
-            {...register("email")}
+          <Input
+            register={register("email")}
             name="email"
             type="text"
             id="email"
             placeholder="Digitar email"
+            label="E-mail"
+            error={error.email}
           />
-          <small>{error.email}</small>
         </div>
         <div>
-          <label htmlFor="password">Senha</label>
-          <input
-            className={error.password ? styles.red : ""}
-            {...register("password")}
+          <Input
+            register={register("password")}
             name="password"
-            type="password"
+            type="text"
             id="password"
             placeholder="Digitar senha"
+            label="Senha"
+            error={error.password}
           />
-          <small>{error.password}</small>
           <Link href="/help">Esqueci minha senha</Link>
         </div>
         <button type="submit">Entrar</button>
