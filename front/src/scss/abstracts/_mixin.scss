@@ -183,3 +183,20 @@
   color: $color-grey-scale-grey-0;
   font-weight: 600;
 }
+
+@mixin button-buy-small {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 10px;
+
+  width: 100px;
+  height: 38px;
+
+  background: $color-brand-brand-1;
+
+  border: 1.5px solid $color-brand-brand-1;
+  border-radius: 4px;
+}

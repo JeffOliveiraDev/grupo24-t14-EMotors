@@ -17,16 +17,20 @@
   box-sizing: border-box;
 }
 
-body,
-html {
-  width: 100vw;
-  height: 100vh;
-}
+// body,
+// html {
+//   width: 100vw;
+//   height: fit-content;
+// }
 
-body {
+body,
+main {
   -webkit-font-smoothing: antialised;
   overflow-x: hidden;
   list-style: none;
+}
+li {
+  list-style-type: none;
 }
 
 h1,
