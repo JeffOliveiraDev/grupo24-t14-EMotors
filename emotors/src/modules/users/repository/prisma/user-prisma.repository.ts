@@ -4,8 +4,7 @@ import { UsersRepository } from '../user.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { UpdateUserDto } from 'src/modules/users/dto/update-user.dto';
-import { Injectable } from '@nestjs/common';
-import { use } from 'passport';
+import { ConflictException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UsersPrismaRepository implements UsersRepository {
@@ -39,11 +38,8 @@ export class UsersPrismaRepository implements UsersRepository {
     return plainToInstance(User, user);
   }
 
-  async findByEmail(email: string): Promise<User> {
-    if (!email) {
-      return;
-    }
-
+  async findByEmail(email: string): Promise<User | null> {
+    console.log(email);
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -74,5 +70,32 @@ export class UsersPrismaRepository implements UsersRepository {
         id: id,
       },
     });
+  }
+
+  async findByCpf(cpf: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        cpf,
+      },
+    });
+
+    if (user) {
+      throw new ConflictException('Cpf aleady exists!');
+    }
+
+    return user;
+  }
+  async findByTel(telephone: string): Promise<User> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        telephone,
+      },
+    });
+
+    if (user) {
+      throw new ConflictException('Telephone aleady exists!');
+    }
+
+    return user;
   }
 }
