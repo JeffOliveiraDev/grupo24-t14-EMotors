@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { randomUUID } from 'crypto';
 
 /* eslint-disable prettier/prettier */
@@ -13,9 +13,11 @@ export class Announcement {
   description: string;
   coverImage: string;
   detailsImage: string;
-  userId: string;
   createdAt?: Date;
   updatedAt?: Date;
+
+  @Exclude()
+  userId: string;
 
   constructor() {
     this.id = randomUUID();
