@@ -1,17 +1,52 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './local-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
-import { LoginDTO } from './dtos/login.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiDefaultResponse } from '@nestjs/swagger/dist';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-@ApiTags('login')
+class Login {
+  @ApiProperty({
+    description: 'email',
+    type: String,
+  })
+  @IsNotEmpty()
+  @IsString()
+  email: string;
+  @ApiProperty({
+    description: 'email',
+    type: String,
+    minimum: 8,
+    maximum: 120,
+  })
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+}
+
 @Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('')
+  @ApiTags('Login')
+  @ApiCreatedResponse({ description: 'Return user token' })
+  @ApiDefaultResponse({
+    schema: {
+      default: {
+        userId: 'ftsdyifgsadfsadbjgiiysadadygh',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJhZmFAZW1haWwuY29tIiwiaWF0IjoxNjg1Mzk4NzQwLCJleHAiOjE2ODU0ODUxNDAsInN1YiI6IjE5YTIzYmFhLTdmMTAtNDgzNC1hMmNlLWU5ZmJkYjEyOGEyNyJ9.AJ8Jc0fNwWOBXSqxxwy9CAm_cui15UsQBYwufAhezsc',
+        user_id: '32b0a551-72a9-4875-893f-d032404d46ed',
+      },
+    },
+  })
   @UseGuards(LocalAuthGuard)
-  async login(@Body() user: LoginDTO) {
-    return this.authService.login(user.email);
+  async login(@Body() user: Login) {
+    if (!user.email) {
+      await this.login(user);
+    }
+    return await this.authService.login(user?.email?.toString());
   }
 }
