@@ -7,9 +7,10 @@ import { AnnouncementRepository } from './repositories/announcement.repository';
 @Injectable()
 export class AnnouncementService {
   constructor(private announcementRepository: AnnouncementRepository) {}
-  async create(createAnnouncementDto: CreateAnnouncementDto) {
+  async create(createAnnouncementDto: CreateAnnouncementDto, userId: string) {
     const announcement = await this.announcementRepository.create(
       createAnnouncementDto,
+      userId,
     );
 
     return announcement;
@@ -28,16 +29,21 @@ export class AnnouncementService {
     return announcement;
   }
 
-  async update(id: string, updateAnnouncementDto: UpdateAnnouncementDto) {
+  async update(
+    id: string,
+    updateAnnouncementDto: UpdateAnnouncementDto,
+    userId: string,
+  ) {
     const user = await this.announcementRepository.update(
       id,
       updateAnnouncementDto,
+      userId,
     );
     return user;
   }
 
-  async remove(id: string) {
-    await this.announcementRepository.delete(id);
+  async remove(id: string, userId: string) {
+    await this.announcementRepository.delete(id, userId);
     return;
   }
 }
