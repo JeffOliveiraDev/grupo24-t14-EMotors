@@ -12,12 +12,25 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateAnnouncementDto): Promise<Announcement> {
     const announcement = new Announcement();
-    Object.assign(announcement, {
-      ...data,
-    });
+
+    Object.assign(announcement, { ...data });
 
     const newAnnouncement = await this.prisma.announcement.create({
-      data: { ...announcement },
+      data: {
+        id: announcement.id,
+        color: announcement.color,
+        coverImage: announcement.coverImage,
+        description: announcement.description,
+        detailsImage: announcement.detailsImage,
+        fuel: announcement.fuel,
+        mileage: announcement.mileage,
+        model: announcement.model,
+        pfipe: announcement.pfipe,
+        sellPrice: announcement.sellPrice,
+        createdAt: announcement.createdAt || new Date(),
+        updatedAt: announcement.updatedAt || undefined,
+        userId: announcement.userId,
+      },
     });
 
     return plainToInstance(Announcement, newAnnouncement);
