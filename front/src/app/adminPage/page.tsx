@@ -10,6 +10,10 @@ import ModalRegisterCar from "@/components/modalRegisterNewCar";
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
+  // const anuncios = { Marca;
+
+  // }
+
   const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
     <main className={styles.boxPage}>
@@ -77,6 +81,18 @@ const AdminProfilePage = () => {
 
         <ModalRegisterCar modalOpen={modalOpen} setModal={setModalOpen} />
       </section>
+      <footer className={styles.footer}>
+        <div className={styles.footerLeft}>
+          <h3>Motors</h3>
+          <h4>shop</h4>
+        </div>
+        <div className={styles.center}>
+          <h4>@2022 - Todos os direitos reservados</h4>
+        </div>
+        <div className={styles.footerRight}>
+          <button className={styles.btnFooter}>^</button>
+        </div>
+      </footer>
     </main>
   );
 };

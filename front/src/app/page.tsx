@@ -3,8 +3,21 @@ import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAdd from "@/components/CardAdd/index.card-add";
+import { GetServerSideProps, NextPage } from "next";
 
-export default function Home() {
+import { CarData } from "@/schemas/cars.schema";
+
+import api from "@/services/api";
+
+interface ICar {
+  car: CarData;
+}
+
+interface HomeListCars {
+  carsList: ICar[];
+}
+
+const Home: NextPage<HomeListCars> = ({ carsList }) => {
   const brands = [
     "General Motors",
     "Fiat",
@@ -123,4 +136,17 @@ export default function Home() {
       </footer>
     </main>
   );
-}
+};
+
+export default Home;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response = await api.get<ICar[]>("/cars?brand=chevrolet");
+  const teste = response.data;
+  console.log(teste);
+  return {
+    props: {
+      carsList: response.data,
+    },
+  };
+};
