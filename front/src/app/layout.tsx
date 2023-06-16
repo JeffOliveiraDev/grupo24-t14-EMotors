@@ -1,5 +1,4 @@
 import { Inter, Lexend } from "next/font/google";
-
 import "@/scss/main.scss";
 import { ToastContainer } from "react-toastify";
 

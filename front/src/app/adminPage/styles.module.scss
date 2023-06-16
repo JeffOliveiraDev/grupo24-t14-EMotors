@@ -34,7 +34,6 @@
 
         color: $color-grey-scale-grey-2;
       }
-
       span {
         display: flex;
         flex-direction: column;
@@ -55,6 +54,26 @@
 
         background: $color-brand-brand-2;
         border-radius: 150px;
+      }
+      .burguerMenu {
+        display: none;
+      }
+      @media (max-width: 500px) {
+        h3 {
+          display: none;
+        }
+        span {
+          display: none;
+        }
+        .btnBurguer {
+          background: none;
+          border: none;
+        }
+        .burguerMenu {
+          display: flex;
+          font-size: 3rem;
+        }
+        border-left: none;
       }
     }
   }

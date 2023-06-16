@@ -1,3 +1,4 @@
+"use client";
 import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
@@ -5,9 +6,8 @@ import Image from "next/image";
 import CardAdd from "@/components/CardAdd/index.card-add";
 import { GetServerSideProps, NextPage } from "next";
 
-import { CarData } from "@/schemas/cars.schema";
-
 import api from "@/services/api";
+import { useEffect, useState } from "react";
 
 interface ICar {
   car: CarData;
@@ -17,7 +17,22 @@ interface HomeListCars {
   carsList: ICar[];
 }
 
-const Home: NextPage<HomeListCars> = ({ carsList }) => {
+interface CarBrand {
+  name: string;
+}
+
+interface CarData {
+  [brand: string]: CarBrand[];
+}
+
+const Home: NextPage<CarData> = ({ carsList }) => {
+  const [cars, setCars] = useState<CarBrand[]>();
+  const [brand, setBrand] = useState("chevrolet");
+  // useEffect(() => {
+  //   setCars(carsList);
+  //   console.log(carsList);
+  // }, []);
+
   const brands = [
     "General Motors",
     "Fiat",
@@ -138,15 +153,15 @@ const Home: NextPage<HomeListCars> = ({ carsList }) => {
   );
 };
 
-export default Home;
-
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await api.get<ICar[]>("/cars?brand=chevrolet");
-  const teste = response.data;
-  console.log(teste);
+  const response = await api.get<CarData[]>("/cars");
+
+  console.log(response.data);
   return {
     props: {
       carsList: response.data,
     },
   };
 };
+
+export default Home;

@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
@@ -6,13 +7,10 @@ import carImage from "../../assets/imageCar.svg";
 import headerTitle from "../../assets/headerTitle.svg";
 import Tag from "@/components/Tags/index.tags";
 import ModalRegisterCar from "@/components/modalRegisterNewCar";
+import { AiOutlineMenu } from "react-icons/Ai";
 
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
-
-  // const anuncios = { Marca;
-
-  // }
 
   const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
@@ -24,6 +22,9 @@ const AdminProfilePage = () => {
         <div className={styles.divRight}>
           <span>CL</span>
           <h3>Samuel</h3>
+          <button className={styles.btnBurguer}>
+            <AiOutlineMenu className={styles.burguerMenu} />
+          </button>
         </div>
       </header>
       <div className={styles.blueBackground}></div>
@@ -55,6 +56,7 @@ const AdminProfilePage = () => {
               <li>
                 <Image src={carImage} alt="" />
                 <h3>carro</h3>
+
                 <p>
                   Lorem Ipsum is simply dummy text of the printing and
                   typesetting industry. Lorem...
@@ -70,10 +72,34 @@ const AdminProfilePage = () => {
               <li>
                 <Image src={carImage} alt="" />
                 <h3>carro</h3>
+
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem...
+                </p>
+                <div className={styles.boxTagsPrice}>
+                  <ul>
+                    {tags.map((e, i) => (
+                      <Tag key={i}>{e.text}</Tag>
+                    ))}
+                  </ul>
+                </div>
               </li>
               <li>
                 <Image src={carImage} alt="" />
                 <h3>carro</h3>
+
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem...
+                </p>
+                <div className={styles.boxTagsPrice}>
+                  <ul>
+                    {tags.map((e, i) => (
+                      <Tag key={i}>{e.text}</Tag>
+                    ))}
+                  </ul>
+                </div>
               </li>
             </ul>
           </div>
@@ -96,5 +122,4 @@ const AdminProfilePage = () => {
     </main>
   );
 };
-
 export default AdminProfilePage;

@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import styles from "../modalRegisterNewCar/styles.module.scss";
 import { useForm } from "react-hook-form";
+import {
+  RegisterNewAnnounceData,
+  registerNewAnnounceSchema,
+} from "@/schemas/cars.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
-  // const { register, handleSubmit } = useForm<UserData>({
-  //   resolver: zodResolver(userSchema),
-  // });
+  const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
+    resolver: zodResolver(registerNewAnnounceSchema),
+  });
 
-  // const { register: registerUser } = useAuth();
+  const onFormSubmit = (formData: RegisterNewAnnounceData) => {
+    console.log(formData);
+  };
 
-  // const onFormSubmit = (formData: UserData) => {
-  //   registerUser(formData);
-  // };
-  const [galleryFields, setGalleryFields] = useState([""]); // Estado para controlar os campos de imagem da galeria
+  const [galleryFields, setGalleryFields] = useState([""]);
 
   const handleAddGalleryField = () => {
-    setGalleryFields([...galleryFields, ""]); // Adicionar um novo campo vazio ao estado
+    setGalleryFields([...galleryFields, ""]);
   };
 
   if (modalOpen) {
@@ -28,47 +32,82 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
           </div>
           <h3>Informações do veículo</h3>
 
-          <form action="" method="post" className={styles.formBox}>
+          <form
+            className={styles.formBox}
+            onSubmit={handleSubmit(onFormSubmit)}
+          >
             <div className={styles.boxMarca}>
-              <label htmlFor="Marca">Marca</label>
-              <input placeholder="Mercedes Benz" type="text" required />
-              <label htmlFor="Marca">Modelo</label>
-              <input placeholder="A 200 CGI" type="text" required />
+              <label htmlFor="marca">Marca</label>
+              <input
+                placeholder="Mercedes Benz"
+                type="text"
+                {...register("marca")}
+              />
+              <label htmlFor="modelo">Modelo</label>
+              <input
+                placeholder="A 200 CGI"
+                type="text"
+                {...register("modelo")}
+              />
             </div>
             <div className={styles.boxDoubleCollum}>
               <div className={styles.boxFlex}>
-                <label htmlFor="Ano">Ano</label>
-                <input placeholder="2018" type="text" required />
+                <label htmlFor="ano">Ano</label>
+                <input placeholder="2018" type="text" {...register("ano")} />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="Combustível">Combustível</label>
-                <input placeholder="Gasolina / Etanol" type="text" required />
+                <input
+                  placeholder="Gasolina / Etanol"
+                  type="text"
+                  {...register("combustivel")}
+                />
               </div>
               <div className={styles.boxFlex}>
-                <label htmlFor="Quilometragem">Quilometragem</label>
-                <input placeholder="30.000" type="text" required />
+                <label htmlFor="quilometragem">Quilometragem</label>
+                <input
+                  placeholder="30.000"
+                  type="text"
+                  {...register("quilometragem")}
+                />
               </div>
               <div className={styles.boxFlex}>
-                <label htmlFor="Cor">Cor</label>
-                <input placeholder="Preto" type="text" required />
+                <label htmlFor="cor">Cor</label>
+                <input placeholder="Preto" type="text" {...register("cor")} />
               </div>
               <div className={styles.boxFlex}>
-                <label htmlFor="Preço tabela FIPE">Preço tabela FIPE</label>
-                <input placeholder="40.000 / Etanol" type="text" required />
+                <label htmlFor="precoFipe">Preço tabela FIPE</label>
+                <input
+                  placeholder="40.000 / Etanol"
+                  type="text"
+                  {...register("precoFipe")}
+                />
               </div>
               <div className={styles.boxFlex}>
-                <label htmlFor="Preço">Preço</label>
-                <input placeholder="50.000 / Etanol" type="text" required />
+                <label htmlFor="preco">Preço</label>
+                <input
+                  placeholder="50.000 / Etanol"
+                  type="text"
+                  {...register("preco")}
+                />
               </div>
             </div>
             <h3>Descrição</h3>
-            <textarea name="description"></textarea>
+            <textarea {...register("descrição")}></textarea>
             <label htmlFor="imagem de capa">Imagem de capa</label>
-            <input placeholder="http://image.com" type="url" required />
+            <input
+              placeholder="http://image.com"
+              type="text"
+              {...register("urlImagemCapa")}
+            />
             <label htmlFor="primeira imagem da galeria">
               1ª Imagem da galeria
             </label>
-            <input placeholder="http://image.com" type="url" required />
+            <input
+              placeholder="http://image.com"
+              type="text"
+              {...register("primeiraImagemGaleria")}
+            />
 
             {galleryFields.map((field, index) => (
               <div className={styles.newImageFields} key={index}>
@@ -77,9 +116,9 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
                 </label>
                 <input
                   placeholder="http://image.com"
-                  type="url"
+                  type="text"
                   id={`imagem-galeria-${index + 1}`}
-                  required
+                  {...register(`imagensGaleria.${index}`)}
                 />
               </div>
             ))}
