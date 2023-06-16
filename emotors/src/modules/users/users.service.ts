@@ -9,13 +9,6 @@ import { UsersRepository } from './repository/user.repository';
 
 @Injectable()
 export class UsersService {
-<<<<<<< HEAD
-  findByEmail(email: string) {
-    throw new Error('Method not implemented.');
-  }
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-=======
   constructor(private usersRepository: UsersRepository) {}
   async create(createUserDto: CreateUserDto) {
     const email = await this.usersRepository.findByEmail(createUserDto.email);
@@ -32,7 +25,6 @@ export class UsersService {
     }
 
     return await this.usersRepository.create(createUserDto);
->>>>>>> b4b52a5090dc5579bd3887732cd1739fc368ed96
   }
 
   async findAll() {
@@ -58,17 +50,18 @@ export class UsersService {
     if (updateUserDto.telephone) {
       await this.usersRepository.findByTel(updateUserDto.telephone);
     }
-
-    return await this.usersRepository.update(id, updateUserDto);
+    const user = await this.usersRepository.update(id, updateUserDto);
+    return user;
   }
 
   async remove(id: string) {
-    const user = await this.findOne(id);
+    const user = await this.usersRepository.findOne(id);
 
     if (!user) {
       throw new NotFoundException('User not found!');
     }
-    return await this.usersRepository.remove(id);
+    await this.usersRepository.delete(id);
+    return;
   }
 
   async finndByEmail(email: string) {
