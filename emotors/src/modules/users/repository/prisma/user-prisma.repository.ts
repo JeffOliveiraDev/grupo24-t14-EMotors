@@ -13,7 +13,7 @@ export class UsersPrismaRepository implements UsersRepository {
   async create(data: CreateUserDto): Promise<User> {
     const user = new User();
 
-    Object.assign(user, data);
+    Object.assign(user, { ...data });
 
     const newUser = await this.prisma.user.create({
       data: {
@@ -52,7 +52,7 @@ export class UsersPrismaRepository implements UsersRepository {
       where: { id },
     });
 
-    return user;
+    return plainToInstance(User, user);
   }
 
   async update(id: string, data: UpdateUserDto): Promise<User> {
@@ -64,11 +64,9 @@ export class UsersPrismaRepository implements UsersRepository {
     return plainToInstance(User, user);
   }
 
-  async remove(id: string): Promise<void> {
-    const user = await this.prisma.user.delete({
-      where: {
-        id: id,
-      },
+  async delete(id: string): Promise<void> {
+    await this.prisma.user.delete({
+      where: { id },
     });
   }
 
