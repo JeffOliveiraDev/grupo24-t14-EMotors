@@ -1,42 +1,109 @@
 import styles from "../CardAdd/styles.module.scss";
 import Image from "next/image";
-import car from "../../assets/imageCar.svg";
+import carImg from "../../assets/imageCar.svg";
 import Tag from "../Tags/index.tags";
+import {
+  JSXElementConstructor,
+  Key,
+  PromiseLikeOfReactNode,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 
-const CardAdd = () => {
+interface ICar {
+  id: string;
+  name: string;
+  brand: string;
+  year: string;
+  fuel: number;
+}
+
+interface Car {
+  name: string;
+}
+
+interface BrandCars {
+  [brand: string]: Car[];
+}
+
+interface CardAddProps {
+  brand: string;
+}
+
+const CardAdd = ({ brand, setBrand }: any) => {
   const array = [{ text: "0Km" }, { text: "2023" }];
+  const [cars, setCars] = useState<BrandCars[]>();
+  console.log(brand);
+  console.log(cars);
+  const [carsRender, setCarsRender] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getData(brand!);
+        setCars(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, [brand]);
+
+  async function getData(brand: string) {
+    const res = await fetch(
+      `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`
+    );
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.boxImage}>
-        <Image alt="image car" width={100} height={100} src={car} />
-      </div>
-      <h3>Porsche - 718</h3>
+    <div className={styles.boxUl}>
+      {cars && (
+        <ul className={styles.boxCars}>
+          {cars.map((car: any) => (
+            <li className={styles.container} key={car.id}>
+              <div className={styles.boxImage}>
+                <Image alt="image car" width={100} height={100} src={carImg} />
+              </div>
+              <h3>{car.name}</h3>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem...
+              </p>
+              <div className={styles.boxUser}>
+                <div>
+                  <p className={styles.boxImageOwner}>R</p>
+                </div>
 
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem...
-      </p>
+                <p>rafael</p>
+              </div>
 
-      <div className={styles.boxUser}>
-        <div>
-          <p className={styles.boxImageOwner}>R</p>
-        </div>
+              <div className={styles.boxTagsPrice}>
+                <ul>
+                  <Tag key={car.year}>{car.year}</Tag>
+                  {/* {cars.map((e, i) => (
+                    <Tag key={i}>{e.year}</Tag>
+                  ))} */}
+                </ul>
 
-        <p>rafael</p>
-      </div>
-
-      <div className={styles.boxTagsPrice}>
-        <ul>
-          {array.map((e, i) => (
-            <Tag key={i}>{e.text}</Tag>
+                <span>
+                  <strong>R$ {car.value}</strong>
+                </span>
+              </div>
+            </li>
           ))}
         </ul>
-
-        <span>
-          <strong>R$ 00.000,00</strong>
-        </span>
-      </div>
+      )}
     </div>
   );
 };

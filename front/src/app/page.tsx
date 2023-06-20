@@ -26,12 +26,35 @@ interface CarData {
 }
 
 const Home: NextPage<CarData> = ({ carsList }) => {
-  const [cars, setCars] = useState<CarBrand[]>();
+  const [carsBrands, setCarsBrands] = useState<string[]>([]);
   const [brand, setBrand] = useState("chevrolet");
-  // useEffect(() => {
-  //   setCars(carsList);
-  //   console.log(carsList);
-  // }, []);
+
+  const [carsRender, setCarsRender] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getData();
+        const brandNames = Object.keys(data);
+        setCarsBrands(brandNames);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  async function getData() {
+    const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
 
   const brands = [
     "General Motors",
@@ -77,8 +100,10 @@ const Home: NextPage<CarData> = ({ carsList }) => {
             <div>
               <h4>Marca</h4>
               <ul>
-                {brands.map((brand) => (
-                  <li key={brand}>{brand}</li>
+                {carsBrands.map((brand) => (
+                  <li key={brand} onClick={() => setBrand(brand)}>
+                    {brand}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -130,11 +155,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
           </div>
         </section>
         <section className={styles.listOfCars}>
-          <div>
-            <ul>
-              <CardAdd />
-            </ul>
-          </div>
+          <CardAdd brand={brand} setBrand={setBrand} />
         </section>
       </div>
       <footer className={styles.footer}>
@@ -153,15 +174,15 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const response = await api.get<CarData[]>("/cars");
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const response = await api.get<CarData[]>("/cars");
 
-  console.log(response.data);
-  return {
-    props: {
-      carsList: response.data,
-    },
-  };
-};
+//   console.log(response.data);
+//   return {
+//     props: {
+//       carsList: response.data,
+//     },
+//   };
+// };
 
 export default Home;
