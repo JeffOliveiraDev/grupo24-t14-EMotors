@@ -1,5 +1,4 @@
 import { Inter, Lexend } from "next/font/google";
-
 import "@/scss/main.scss";
 import { ToastContainer } from "react-toastify";
 
@@ -23,12 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-
       <body className={`${inter.className} ${lexend.className} `}>
-
         {children}
         <ToastContainer />
-
       </body>
     </html>
   );

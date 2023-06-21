@@ -1,18 +1,86 @@
+"use client";
 import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAdd from "@/components/CardAdd/index.card-add";
+import { GetServerSideProps, NextPage } from "next";
 
-export default function Home() {
-  const brands = [
-    "General Motors",
-    "Fiat",
-    "Ford",
-    "Honda",
-    "Porsche",
-    "Volkswagen",
-  ];
+import api from "@/services/api";
+import { useEffect, useState } from "react";
+
+interface ICar {
+  car: CarData;
+}
+
+interface HomeListCars {
+  carsList: ICar[];
+}
+
+interface CarBrand {
+  name: string;
+}
+
+interface CarData {
+  [brand: string]: CarBrand[];
+}
+
+const Home: NextPage<CarData> = ({ carsList }) => {
+  const [carsBrands, setCarsBrands] = useState<string[]>([]);
+  const [brand, setBrand] = useState("chevrolet");
+  const [year, setYear] = useState([]);
+  const [choosenYear, setchoosenYear] = useState();
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const dataBrand = await getBrand();
+        const data = await getData();
+        const years = data.map((car: { year: any }) => {
+          return car.year;
+        });
+
+        const uniqueYears = years.filter(
+          (year: any, index: any, arr: string | any[]) =>
+            arr.indexOf(year) === index
+        );
+
+        const brandNames = Object.keys(dataBrand);
+
+        setYear(uniqueYears);
+        setCarsBrands(brandNames);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  async function getBrand() {
+    const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
+
+  async function getData() {
+    const res = await fetch(
+      "https://kenzie-kars.herokuapp.com/cars?brand=chevrolet"
+    );
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
+
   const models = [
     "Civic",
     "Corolla",
@@ -49,8 +117,10 @@ export default function Home() {
             <div>
               <h4>Marca</h4>
               <ul>
-                {brands.map((brand) => (
-                  <li key={brand}>{brand}</li>
+                {carsBrands.map((brand) => (
+                  <li key={brand} onClick={() => setBrand(brand)}>
+                    {brand}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -73,8 +143,10 @@ export default function Home() {
             <div>
               <h4>Ano</h4>
               <ul>
-                {years.map((year) => (
-                  <li key={year}>{year}</li>
+                {year.map((year) => (
+                  <li key={year} onClick={() => setchoosenYear(year)}>
+                    {year}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -102,11 +174,11 @@ export default function Home() {
           </div>
         </section>
         <section className={styles.listOfCars}>
-          <div>
-            <ul>
-              <CardAdd />
-            </ul>
-          </div>
+          <CardAdd
+            brand={brand}
+            setBrand={setBrand}
+            choosenYear={choosenYear}
+          />
         </section>
       </div>
       <footer className={styles.footer}>
@@ -123,4 +195,6 @@ export default function Home() {
       </footer>
     </main>
   );
-}
+};
+
+export default Home;

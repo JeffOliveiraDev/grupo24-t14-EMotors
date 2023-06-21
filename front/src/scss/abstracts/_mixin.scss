@@ -200,3 +200,24 @@
   border: 1.5px solid $color-brand-brand-1;
   border-radius: 4px;
 }
+
+@mixin button-big-text {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  padding: 12px 28px;
+  gap: 10px;
+  background: none;
+  width: fit-content;
+  height: 48px;
+
+  border: 1.5px solid $color-brand-brand-1;
+  border-radius: 4px;
+
+  color: $color-brand-brand-1;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.6rem;
+}
