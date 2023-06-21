@@ -33,12 +33,11 @@ interface CardAddProps {
   brand: string;
 }
 
-const CardAdd = ({ brand, setBrand }: any) => {
-  const array = [{ text: "0Km" }, { text: "2023" }];
+const CardAdd = ({ brand, choosenYear, page }: any) => {
   const [cars, setCars] = useState<BrandCars[]>();
-  console.log(brand);
-  console.log(cars);
-  const [carsRender, setCarsRender] = useState();
+  const [filteredCars, setFilteredCars] = useState<BrandCars[]>([]);
+  const [itens, setItens] = useState([0]);
+  const carsToRender = cars?.slice((page - 1) * 12, page * 12);
 
   useEffect(() => {
     async function fetchData() {
@@ -52,6 +51,15 @@ const CardAdd = ({ brand, setBrand }: any) => {
 
     fetchData();
   }, [brand]);
+
+  useEffect(() => {
+    if (choosenYear) {
+      const filteredCars = cars!.filter((car) => car.year === choosenYear);
+      setFilteredCars(filteredCars);
+    } else {
+      setFilteredCars(cars!);
+    }
+  }, [choosenYear, cars]);
 
   async function getData(brand: string) {
     const res = await fetch(
@@ -68,9 +76,9 @@ const CardAdd = ({ brand, setBrand }: any) => {
 
   return (
     <div className={styles.boxUl}>
-      {cars && (
+      {filteredCars?.length > 0 && (
         <ul className={styles.boxCars}>
-          {cars.map((car: any) => (
+          {filteredCars.map((car: any) => (
             <li className={styles.container} key={car.id}>
               <div className={styles.boxImage}>
                 <Image alt="image car" width={100} height={100} src={carImg} />
@@ -84,20 +92,14 @@ const CardAdd = ({ brand, setBrand }: any) => {
                 <div>
                   <p className={styles.boxImageOwner}>R</p>
                 </div>
-
                 <p>rafael</p>
               </div>
-
               <div className={styles.boxTagsPrice}>
                 <ul>
                   <Tag key={car.year}>{car.year}</Tag>
-                  {/* {cars.map((e, i) => (
-                    <Tag key={i}>{e.year}</Tag>
-                  ))} */}
                 </ul>
-
                 <span>
-                  <strong>R$ {car.value}</strong>
+                  <strong>R$ {car.value.toLocaleString()}</strong>
                 </span>
               </div>
             </li>
@@ -107,5 +109,45 @@ const CardAdd = ({ brand, setBrand }: any) => {
     </div>
   );
 };
+// <div className={styles.boxUl}>
+//   {cars && (
+//     <ul className={styles.boxCars}>
+//       {cars.map((car: any) => (
+//         <li className={styles.container} key={car.id}>
+//           <div className={styles.boxImage}>
+//             <Image alt="image car" width={100} height={100} src={carImg} />
+//           </div>
+//           <h3>{car.name}</h3>
+//           <p>
+//             Lorem Ipsum is simply dummy text of the printing and typesetting
+//             industry. Lorem...
+//           </p>
+//           <div className={styles.boxUser}>
+//             <div>
+//               <p className={styles.boxImageOwner}>R</p>
+//             </div>
+
+//             <p>rafael</p>
+//           </div>
+
+//           <div className={styles.boxTagsPrice}>
+//             <ul>
+//               <Tag key={car.year}>{car.year}</Tag>
+//               {/* {cars.map((e, i) => (
+//                 <Tag key={i}>{e.year}</Tag>
+//               ))} */}
+//             </ul>
+
+//             <span>
+//               <strong>R$ {car.value.toLocaleString()}</strong>
+//             </span>
+//           </div>
+//         </li>
+//       ))}
+//     </ul>
+//   )}
+// </div>
+// );
+// };
 
 export default CardAdd;

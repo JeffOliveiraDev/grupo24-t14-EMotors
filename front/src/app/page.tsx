@@ -28,14 +28,26 @@ interface CarData {
 const Home: NextPage<CarData> = ({ carsList }) => {
   const [carsBrands, setCarsBrands] = useState<string[]>([]);
   const [brand, setBrand] = useState("chevrolet");
-
-  const [carsRender, setCarsRender] = useState();
+  const [year, setYear] = useState([]);
+  const [choosenYear, setchoosenYear] = useState();
 
   useEffect(() => {
     async function fetchData() {
       try {
+        const dataBrand = await getBrand();
         const data = await getData();
-        const brandNames = Object.keys(data);
+        const years = data.map((car: { year: any }) => {
+          return car.year;
+        });
+
+        const uniqueYears = years.filter(
+          (year: any, index: any, arr: string | any[]) =>
+            arr.indexOf(year) === index
+        );
+
+        const brandNames = Object.keys(dataBrand);
+
+        setYear(uniqueYears);
         setCarsBrands(brandNames);
       } catch (error) {
         console.error(error);
@@ -45,7 +57,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     fetchData();
   }, []);
 
-  async function getData() {
+  async function getBrand() {
     const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
 
     if (!res.ok) {
@@ -56,14 +68,19 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     return res.json();
   }
 
-  const brands = [
-    "General Motors",
-    "Fiat",
-    "Ford",
-    "Honda",
-    "Porsche",
-    "Volkswagen",
-  ];
+  async function getData() {
+    const res = await fetch(
+      "https://kenzie-kars.herokuapp.com/cars?brand=chevrolet"
+    );
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
+
   const models = [
     "Civic",
     "Corolla",
@@ -126,8 +143,10 @@ const Home: NextPage<CarData> = ({ carsList }) => {
             <div>
               <h4>Ano</h4>
               <ul>
-                {years.map((year) => (
-                  <li key={year}>{year}</li>
+                {year.map((year) => (
+                  <li key={year} onClick={() => setchoosenYear(year)}>
+                    {year}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -155,7 +174,11 @@ const Home: NextPage<CarData> = ({ carsList }) => {
           </div>
         </section>
         <section className={styles.listOfCars}>
-          <CardAdd brand={brand} setBrand={setBrand} />
+          <CardAdd
+            brand={brand}
+            setBrand={setBrand}
+            choosenYear={choosenYear}
+          />
         </section>
       </div>
       <footer className={styles.footer}>
@@ -173,16 +196,5 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     </main>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const response = await api.get<CarData[]>("/cars");
-
-//   console.log(response.data);
-//   return {
-//     props: {
-//       carsList: response.data,
-//     },
-//   };
-// };
 
 export default Home;
