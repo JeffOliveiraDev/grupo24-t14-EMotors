@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss";
+import InputMask from "react-input-mask";
 
 interface iInput {
   register?: any;
@@ -11,7 +12,8 @@ interface iInput {
   textarea?: boolean;
   value?: string | undefined;
   labelClass?: string | undefined;
-  checked?: boolean | undefined;
+  inputMask?: boolean;
+  mask?: string | (string | RegExp)[];
   onChange?: React.ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
@@ -26,8 +28,9 @@ const Input = ({
   textarea,
   value,
   labelClass,
-  checked,
   onChange,
+  mask,
+  inputMask,
 }: iInput) => {
   const prop = {
     onChange,
@@ -38,7 +41,45 @@ const Input = ({
     error,
     value,
     styles,
-    checked,
+  };
+
+  const funcInput = () => {
+    if (textarea) {
+      return (
+        <textarea
+          className={error ? styles.red : styles.textarea}
+          {...register}
+          {...prop}
+        />
+      );
+    }
+
+    if (!textarea && !inputMask) {
+      return (
+        <input
+          className={error ? styles.red : styles.input}
+          {...register}
+          {...prop}
+        />
+      );
+    }
+
+    delete prop.placeholder;
+
+    const propMask = {
+      placeholder,
+    };
+
+    return (
+      <InputMask
+        maskChar="_"
+        className={error ? styles.red : styles.input}
+        {...register}
+        {...prop}
+        mask={mask!}
+        {...propMask}
+      />
+    );
   };
 
   return (
@@ -48,19 +89,8 @@ const Input = ({
           {label}
         </label>
       )}
-      {!textarea ? (
-        <input
-          className={error ? styles.red : styles.input}
-          {...register}
-          {...prop}
-        />
-      ) : (
-        <textarea
-          className={error ? styles.red : styles.textarea}
-          {...register}
-          {...prop}
-        />
-      )}
+      {funcInput()}
+
       <small className={styles.small}>{error}</small>
     </div>
   );

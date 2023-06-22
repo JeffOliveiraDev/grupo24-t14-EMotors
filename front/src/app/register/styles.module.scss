@@ -62,6 +62,8 @@
 
         transition: 200ms;
 
+        cursor: pointer;
+
         @include text-style-inputs-buttons-button-big-text;
       }
 
@@ -122,6 +124,18 @@
       input {
         width: 100%;
       }
+    }
+
+    button {
+      height: 48px;
+
+      background-color: $color-brand-brand-1;
+      color: $color-grey-scale-grey-10;
+
+      @include text-style-inputs-buttons-button-big-text;
+
+      border-radius: 4px;
+      border: none;
     }
   }
 }
