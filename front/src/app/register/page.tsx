@@ -1,8 +1,8 @@
 "use client";
-import Header from "@/components/Header/index.header";
+import Header from "@/components/Header/header";
 import styles from "./styles.module.scss";
-import Footer from "@/components/Footer/index.footer";
-import Input from "../../components/Input/index.module";
+import Footer from "@/components/Footer/footer";
+import Input from "../../components/Input/loginModule";
 import { useState } from "react";
 
 const Register = () => {
