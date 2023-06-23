@@ -1,0 +1,442 @@
+@use "../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.page {
+  width: 100%;
+  height: 100%;
+  background-color: grey;
+}
+
+.header {
+  background-color: $color-grey-scale-grey-10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0px 60px;
+  border-bottom: 2px solid #dee2e6;
+
+  .divLeft {
+    width: 70%;
+  }
+
+  .divRight {
+    width: 30%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 44px;
+
+    border-left: 2px solid #dee2e6;
+
+    h3 {
+      @include text-style-text-body-1-600;
+      color: $color-grey-scale-grey-2;
+    }
+
+    button {
+      @include button-register;
+    }
+  }
+}
+
+.backgroundBlue {
+  background: #4529e6;
+  border-radius: 8px;
+  width: 100vw;
+  height: 400px;
+  position: absolute;
+  z-index: 2;
+}
+.backgroundGrey {
+  background: #f1f3f5;
+  border-radius: 8px;
+  width: 100vw;
+  height: 150%;
+  position: absolute;
+  z-index: 1;
+}
+.boxAnnounceAndSocial {
+  width: 100%;
+  height: 100%;
+}
+.sectionAnnounceAndSocial {
+  width: 100vw;
+  height: 100vh;
+
+  .boxCarAndSocial {
+    position: absolute;
+    left: 0;
+    width: 60vw;
+    height: fit-content;
+    z-index: 2;
+
+    display: flex;
+    justify-content: center;
+  }
+  .boxPhotosAndUser {
+    right: 0;
+    position: absolute;
+
+    width: 40vw;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+  }
+
+  .carAndSocial {
+    margin-top: 40px;
+    width: 90%;
+    height: fit-content;
+  }
+  .boxImgCar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 251px;
+
+    background: #fdfdfd;
+    border-radius: 4px;
+  }
+  .carNamePrice {
+    background-color: $color-grey-scale-grey-10;
+    margin-top: 16px;
+    width: 100%;
+    padding: 28px 44px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8rem;
+    border-radius: 0.4rem;
+  }
+  .boxTagsPrice {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ul {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    span {
+      @include text-style-heading-heading-7-500;
+      color: $color-grey-scale-grey-1;
+    }
+  }
+
+  .btnBuy {
+    @include button-buy-small;
+    color: #ffffff;
+  }
+
+  .carDescription {
+    background-color: $color-grey-scale-grey-10;
+    margin-top: 16px;
+
+    // padding: 36px 44px;
+    // height: fit-content;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: center;
+
+    // gap: 0.8rem;
+    // border-radius: 0.4rem;
+  }
+  h2 {
+    @include text-style-heading-heading-6-600;
+    color: $color-grey-scale-grey-1;
+  }
+  p {
+    @include text-style-text-body-1-400;
+  }
+}
+.commentsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  margin-top: 2rem;
+  background-color: $color-grey-scale-grey-10;
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 44px 20px 44px;
+  height: fit-content;
+
+  border-radius: 0.4rem;
+  h2 {
+    margin-top: 2rem;
+  }
+  span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 1.4rem;
+    background: #e34d8c;
+    border-radius: 150px;
+  }
+  h5 {
+    width: 4px;
+    height: 4px;
+    left: 115px;
+    top: 14px;
+
+    background: $color-grey-scale-grey-4;
+  }
+}
+.liComment {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  p {
+    @include text-style-text-body-2-400;
+    color: $color-grey-scale-grey-2;
+  }
+}
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  h3 {
+    @include text-style-text-body-2-500;
+    color: $color-grey-scale-grey-1;
+  }
+}
+.commentsList {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.commentBox {
+  background-color: $color-grey-scale-grey-10;
+  margin-top: 16px;
+  width: 100%;
+  padding: 10px 44px 20px 44px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  border-radius: 0.4rem;
+}
+
+.commentArea {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.textareaWrapper textarea {
+  margin-top: 1.5rem;
+  width: 100%;
+  height: 120px;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.textareaWrapper .submitButton {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+}
+.submitButtonEnabled {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+
+  width: 108px;
+  height: 38px;
+  background: $color-brand-brand-1;
+
+  border: 0.4rem solid $color-brand-brand-1;
+  border-radius: 4px;
+  color: #ffffff;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.submitButtonDisabled {
+  position: absolute;
+  bottom: 10px;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+
+  width: 108px;
+  height: 38px;
+  background: $color-grey-scale-grey-5;
+
+  border: 0.4rem solid $color-grey-scale-grey-5;
+  border-radius: 4px;
+  color: #ffffff;
+
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.commentArea .tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.commentArea .tags .tagButton {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  border: none;
+  color: $color-grey-scale-grey-3;
+  font-family: inter;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  h3 {
+    @include text-style-text-body-2-500;
+    color: $color-grey-scale-grey-1;
+  }
+  span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 32px;
+    height: 32px;
+
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 1.4rem;
+    background: #e34d8c;
+    border-radius: 150px;
+  }
+}
+
+.photosAndUser {
+  width: 90%;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 36px 44px;
+  gap: 3.2rem;
+
+  position: absolute;
+  width: 90%;
+  height: fit-content;
+
+  /* Grey Scale/grey-10 */
+
+  background: #fdfdfd;
+  border-radius: 4px;
+}
+.photosList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.photosList img {
+  padding: 20px 7px;
+
+  width: 108px;
+  height: 108px;
+
+  /* Grey Scale/grey-7 */
+
+  background: #e9ecef;
+  border-radius: 4px;
+}
+
+.footer {
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  color: #ffffff;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+}
+.footerLeft {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.footerLeft h4 {
+  display: flex;
+  margin-top: 5%;
+  align-items: baseline;
+}
+.footerRight {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  width: calc(33.33% - 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+
+  color: #ffffff;
+}

@@ -1,0 +1,91 @@
+@use "../../scss/abstracts/" as *;
+
+.conteiner {
+  width: 100%;
+  height: 80px;
+
+  background-color: $color-grey-scale-grey-10;
+  border-bottom: 2px solid $color-grey-scale-grey-6;
+
+  display: flex;
+
+  position: fixed;
+  top: 0;
+
+  > div {
+    width: 100%;
+    height: 100%;
+
+    margin-inline: 5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a {
+      display: none;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: none;
+      border: none;
+
+      width: 16px;
+      height: 21px;
+
+      > svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    @media (min-width: 800px) {
+      button {
+        display: none;
+      }
+      > div {
+        height: 100%;
+
+        display: flex;
+        align-items: center;
+
+        border-left: 2px solid $color-grey-scale-grey-6;
+
+        a {
+          display: flex;
+
+          margin-left: 4.5rem;
+          padding: 1.5rem;
+
+          color: $color-brand-brand-1;
+
+          transition: 400ms;
+          @include text-style-inputs-buttons-button-big-text;
+        }
+
+        .login:hover {
+          color: $color-random-profile-11;
+        }
+
+        .register {
+          outline: 2px solid $color-grey-scale-grey-6;
+          color: $color-grey-scale-grey-0;
+
+          border-radius: 4px;
+        }
+
+        .register:hover {
+          background-color: $color-grey-scale-grey-0;
+          color: $color-grey-scale-grey-10;
+          outline: none;
+
+          transition: 400ms;
+        }
+      }
+    }
+  }
+}

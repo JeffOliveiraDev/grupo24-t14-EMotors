@@ -1,0 +1,177 @@
+@use "../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.home {
+  background-color: $color-grey-scale-grey-10;
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0px 60px;
+    border-bottom: 2px solid #dee2e6;
+
+    .divLeft {
+      width: 70%;
+    }
+
+    .divRight {
+      width: 30%;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 44px;
+
+      border-left: 2px solid #dee2e6;
+
+      h3 {
+        @include text-style-text-body-1-600;
+        color: $color-grey-scale-grey-2;
+      }
+
+      button {
+        @include button-register;
+      }
+    }
+  }
+  .bannerCentral img {
+    width: 100vw;
+    height: 100%;
+  }
+
+  h2 {
+    @include text-style-heading-heading-2-600;
+  }
+}
+
+.filtersAndCars {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+
+  .filters li {
+    list-style-type: none;
+  }
+
+  .filters {
+    width: 30vw;
+    height: 100%;
+    padding: 20px;
+    margin-left: 30px;
+  }
+  .filters h4 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    @include text-style-heading-heading-4-600;
+    line-height: 3.5rem;
+  }
+  .filters li {
+    @include text-style-heading-heading-6-500;
+    color: $color-grey-scale-grey-3;
+    padding-left: 10px;
+    cursor: pointer;
+  }
+  .filters li:hover {
+    scale: 1.1;
+    color: $color-grey-scale-grey-2;
+  }
+
+  .listOfCars {
+    width: 70vw;
+    height: 100%;
+  }
+
+  .buttonsKmPrice {
+    display: flex;
+    gap: 10px;
+  }
+  .buttonsKmPrice button {
+    width: 125px;
+    height: 37px;
+    background-color: $color-grey-scale-grey-5;
+    border: none;
+    @include text-style-heading-heading-7-600;
+
+    color: $color-grey-scale-grey-3;
+  }
+  .btnCleanFilter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    // height: 100%;
+    margin-top: 79px;
+  }
+  .btnCleanFilter button {
+    background-color: $color-brand-brand-2;
+    padding: 12px 28px;
+    border: 1.5px solid #5126ea;
+    border-radius: 4px;
+    width: 279px;
+    height: 48px;
+    @include text-style-inputs-buttons-button-big-text;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}
+.footer {
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  color: #ffffff;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+}
+.footerLeft {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.footerLeft h4 {
+  display: flex;
+  margin-top: 5%;
+  align-items: baseline;
+}
+.footerRight {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  width: calc(33.33% - 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+  font-family: "Font Awesome 5 Free";
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+
+  color: #ffffff;
+}
+.containerCarsList {
+  display: flex;
+  width: 100%;
+  height: fit-content;
+}
