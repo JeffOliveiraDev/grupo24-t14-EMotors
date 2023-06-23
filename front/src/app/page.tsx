@@ -3,11 +3,14 @@ import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
-import CardAdd from "@/components/CardAdd/index.card-add";
+import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import { GetServerSideProps, NextPage } from "next";
 
 import api from "@/services/api";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import Footer from "@/components/Footer/footer";
+import Header from "@/components/Header/header";
 
 interface ICar {
   car: CarData;
@@ -30,7 +33,12 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const [brand, setBrand] = useState("chevrolet");
   const [year, setYear] = useState([]);
   const [choosenYear, setchoosenYear] = useState();
+  const [filterClear, setClearFilter] = useState(false);
 
+  if (filterClear) {
+    window.location.reload();
+    setClearFilter(false);
+  }
   useEffect(() => {
     async function fetchData() {
       try {
@@ -92,20 +100,11 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     "Porsche 718",
   ];
   const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
-  const years = ["2022", "2021", "2018", "2015", "2013", "2012", "2010"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
   return (
     <main className={styles.home}>
-      <header>
-        <div className={styles.divLeft}>
-          <Image src={headerTitle} alt="" />
-        </div>
-        <div className={styles.divRight}>
-          <h3>Fazer Login</h3>
-          <button>Cadastrar</button>
-        </div>
-      </header>
+      <Header />
 
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />
@@ -170,29 +169,22 @@ const Home: NextPage<CarData> = ({ carsList }) => {
             </div>
           </div>
           <div className={styles.btnCleanFilter}>
-            <button>Limpar Filtros</button>
+            <button onClick={() => setClearFilter(!filterClear)}>
+              Limpar Filtros
+            </button>
           </div>
         </section>
         <section className={styles.listOfCars}>
-          <CardAdd
+          <CardAddNewCar
             brand={brand}
             setBrand={setBrand}
             choosenYear={choosenYear}
+            filterCLear={filterClear}
+            setClearFilter={setClearFilter}
           />
         </section>
       </div>
-      <footer className={styles.footer}>
-        <div className={styles.footerLeft}>
-          <h2>Motors</h2>
-          <h4>shop</h4>
-        </div>
-        <div className={styles.center}>
-          <h4>@2022 - Todos os direitos reservados</h4>
-        </div>
-        <div className={styles.footerRight}>
-          <button className={styles.btnFooter}>^</button>
-        </div>
-      </footer>
+      <Footer top="" />
     </main>
   );
 };
