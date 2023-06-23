@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import carImage from "../../assets/imageCar.svg";
 import headerTitle from "../../assets/headerTitle.svg";
-import Tag from "@/components/Tags/index.tags";
+import Tag from "@/components/Tags/tags";
 import ModalRegisterCar from "@/components/modalRegisterNewCar";
 import { AiOutlineMenu } from "react-icons/Ai";
 

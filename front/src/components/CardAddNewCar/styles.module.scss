@@ -99,3 +99,25 @@
     outline: 2px solid $color-brand-brand-1;
   }
 }
+.btnPages {
+  display: flex;
+  align-items: center;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+  margin-left: 4rem;
+  gap: 2rem;
+
+  h4 {
+    @include text-style-heading-heading-5-600;
+    color: $color-grey-scale-grey-4;
+    span {
+      color: #868e96;
+    }
+  }
+  button {
+    @include text-style-heading-heading-5-600;
+    background: none;
+    border: none;
+    color: $color-brand-brand-2;
+  }
+}
