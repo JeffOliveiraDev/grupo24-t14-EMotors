@@ -8,6 +8,7 @@ import { GetServerSideProps, NextPage } from "next";
 
 import api from "@/services/api";
 import { useEffect, useState } from "react";
+import ModalEditUser from "@/components/modalEditUser";
 
 interface ICar {
   car: CarData;
@@ -95,8 +96,13 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const years = ["2022", "2021", "2018", "2015", "2013", "2012", "2010"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
+      <button onClick={() => setModalOpen(true)}>editar</button>
+      {modalOpen && (
+        <ModalEditUser modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
       <header>
         <div className={styles.divLeft}>
           <Image src={headerTitle} alt="" />

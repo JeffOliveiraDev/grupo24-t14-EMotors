@@ -33,6 +33,8 @@
 .tittleAndClose {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
   button {
     background: none;
     width: 12px;
