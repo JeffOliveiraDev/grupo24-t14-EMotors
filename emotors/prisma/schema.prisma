@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id 
+  name         String     
+  email        String     @unique @db.VarChar(50)
+  cpf          String     @unique @db.VarChar(11)
+  telephone    String     @unique @db.VarChar(11)
+  birthdate    String     @db.VarChar(10)
+  description  String?    @db.VarChar(250)
+  password     String     @db.VarChar(200)
+  acoountType  Boolean    @default(false)    
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Announcement Announcement[]
+
+  @@map("users")
+}
+
+model Announcement {
+  id           String     @id 
+  model        String
+  fuel         String
+  mileage      String
+  color        String
+  pfipe        Boolean
+  sellPrice    Float
+  description  String
+  coverImage   String
+  detailsImage String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String 
+
+  @@map("announcements")
+}
+
+
+
+
