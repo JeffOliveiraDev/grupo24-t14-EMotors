@@ -5,6 +5,7 @@ import { PrismaService } from 'src/database/prisma.service';
 import { plainToInstance } from 'class-transformer';
 import { UpdateUserDto } from 'src/modules/users/dto/update-user.dto';
 import { ConflictException, Injectable } from '@nestjs/common';
+import { hashSync } from 'bcryptjs';
 
 @Injectable()
 export class UsersPrismaRepository implements UsersRepository {
@@ -47,6 +48,12 @@ export class UsersPrismaRepository implements UsersRepository {
     return user;
   }
 
+  async findByToken(token: string): Promise<User> {
+    const user = await this.prisma.user.findFirst({
+      where: { reset_token: token },
+    });
+    return user;
+  }
   async findOne(id: string): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: { id },
@@ -97,5 +104,20 @@ export class UsersPrismaRepository implements UsersRepository {
     }
 
     return user;
+  }
+  async updateToken(email: string, resetToken: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { email },
+      data: { reset_token: resetToken },
+    });
+  }
+  async updatePassword(id: string, password: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id },
+      data: {
+        password: hashSync(password, 10),
+        reset_token: null,
+      },
+    });
   }
 }

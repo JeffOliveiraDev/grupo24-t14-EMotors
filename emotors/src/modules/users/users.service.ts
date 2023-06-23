@@ -6,10 +6,15 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './repository/user.repository';
+import { randomUUID } from 'node:crypto';
+import { MailService } from 'src/ultis/mail.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private usersRepository: UsersRepository) {}
+  constructor(
+    private usersRepository: UsersRepository,
+    private mailService: MailService,
+  ) {}
   async create(createUserDto: CreateUserDto) {
     const email = await this.usersRepository.findByEmail(createUserDto.email);
     console.log(email);
@@ -66,5 +71,33 @@ export class UsersService {
 
   async finndByEmail(email: string) {
     return await this.usersRepository.findByEmail(email);
+  }
+
+  async sendEmailResetPassword(email: string) {
+    const user = await this.usersRepository.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException('User not found !');
+    }
+
+    const resetToken = randomUUID();
+
+    await this.usersRepository.updateToken(email, resetToken);
+
+    const resetPasswordTemplate = this.mailService.resetPasswordTemplate(
+      email,
+      user.name,
+      resetToken,
+    );
+
+    await this.mailService.sendEmail(resetPasswordTemplate);
+  }
+
+  async resetPassword(password: string, reset_token: string) {
+    const user = await this.usersRepository.findByToken(reset_token);
+    if (!user) {
+      throw new NotFoundException('User not found !');
+    }
+
+    await this.usersRepository.updatePassword(user.id, password);
   }
 }
