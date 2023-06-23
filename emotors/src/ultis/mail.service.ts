@@ -42,17 +42,17 @@ export class MailService {
       body: {
         name: userName,
         intro:
-          'Você recebeu esse e-mail devido a sua solicitação de recuparação de senha',
+          'You have received this email because a password reset request for your account was received.',
         action: {
-          instructions: 'Clique no botão abaixo para recuperar sua senha:',
+          instructions: 'Click the button below to reset your password:',
           button: {
             color: '#DC4D2F',
-            text: 'Recuperar Senha',
+            text: 'Reset your password',
             link: `http://localhost:3001/users/resetPassword/${resetToken}`,
           },
         },
         outro:
-          'Se você não solicitou uma redefinição de senha, nenhuma outra ação será necessária de sua parte.',
+          'If you did not request a password reset, no further action is required on your part.',
       },
     };
 
