@@ -4,11 +4,10 @@ import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 
-import api from "@/services/api";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
 
