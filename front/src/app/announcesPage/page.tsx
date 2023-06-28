@@ -8,17 +8,32 @@ import headerTitle from "../../assets/headerTitle.svg";
 import Tag from "@/components/Tags/tags";
 import ModalRegisterCar from "@/components/modalRegisterNewCar";
 import { AiOutlineMenu } from "react-icons/ai";
+import ModalEditDeleteCar from "@/components/ModalEditDeleteCar";
+import ModalDelete from "@/components/ModalDelete";
 
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [editDeleteModal, setModalEditDelete] = useState(false);
   const [announces, setAnnounces] = useState<any>();
+  const [announceId, setAnnounceId] = useState();
+  const [modalDelete, setModalDelete] = useState(false);
+  console.log(modalDelete, "esse");
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getData();
-        setAnnounces(data);
-        console.log(data[0]);
+        const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3ODY4ODI1LCJleHAiOjE2ODc5NTUyMjUsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.YdAzW_PK9PH5Xm6Guejn7CGLYpgXxhOimGvkcIYXByA";
+        const data = await getData(token);
+
+        if (data.length > 0) {
+          const userId = data[0].user.id;
+          const filteredData = data.filter(
+            (item: any) => item.user.id === userId
+          );
+          setAnnounces(filteredData);
+          console.log(filteredData);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -27,10 +42,7 @@ const AdminProfilePage = () => {
     fetchData();
   }, []);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3ODA2NTgwLCJleHAiOjE2ODc4OTI5ODAsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.D3bIrW-V1CAWw6tJGgOqwNKOVzoCZgh7s4Ky_VmPLxI";
-
-  async function getData() {
+  async function getData(token: string) {
     const res = await fetch("http://127.0.0.1:3001/announcements", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -56,8 +68,8 @@ const AdminProfilePage = () => {
           <Image src={headerTitle} alt="" />
         </div>
         <div className={styles.divRight}>
-          <span>{announces[0].user.name.slice(0, 2).toUpperCase()}</span>
-          <h3>{announces[0].user.name}</h3>
+          <span>{announces?.[0]?.user?.name?.slice(0, 2).toUpperCase()}</span>
+          <h3>{announces?.[0]?.user?.name}</h3>
           <button className={styles.btnBurguer}>
             <AiOutlineMenu className={styles.burguerMenu} />
           </button>
@@ -67,10 +79,10 @@ const AdminProfilePage = () => {
       <section>
         <div className={styles.boxCreateAndList}>
           <div className={styles.boxUser}>
-            <span>{announces[0].user.name.slice(0, 2).toUpperCase()}</span>
+            <span>{announces?.[0]?.user?.name?.slice(0, 2).toUpperCase()}</span>
 
             <div className={styles.nameAndTag}>
-              <h3>{announces[0].user.name}</h3>
+              <h3>{announces?.[0]?.user?.name}</h3>
               <Tag>Anunciante</Tag>
             </div>
             <p>
@@ -120,13 +132,35 @@ const AdminProfilePage = () => {
                       </h3>
                     </ul>
                   </div>
+                  <div className={styles.boxBtnsEditDetails}>
+                    <button
+                      onClick={() => {
+                        setModalEditDelete(!editDeleteModal),
+                          setAnnounceId(announce.id);
+                      }}
+                    >
+                      Editar
+                    </button>
+                    <button>Ver detalhes</button>
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
         </div>
-
+        <ModalEditDeleteCar
+          editDeleteModal={editDeleteModal}
+          setModalEditDelete={setModalEditDelete}
+          announceId={announceId}
+          modalDelete={modalDelete}
+          setModalDelete={setModalDelete}
+        />
         <ModalRegisterCar modalOpen={modalOpen} setModal={setModalOpen} />
+        <ModalDelete
+          modalDelete={modalDelete}
+          setModalDelete={setModalDelete}
+          announceId={announceId}
+        />
       </section>
       <footer className={styles.footer}>
         <div className={styles.footerLeft}>
