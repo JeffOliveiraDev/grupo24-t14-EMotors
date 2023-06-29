@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
-import carImage from "../../assets/imageCar.svg";
 import headerTitle from "../../assets/headerTitle.svg";
 import Tag from "@/components/Tags/tags";
 import ModalRegisterCar from "@/components/modalRegisterNewCar";
 import { AiOutlineMenu } from "react-icons/ai";
 import ModalEditDeleteCar from "@/components/ModalEditDeleteCar";
 import ModalDelete from "@/components/ModalDelete";
+import ModalImgDetail from "@/components/ModalImgDetail";
 
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,14 +17,16 @@ const AdminProfilePage = () => {
   const [announces, setAnnounces] = useState<any>();
   const [announceId, setAnnounceId] = useState();
   const [modalDelete, setModalDelete] = useState(false);
+  const [selectedAnnounce, setSelectedAnnounce] = useState(null);
+  const [detailedImage, setDetailedImage] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
         const data = await getData(token);
-
+        console.log(data[0].user);
         if (data.length > 0) {
           const userId = data[0].user.id;
           const filteredData = data.filter(
@@ -47,12 +49,8 @@ const AdminProfilePage = () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // The return value is *not* serialized
-    // You can return Date, Map, Set, etc.
 
-    // Recommendation: handle errors
     if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
       throw new Error("Failed to fetch data");
     }
 
@@ -61,7 +59,7 @@ const AdminProfilePage = () => {
 
   const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
-    <main className={styles.boxPage}>
+    <main className={`${styles.boxPage} ${styles.scroolBar}`}>
       <header>
         <div className={styles.divLeft}>
           <Image src={headerTitle} alt="" />
@@ -108,7 +106,12 @@ const AdminProfilePage = () => {
                     width={312}
                     height={152}
                     alt=""
+                    onClick={() => {
+                      setDetailedImage(!detailedImage),
+                        setSelectedAnnounce(announce);
+                    }}
                   />
+
                   <h3>{announce.model}</h3>
 
                   <p>{announce.description}</p>
@@ -136,6 +139,7 @@ const AdminProfilePage = () => {
                       onClick={() => {
                         setModalEditDelete(!editDeleteModal),
                           setAnnounceId(announce.id);
+                        setSelectedAnnounce(announce);
                       }}
                     >
                       Editar
@@ -153,12 +157,18 @@ const AdminProfilePage = () => {
           announceId={announceId}
           modalDelete={modalDelete}
           setModalDelete={setModalDelete}
+          selectedAnnounce={selectedAnnounce}
         />
         <ModalRegisterCar modalOpen={modalOpen} setModal={setModalOpen} />
         <ModalDelete
           modalDelete={modalDelete}
           setModalDelete={setModalDelete}
           announceId={announceId}
+        />
+        <ModalImgDetail
+          detailedImage={detailedImage}
+          setDetailedImage={setDetailedImage}
+          selectedAnnounce={selectedAnnounce}
         />
       </section>
       <footer className={styles.footer}>

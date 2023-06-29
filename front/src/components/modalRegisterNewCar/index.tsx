@@ -30,20 +30,6 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
 
-  const newCar = {
-    model: "Voyager",
-    fuel: "combustãoci23a",
-    mileage: "2000000",
-    color: "céu",
-    pfipe: true,
-    sellPrice: 9000000,
-    description: "Atravessa o sistema solar",
-    coverImage:
-      "https://img.olhardigital.com.br/wp-content/uploads/2019/10/20191022062955.jpg",
-    detailsImage: "Ao infinito e além",
-    testeerrror: "funfa?",
-  };
-
   async function handleCreateAnnounce(formData: {
     model: string;
     fuel: string;

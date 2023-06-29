@@ -144,6 +144,9 @@
     @include text-style-inputs-buttons-button-big-text;
     color: $color-grey-scale-grey-2;
   }
+  .btnCancel:hover {
+    scale: 1.1;
+  }
   .btnCreate {
     display: flex;
     flex-direction: row;
@@ -160,6 +163,10 @@
     border-radius: 4px;
     @include text-style-inputs-buttons-button-big-text;
     color: $color-brand-brand-4;
+  }
+  .btnCreate:hover {
+    scale: 1.1;
+    color: #ffffff;
   }
 }
 .btnsPublishedAnnounce {

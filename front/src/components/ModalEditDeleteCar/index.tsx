@@ -6,20 +6,17 @@ import {
   registerNewAnnounceSchema,
 } from "@/schemas/cars.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import InputMask from "react-input-mask";
 
 const ModalEditDeleteCar = ({
   editDeleteModal,
   setModalEditDelete,
   announceId,
   setModalDelete,
+  selectedAnnounce,
 }: any) => {
-  const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
-    resolver: zodResolver(registerNewAnnounceSchema),
-  });
-  console.log(announceId);
-  const onFormSubmit = (formData: RegisterNewAnnounceData) => {
-    console.log(formData);
-  };
+  const { register, handleSubmit } = useForm();
 
   const [selectedButton, setSelectedButton] = useState(true);
   const [galleryFields, setGalleryFields] = useState([""]);
@@ -27,6 +24,55 @@ const ModalEditDeleteCar = ({
   const handleAddGalleryField = () => {
     setGalleryFields([...galleryFields, ""]);
   };
+
+  const onFormSubmit = (formData: any) => {
+    console.log(formData);
+    formData.pfipe = !!formData.pfipe;
+    formData.sellPrice = parseFloat(formData.sellPrice);
+
+    handleCreateAnnounce(formData);
+  };
+
+  async function handleCreateAnnounce(formData: {
+    model: string;
+    fuel: string;
+    mileage: string;
+    color: string;
+    pfipe: boolean;
+    sellPrice: number;
+    description: string;
+    coverImage: string;
+    detailsImage: string;
+    testeerrror: string;
+  }) {
+    const url = `http://127.0.0.1:3001/announcements/${announceId}`;
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error("Failed to edit announcement");
+      }
+
+      const data = await response.json();
+      console.log("Anúncio editado com sucesso!", data);
+      window.location.reload();
+      toast.success("Sucesso!");
+    } catch (error) {
+      console.error("Erro ao editar o anúncio:", error);
+    }
+  }
 
   if (editDeleteModal) {
     return (
@@ -45,31 +91,33 @@ const ModalEditDeleteCar = ({
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <div className={styles.boxMarca}>
-              <label htmlFor="marca">Marca</label>
+              {/* <label htmlFor="marca">Marca</label>
               <input
                 placeholder="Mercedes Benz"
                 type="text"
                 // {...register("marca")}
-              />
+              /> */}
               <label htmlFor="modelo">Modelo</label>
               <input
+                defaultValue={selectedAnnounce.model}
                 placeholder="A 200 CGI"
                 type="text"
                 {...register("model")}
               />
             </div>
             <div className={styles.boxDoubleCollum}>
-              <div className={styles.boxFlex}>
+              {/* <div className={styles.boxFlex}>
                 <label htmlFor="ano">Ano</label>
                 <input
                   placeholder="2018"
                   type="text"
                   // {...register("ano")}
                 />
-              </div>
+              </div> */}
               <div className={styles.boxFlex}>
                 <label htmlFor="Combustível">Combustível</label>
                 <input
+                  defaultValue={selectedAnnounce.fuel}
                   placeholder="Gasolina / Etanol"
                   type="text"
                   {...register("fuel")}
@@ -78,6 +126,7 @@ const ModalEditDeleteCar = ({
               <div className={styles.boxFlex}>
                 <label htmlFor="quilometragem">Quilometragem</label>
                 <input
+                  defaultValue={selectedAnnounce.mileage}
                   placeholder="30.000"
                   type="text"
                   {...register("mileage")}
@@ -85,28 +134,45 @@ const ModalEditDeleteCar = ({
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="cor">Cor</label>
-                <input placeholder="Preto" type="text" {...register("color")} />
+                <input
+                  placeholder="Preto"
+                  defaultValue={selectedAnnounce.color}
+                  type="text"
+                  {...register("color")}
+                />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="precoFipe">Preço tabela FIPE</label>
-                <input
-                  placeholder="40.000 / Etanol"
-                  type="text"
-                  {...register("pfipe")}
+                <InputMask
+                  mask={"false"}
+                  maskChar=""
+                  // defaultValue={selectedAnnounce.mileage}
+                  // placeholder="30.000"
+                  {...register("mileage")}
                 />
+                {/* <input
+                  placeholder="true/false"
+                  type="text"
+                  defaultValue={selectedAnnounce.pfipe}
+                  {...register("pfipe")}
+                /> */}
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="preco">Preço</label>
                 <input
                   placeholder="50.000 / Etanol"
                   type="text"
-                  {...register("preco")}
+                  defaultValue={selectedAnnounce.sellPrice}
+                  {...register("sellPrice")}
                 />
               </div>
             </div>
             <h3>Descrição</h3>
-            <textarea {...register("descrição")}></textarea>
-            <div>
+            <textarea
+              {...register("description")}
+              defaultValue={selectedAnnounce.description}
+            ></textarea>
+            {/* <div>
               <h3>Publicado</h3>
               <div className={styles.btnsPublishedAnnounce}>
                 <button
@@ -125,25 +191,26 @@ const ModalEditDeleteCar = ({
                 >
                   Não
                 </button>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
 
             <label htmlFor="imagem de capa">Imagem de capa</label>
             <input
               placeholder="http://image.com"
               type="text"
-              {...register("urlImagemCapa")}
+              {...register("coverImage")}
+              defaultValue={selectedAnnounce.coverImage}
             />
-            <label htmlFor="primeira imagem da galeria">
+            {/* <label htmlFor="primeira imagem da galeria">
               1ª Imagem da galeria
             </label>
             <input
               placeholder="http://image.com"
               type="text"
               {...register("primeiraImagemGaleria")}
-            />
+            /> */}
 
-            {galleryFields.map((field, index) => (
+            {/* {galleryFields.map((field, index) => (
               <div className={styles.newImageFields} key={index}>
                 <label htmlFor={`imagem-galeria-${index + 1}`}>
                   {`${index + 2}ª Imagem da galeria`}
@@ -155,14 +222,14 @@ const ModalEditDeleteCar = ({
                   {...register(`imagensGaleria.${index}`)}
                 />
               </div>
-            ))}
+            ))} */}
 
-            <button
+            {/* <button
               className={styles.btnAddCampo}
               onClick={handleAddGalleryField}
             >
               Adicionar campo para imagem da galeria
-            </button>
+            </button> */}
             <div className={styles.boxBtnCancelCreate}>
               <button
                 className={styles.btnCancel}
