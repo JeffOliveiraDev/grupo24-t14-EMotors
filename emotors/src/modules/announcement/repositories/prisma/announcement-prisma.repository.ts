@@ -16,7 +16,7 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
   ): Promise<Announcement> {
     const announcement = new Announcement();
 
-    Object.assign(announcement, { ...data });
+    Object.assign(announcement, data);
 
     const newAnnouncement = await this.prisma.announcement.create({
       data: {
@@ -30,7 +30,7 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
         model: announcement.model,
         pfipe: announcement.pfipe,
         sellPrice: announcement.sellPrice,
-        createdAt: announcement.createdAt || new Date(),
+        createdAt: announcement.createdAt,
         updatedAt: announcement.updatedAt || undefined,
         userId,
       },
@@ -39,19 +39,27 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
 
     return plainToInstance(Announcement, newAnnouncement);
   }
+
   async findAll(): Promise<Announcement[]> {
     const announcements = await this.prisma.announcement.findMany({
-      include: { user: true },
+      include: {
+        user: true,
+        comments: true,
+      },
     });
+
     return plainToInstance(Announcement, announcements);
   }
+
   async findOne(id: string): Promise<Announcement> {
     const announcement = await this.prisma.announcement.findUnique({
       where: { id },
       include: { user: true },
     });
+
     return plainToInstance(Announcement, announcement);
   }
+
   async update(
     id: string,
     data: UpdateAnnouncementDto,
@@ -77,6 +85,7 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
 
     return plainToInstance(Announcement, announcement);
   }
+
   async delete(id: string, userId: string): Promise<void> {
     const user = await this.prisma.announcement.findFirst({
       where: {

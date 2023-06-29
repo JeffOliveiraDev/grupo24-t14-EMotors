@@ -14,6 +14,52 @@ export class UsersPrismaRepository implements UsersRepository {
   async create(data: CreateUserDto): Promise<User> {
     const user = new User();
 
+    const array = [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      ,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      ,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+    ];
+
     Object.assign(user, data);
 
     const dataAddress = new Address();
@@ -31,7 +77,7 @@ export class UsersPrismaRepository implements UsersRepository {
         email: user.email,
         cpf: user.cpf,
         telephone: user.telephone,
-        birthdate: user.birthdate,
+        birthDate: user.birthDate,
         description: user.description,
         password: user.password,
         acoountType: user.acoountType || false,
@@ -54,7 +100,6 @@ export class UsersPrismaRepository implements UsersRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    console.log(email);
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
@@ -75,8 +120,6 @@ export class UsersPrismaRepository implements UsersRepository {
     const newData = new User();
     Object.assign(newData, data);
 
-    console.log(newData);
-
     let user = await this.prisma.user.update({
       where: { id },
       data: {
@@ -84,7 +127,7 @@ export class UsersPrismaRepository implements UsersRepository {
         email: newData.email,
         cpf: newData.cpf,
         telephone: newData.telephone,
-        birthdate: newData.birthdate,
+        birthDate: newData.birthDate,
         description: newData.description,
         password: newData.password,
         acoountType: newData.acoountType || false,
@@ -93,7 +136,6 @@ export class UsersPrismaRepository implements UsersRepository {
     });
 
     if (data.address) {
-      console.log('oi');
       const classAddress = new Address();
 
       Object.assign(classAddress, data.address);

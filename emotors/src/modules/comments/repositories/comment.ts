@@ -10,12 +10,9 @@ export abstract class CommentRepository {
     userId: string,
     announcementId: string,
   ): Promise<Comment>;
-  abstract findAll(): Promise<Comment[]>;
+  abstract findAll(query: any): Promise<Comment[]>;
   abstract findOne(id: string): Promise<Comment>;
-  abstract update(
-    data: UpdateCommentDto,
-    id: string,
-    userId: string,
-  ): Promise<Comment>;
+  abstract update(data: UpdateCommentDto, id: string): Promise<Comment>;
   abstract delete(id: string): Promise<void>;
+  abstract checkUserComment(userId: string, commentId: string): Promise<void>;
 }

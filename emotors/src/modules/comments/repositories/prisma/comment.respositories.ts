@@ -9,6 +9,7 @@ import { CreateCommentDto } from '../../dto/create-comment.dto';
 import { Comment } from '../../entities/comment.entity';
 import { UpdateCommentDto } from '../../dto/update-comment.dto';
 import { randomUUID } from 'crypto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class CommentPrismaService implements CommentRepository {
@@ -19,33 +20,46 @@ export class CommentPrismaService implements CommentRepository {
     announcementId: string,
   ): Promise<Comment> {
     const comment = new Comment();
+
     Object.assign(comment, data);
 
     const commentCreate = await this.prisma.comments.create({
-      data: { ...comment, userId: userId },
-      include: { user: true, CommentsOnAnnouncement: true },
-    });
-
-    await this.prisma.commentsOnAnnouncement.create({
       data: {
-        id: randomUUID(),
-        commentsId: commentCreate.id,
+        id: comment.id,
+        userId: userId,
+        text: comment.text,
         announcementId: announcementId,
       },
+      include: { user: true },
     });
 
-    return commentCreate;
+    return plainToInstance(Comment, commentCreate);
   }
 
   async delete(id: string): Promise<void> {
-    await this.prisma.comments.delete({
-      where: { id },
+    const comment = await this.prisma.comments.delete({
+      where: { id: id },
     });
   }
 
-  async findAll(): Promise<Comment[]> {
-    const comments = await this.prisma.comments.findMany();
-    return comments;
+  async findAll(query: any): Promise<Comment[]> {
+    if (query.announcementId) {
+      const comments = await this.prisma.comments.findMany({
+        where: {
+          announcementId: query.announcementId,
+        },
+      });
+
+      return plainToInstance(Comment, comments);
+    }
+
+    const comments = await this.prisma.comments.findMany({
+      include: {
+        user: true,
+      },
+    });
+
+    return plainToInstance(Comment, comments);
   }
 
   async findOne(id: string): Promise<Comment> {
@@ -57,28 +71,32 @@ export class CommentPrismaService implements CommentRepository {
       throw new NotFoundException('comment not found!');
     }
 
-    return comment;
+    return plainToInstance(Comment, comment);
   }
 
-  async update(
-    data: UpdateCommentDto,
-    id: string,
-    userId: string,
-  ): Promise<Comment> {
-    const CheckUserComment = await this.prisma.comments.findFirst({
-      where: { id, userId },
-    });
-
-    if (!CheckUserComment) {
-      throw new UnauthorizedException('not authorized');
-    }
+  async update(data: UpdateCommentDto, id: string): Promise<Comment> {
+    const commentData = new Comment();
+    Object.assign(commentData, data);
 
     const comment = await this.prisma.comments.update({
       where: { id },
-      data,
-      include: { user: true, CommentsOnAnnouncement: true },
+      data: {
+        text: commentData.text,
+      },
+
+      include: { user: true },
     });
 
-    return comment;
+    return plainToInstance(Comment, comment);
+  }
+
+  async checkUserComment(userId: string, commentId: string) {
+    const checkUserComment = await this.prisma.comments.findFirst({
+      where: { id: commentId, userId: userId },
+    });
+
+    if (!checkUserComment) {
+      throw new UnauthorizedException();
+    }
   }
 }

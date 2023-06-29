@@ -35,7 +35,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  birthdate: string;
+  birthDate: string;
 
   @IsString()
   @IsOptional()

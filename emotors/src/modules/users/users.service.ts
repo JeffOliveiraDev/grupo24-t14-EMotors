@@ -12,13 +12,8 @@ export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
   async create(createUserDto: CreateUserDto) {
     const email = await this.usersRepository.findByEmail(createUserDto.email);
-    console.log(email);
     const cpf = await this.usersRepository.findByCpf(createUserDto.cpf);
-    console.log(cpf);
     const tel = await this.usersRepository.findByTel(createUserDto.telephone);
-    console.log(tel);
-
-    console.log(cpf, tel, email);
 
     if (email) {
       throw new ConflictException('Email aleady exists!');
