@@ -5,11 +5,12 @@ import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import { NextPage } from "next";
-
 import { useEffect, useState } from "react";
-
+import ModalEditUser from "@/components/modalEditUser";
+import Link from "next/link";
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
+
 
 interface ICar {
   car: CarData;
@@ -101,9 +102,13 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
+
+      
       <Header />
+
 
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />

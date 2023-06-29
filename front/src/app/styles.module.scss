@@ -38,7 +38,8 @@
         color: $color-grey-scale-grey-2;
       }
 
-      button {
+      a {
+        @include text-style-inputs-buttons-button-big-text;
         @include button-register;
       }
     }
