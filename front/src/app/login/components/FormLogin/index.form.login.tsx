@@ -6,6 +6,7 @@ import SchemaLogin from "../../schema/index.schema";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import Input from "../../../../components/Input/loginModule";
+import InputMask from "react-input-mask";
 
 const FormLogin = () => {
   const {

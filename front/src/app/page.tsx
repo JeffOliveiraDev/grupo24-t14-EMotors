@@ -3,18 +3,10 @@ import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
-<<<<<<< HEAD
-import CardAdd from "@/components/CardAdd/index.card-add";
-import Link from "next/link";
-=======
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
-import { GetServerSideProps, NextPage } from "next";
-
-import api from "@/services/api";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
-
 import ModalEditUser from "@/components/modalEditUser";
-
 import Link from "next/link";
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
@@ -96,7 +88,6 @@ const Home: NextPage<CarData> = ({ carsList }) => {
 
     return res.json();
   }
->>>>>>> 1d11eb3306a5d7cad05f194d7f96a58254db66cb
 
   const models = [
     "Civic",
@@ -114,26 +105,10 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
-<<<<<<< HEAD
-      <header>
-        <div className={styles.divLeft}>
-          <Image src={headerTitle} alt="" />
-        </div>
-        <div className={styles.divRight}>
-          <h3>Fazer Login</h3>
-          <Link href="/register">Cadastrar</Link>
-        </div>
-      </header>
-=======
 
-      <button onClick={() => setModalOpen(true)}>editar</button>
-      {modalOpen && (
-        <ModalEditUser modalOpen={modalOpen} setModalOpen={setModalOpen} />
-      )}
       
       <Header />
 
->>>>>>> 1d11eb3306a5d7cad05f194d7f96a58254db66cb
 
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />

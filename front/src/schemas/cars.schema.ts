@@ -18,20 +18,35 @@ const carSchema = z.record(
   )
 );
 
+// export const registerNewAnnounceSchema = z.object({
+//   marca: z.string(),
+//   modelo: z.string(),
+//   ano: z.string(),
+//   combustivel: z.string(),
+//   quilometragem: z.string(),
+//   cor: z.string(),
+//   precoFipe: z.string(),
+//   preco: z.string(),
+//   descrição: z.string(),
+//   urlImagemCapa: z.string(),
+//   primeiraImagemGaleria: z.string(),
+//   imagensGaleria: z.array(z.string()),
+
+// });
+
 export const registerNewAnnounceSchema = z.object({
-  marca: z.string(),
-  modelo: z.string(),
-  ano: z.string(),
-  combustivel: z.string(),
-  quilometragem: z.string(),
-  cor: z.string(),
-  precoFipe: z.string(),
-  preco: z.string(),
-  descrição: z.string(),
-  urlImagemCapa: z.string(),
-  primeiraImagemGaleria: z.string(),
-  imagensGaleria: z.array(z.string()),
+  model: z.string(),
+  fuel: z.string(),
+  mileage: z.string(),
+  color: z.string(),
+  pfipe: z.boolean(),
+  sellPrice: z.number(),
+  description: z.string(),
+  coverImage: z.string(),
+  detailsImage: z.string(),
 });
+
+export const editAnnounceSchema = z.object({});
 
 export type RegisterNewAnnounceData = z.infer<typeof registerNewAnnounceSchema>;
 export type CarData = z.infer<typeof carSchema>;
