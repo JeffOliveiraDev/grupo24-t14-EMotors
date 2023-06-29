@@ -14,52 +14,6 @@ export class UsersPrismaRepository implements UsersRepository {
   async create(data: CreateUserDto): Promise<User> {
     const user = new User();
 
-    const array = [
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      ,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      ,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-      1,
-    ];
-
     Object.assign(user, data);
 
     const dataAddress = new Address();
