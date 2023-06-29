@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTAwNDc5LCJleHAiOjE2ODc5ODY4NzksInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.-kmyy-4SwBCCxW1-A9n_TiGNrYXradjYW4jXPJyRHvw";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
 
   const handleDeleteAnnounce = () => {
     fetch(`http://127.0.0.1:3001/announcements/${announceId}`, {

@@ -49,26 +49,30 @@ const ModalEditDeleteCar = ({
               <input
                 placeholder="Mercedes Benz"
                 type="text"
-                {...register("marca")}
+                // {...register("marca")}
               />
               <label htmlFor="modelo">Modelo</label>
               <input
                 placeholder="A 200 CGI"
                 type="text"
-                {...register("modelo")}
+                {...register("model")}
               />
             </div>
             <div className={styles.boxDoubleCollum}>
               <div className={styles.boxFlex}>
                 <label htmlFor="ano">Ano</label>
-                <input placeholder="2018" type="text" {...register("ano")} />
+                <input
+                  placeholder="2018"
+                  type="text"
+                  // {...register("ano")}
+                />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="Combustível">Combustível</label>
                 <input
                   placeholder="Gasolina / Etanol"
                   type="text"
-                  {...register("combustivel")}
+                  {...register("fuel")}
                 />
               </div>
               <div className={styles.boxFlex}>
@@ -76,19 +80,19 @@ const ModalEditDeleteCar = ({
                 <input
                   placeholder="30.000"
                   type="text"
-                  {...register("quilometragem")}
+                  {...register("mileage")}
                 />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="cor">Cor</label>
-                <input placeholder="Preto" type="text" {...register("cor")} />
+                <input placeholder="Preto" type="text" {...register("color")} />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="precoFipe">Preço tabela FIPE</label>
                 <input
                   placeholder="40.000 / Etanol"
                   type="text"
-                  {...register("precoFipe")}
+                  {...register("pfipe")}
                 />
               </div>
               <div className={styles.boxFlex}>

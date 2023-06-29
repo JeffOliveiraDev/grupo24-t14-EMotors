@@ -8,12 +8,17 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
-  const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
-    resolver: zodResolver(registerNewAnnounceSchema),
-  });
+  const { register, handleSubmit } = useForm();
+  // const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
+  //   resolver: zodResolver(registerNewAnnounceSchema),
+  // });
 
-  const onFormSubmit = (formData: RegisterNewAnnounceData) => {
+  const onFormSubmit = (formData: any) => {
     console.log(formData);
+    formData.pfipe = !!formData.pfipe;
+    formData.sellPrice = parseFloat(formData.sellPrice);
+
+    handleCreateAnnounce(formData);
   };
 
   const [galleryFields, setGalleryFields] = useState([""]);
@@ -21,6 +26,62 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
   const handleAddGalleryField = () => {
     setGalleryFields([...galleryFields, ""]);
   };
+
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
+
+  const newCar = {
+    model: "Voyager",
+    fuel: "combustãoci23a",
+    mileage: "2000000",
+    color: "céu",
+    pfipe: true,
+    sellPrice: 9000000,
+    description: "Atravessa o sistema solar",
+    coverImage:
+      "https://img.olhardigital.com.br/wp-content/uploads/2019/10/20191022062955.jpg",
+    detailsImage: "Ao infinito e além",
+    testeerrror: "funfa?",
+  };
+
+  async function handleCreateAnnounce(formData: {
+    model: string;
+    fuel: string;
+    mileage: string;
+    color: string;
+    pfipe: boolean;
+    sellPrice: number;
+    description: string;
+    coverImage: string;
+    detailsImage: string;
+    testeerrror: string;
+  }) {
+    const url = "http://127.0.0.1:3001/announcements";
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error("Failed to create announcement");
+      }
+
+      const data = await response.json();
+      console.log("Anúncio criado com sucesso!", data);
+    } catch (error) {
+      console.error("Erro ao criar o anúncio:", error);
+    }
+  }
 
   if (modalOpen) {
     return (
@@ -37,17 +98,17 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <div className={styles.boxMarca}>
-              <label htmlFor="marca">Marca</label>
+              {/* <label htmlFor="marca">Marca</label>
               <input
                 placeholder="Mercedes Benz"
                 type="text"
                 {...register("marca")}
-              />
+              /> */}
               <label htmlFor="modelo">Modelo</label>
               <input
                 placeholder="A 200 CGI"
                 type="text"
-                {...register("modelo")}
+                {...register("model")}
               />
             </div>
             <div className={styles.boxDoubleCollum}>
@@ -60,7 +121,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
                 <input
                   placeholder="Gasolina / Etanol"
                   type="text"
-                  {...register("combustivel")}
+                  {...register("fuel")}
                 />
               </div>
               <div className={styles.boxFlex}>
@@ -68,48 +129,49 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
                 <input
                   placeholder="30.000"
                   type="text"
-                  {...register("quilometragem")}
+                  {...register("mileage")}
                 />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="cor">Cor</label>
-                <input placeholder="Preto" type="text" {...register("cor")} />
+                <input placeholder="Preto" type="text" {...register("color")} />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="precoFipe">Preço tabela FIPE</label>
                 <input
                   placeholder="40.000 / Etanol"
-                  type="text"
-                  {...register("precoFipe")}
+                  type="boolean"
+                  {...register("pfipe")}
                 />
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="preco">Preço</label>
                 <input
                   placeholder="50.000 / Etanol"
-                  type="text"
-                  {...register("preco")}
+                  type="number"
+                  {...register("sellPrice")}
                 />
               </div>
             </div>
             <h3>Descrição</h3>
-            <textarea {...register("descrição")}></textarea>
+            <textarea {...register("description")}></textarea>
             <label htmlFor="imagem de capa">Imagem de capa</label>
             <input
               placeholder="http://image.com"
               type="text"
-              {...register("urlImagemCapa")}
+              {...register("coverImage")}
             />
-            <label htmlFor="primeira imagem da galeria">
+            <textarea {...register("detailsImage")}></textarea>
+            {/* <label htmlFor="primeira imagem da galeria">
               1ª Imagem da galeria
             </label>
             <input
               placeholder="http://image.com"
               type="text"
               {...register("primeiraImagemGaleria")}
-            />
+            /> */}
 
-            {galleryFields.map((field, index) => (
+            {/* {galleryFields.map((field, index) => (
               <div className={styles.newImageFields} key={index}>
                 <label htmlFor={`imagem-galeria-${index + 1}`}>
                   {`${index + 2}ª Imagem da galeria`}
@@ -121,14 +183,14 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
                   {...register(`imagensGaleria.${index}`)}
                 />
               </div>
-            ))}
+            ))} */}
 
-            <button
+            {/* <button
               className={styles.btnAddCampo}
               onClick={handleAddGalleryField}
             >
               Adicionar campo para imagem da galeria
-            </button>
+            </button> */}
             <div className={styles.boxBtnCancelCreate}>
               <button
                 className={styles.btnCancel}

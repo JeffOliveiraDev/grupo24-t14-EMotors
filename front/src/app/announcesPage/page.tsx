@@ -17,13 +17,12 @@ const AdminProfilePage = () => {
   const [announces, setAnnounces] = useState<any>();
   const [announceId, setAnnounceId] = useState();
   const [modalDelete, setModalDelete] = useState(false);
-  console.log(modalDelete, "esse");
 
   useEffect(() => {
     async function fetchData() {
       try {
         const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3ODY4ODI1LCJleHAiOjE2ODc5NTUyMjUsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.YdAzW_PK9PH5Xm6Guejn7CGLYpgXxhOimGvkcIYXByA";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
         const data = await getData(token);
 
         if (data.length > 0) {
