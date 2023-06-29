@@ -8,6 +8,7 @@ export class Address {
   homeNumber: string;
   reference: string;
   userId: string;
+  state: string;
 
   constructor() {
     this.id = randomUUID();

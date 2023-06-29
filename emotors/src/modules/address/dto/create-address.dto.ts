@@ -24,4 +24,9 @@ export class CreateAddressDto {
   @IsString()
   @IsOptional()
   reference: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @Length(3, 50)
+  state: string;
 }

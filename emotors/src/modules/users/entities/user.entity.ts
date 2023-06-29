@@ -12,6 +12,8 @@ export class User {
   acoountType?: boolean;
   @Exclude()
   password: string;
+  @Exclude()
+  addressId: string;
 
   constructor() {
     this.id = randomUUID();

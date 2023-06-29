@@ -7,6 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Address{
+  id            String  @id
+  cep           String  @db.VarChar(8)
+  city          String  @db.VarChar(200)
+  street        String  @db.VarChar(200)
+  homeNumber    String  @db.VarChar(10)
+  state         String  @db.VarChar(50)
+  reference     String? @db.VarChar(200)
+  User          User?
+}
+
 model User{
   id           String     @id 
   name         String     
@@ -19,9 +30,13 @@ model User{
   acoountType  Boolean    @default(false)    
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  address      Address?   @relation(fields: [addressId], references: [id])
+  addressId    String?    @unique
   Announcement Announcement[]
+
   @@map("users")
 }
+
 
 model Announcement {
   id           String     @id 

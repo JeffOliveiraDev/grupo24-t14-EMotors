@@ -3,6 +3,7 @@ import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAdd from "@/components/CardAdd/index.card-add";
+import Link from "next/link";
 
 export default function Home() {
   const brands = [
@@ -35,7 +36,7 @@ export default function Home() {
         </div>
         <div className={styles.divRight}>
           <h3>Fazer Login</h3>
-          <button>Cadastrar</button>
+          <Link href="/register">Cadastrar</Link>
         </div>
       </header>
 

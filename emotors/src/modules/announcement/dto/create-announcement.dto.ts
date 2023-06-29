@@ -45,8 +45,4 @@ export class CreateAnnouncementDto {
   @IsString()
   @IsNotEmpty()
   detailsImage: string;
-
-  @IsString()
-  @IsNotEmpty()
-  userId: string;
 }
