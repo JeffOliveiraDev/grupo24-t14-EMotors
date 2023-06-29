@@ -7,19 +7,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Address{
+  id            String  @id
+  cep           String  @db.VarChar(8)
+  city          String  @db.VarChar(200)
+  street        String  @db.VarChar(200)
+  homeNumber    String  @db.VarChar(10)
+  state         String  @db.VarChar(50)
+  reference     String? @db.VarChar(200)
+  User          User?
+}
+
 model User {
   id           String     @id 
   name         String     
   email        String     @unique @db.VarChar(50)
   cpf          String     @unique @db.VarChar(11)
   telephone    String     @unique @db.VarChar(11)
-  birthdate    String     @db.VarChar(10)
+  birthDate    String     @db.VarChar(10)
   description  String?    @db.VarChar(250)
   password     String     @db.VarChar(200)
   acoountType  Boolean    @default(false)    
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-  Announcement Announcement[]
+  address      Address?   @relation(fields: [addressId], references: [id])
+  addressId    String?    @unique
+  announcement Announcement[]
+  comments Comments[]
 
   @@map("users")
 }
@@ -38,9 +52,23 @@ model Announcement {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId       String 
+  userId       String
+  comments Comments[]
+}
 
-  @@map("announcements")
+model Comments {
+  id               String @id
+  text             String @db.VarChar(250)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  announcement     Announcement     @relation(fields: [announcementId], references: [id])
+  announcementId   String
+
+  @@map("comments")
 }
 
 

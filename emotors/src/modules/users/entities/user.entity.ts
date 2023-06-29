@@ -7,12 +7,14 @@ export class User {
   email: string;
   cpf: string;
   telephone: string;
-  birthdate: string;
+  birthDate: string;
   description?: string;
   acoountType?: boolean;
 
   @Exclude()
   password: string;
+  @Exclude()
+  addressId: string;
 
   constructor() {
     this.id = randomUUID();
