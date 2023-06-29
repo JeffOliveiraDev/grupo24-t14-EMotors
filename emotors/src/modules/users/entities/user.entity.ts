@@ -10,6 +10,7 @@ export class User {
   birthDate: string;
   description?: string;
   acoountType?: boolean;
+
   @Exclude()
   password: string;
   @Exclude()

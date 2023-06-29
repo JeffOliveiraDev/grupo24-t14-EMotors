@@ -4,7 +4,7 @@ import headerTitle from "../../assets/headerTitle.svg";
 import mercedezA200 from "../../assets/MercedesBenzA200.svg";
 import listFotos from "../../assets/listFhotos.svg";
 import Image from "next/image";
-import Tag from "@/components/Tags/index.tags";
+import Tag from "@/components/Tags/tags";
 
 const ProductPage = () => {
   const tags = [{ text: "0Km" }, { text: "2023" }];

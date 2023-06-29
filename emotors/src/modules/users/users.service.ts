@@ -45,17 +45,18 @@ export class UsersService {
     if (updateUserDto.telephone) {
       await this.usersRepository.findByTel(updateUserDto.telephone);
     }
-
-    return await this.usersRepository.update(id, updateUserDto);
+    const user = await this.usersRepository.update(id, updateUserDto);
+    return user;
   }
 
   async remove(id: string) {
-    const user = await this.findOne(id);
+    const user = await this.usersRepository.findOne(id);
 
     if (!user) {
       throw new NotFoundException('User not found!');
     }
-    return await this.usersRepository.remove(id);
+    await this.usersRepository.delete(id);
+    return;
   }
 
   async finndByEmail(email: string) {

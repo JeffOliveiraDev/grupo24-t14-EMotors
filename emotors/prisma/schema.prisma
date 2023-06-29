@@ -18,7 +18,7 @@ model Address{
   User          User?
 }
 
-model User{
+model User {
   id           String     @id 
   name         String     
   email        String     @unique @db.VarChar(50)

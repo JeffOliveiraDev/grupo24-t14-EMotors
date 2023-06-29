@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import SchemaLogin from "../../schema/index.schema";
 import { toast } from "react-toastify";
 import { z } from "zod";
-import Input from "../../../../components/Input/index.module";
+import Input from "../../../../components/Input/loginModule";
 
 const FormLogin = () => {
   const {
@@ -52,7 +52,7 @@ const FormLogin = () => {
             label="Senha"
             error={error.password}
           />
-          <Link href="/help">Esqueci minha senha</Link>
+          <Link href="/recoverPassword">Esqueci minha senha</Link>
         </div>
         <button type="submit">Entrar</button>
         <span>Ainda não possui conta?</span>

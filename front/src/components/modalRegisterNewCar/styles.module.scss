@@ -1,0 +1,167 @@
+@use "../../scss/abstracts/" as *;
+
+.modalBox {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  overflow-y: auto;
+}
+.modalInterior {
+  max-height: 95vh;
+  overflow-y: scroll;
+  margin-top: 5%;
+  width: 100%;
+  max-width: 462px;
+  height: fit-content;
+  padding: 1.8rem 2.4rem;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  h3 {
+    @include text-style-text-body-2-500;
+    color: #000000;
+  }
+}
+.tittleAndClose {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  button {
+    background: none;
+    width: 12px;
+    height: 12px;
+    border: none;
+    color: $color-grey-scale-grey-4;
+  }
+  h2 {
+    @include text-style-heading-heading-7-500;
+    color: $color-grey-scale-grey-1;
+  }
+}
+.formBox {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 1rem;
+  label {
+    @include text-style-inputs-buttons-input-label;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    color: $color-grey-scale-grey-1;
+  }
+  input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 3% 4%;
+    gap: 0.5rem;
+    height: 2.5rem;
+    border: 1.5px solid $color-grey-scale-grey-7;
+    border-radius: 4px;
+  }
+  textarea {
+    resize: none;
+
+    width: 100%;
+    height: 5vh;
+    border: 1.5px solid $color-grey-scale-grey-7;
+  }
+}
+
+.boxFlex {
+  display: flex;
+  flex-direction: column;
+}
+.boxMarca {
+  display: flex;
+  flex-direction: column;
+}
+.boxPreço {
+  display: flex;
+  flex-direction: column;
+}
+.boxDoubleCollum {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.newImageFields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.btnAddCampo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 10px;
+
+  width: fit-content;
+  height: 38px;
+
+  background: $color-brand-brand-4;
+
+  border: 1.5px solid $color-brand-brand-4;
+  border-radius: 4px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+
+  color: $color-brand-brand-1;
+}
+
+.boxBtnCancelCreate {
+  width: 100%;
+  display: flex;
+  // justify-content: end;
+  gap: 1rem;
+  .btnCancel {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 28px;
+    gap: 10px;
+
+    width: 126px;
+    height: 48px;
+
+    background: $color-grey-scale-grey-6;
+
+    border: 1.5px solid $color-grey-scale-grey-6;
+    border-radius: 4px;
+
+    @include text-style-inputs-buttons-button-big-text;
+    color: $color-grey-scale-grey-2;
+  }
+  .btnCreate {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 28px;
+    gap: 10px;
+
+    width: 193px;
+    height: 48px;
+
+    background: $color-brand-brand-3;
+
+    border: 1.5px solid $color-brand-brand-3;
+    border-radius: 4px;
+    @include text-style-inputs-buttons-button-big-text;
+    color: $color-brand-brand-4;
+  }
+}

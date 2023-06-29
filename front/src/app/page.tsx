@@ -1,19 +1,103 @@
+"use client";
 import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
+<<<<<<< HEAD
 import CardAdd from "@/components/CardAdd/index.card-add";
 import Link from "next/link";
+=======
+import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
+import { GetServerSideProps, NextPage } from "next";
 
-export default function Home() {
-  const brands = [
-    "General Motors",
-    "Fiat",
-    "Ford",
-    "Honda",
-    "Porsche",
-    "Volkswagen",
-  ];
+import api from "@/services/api";
+import { useEffect, useState } from "react";
+
+import ModalEditUser from "@/components/modalEditUser";
+
+import Link from "next/link";
+import Footer from "@/components/Footer/footer";
+import Header from "@/components/Header/header";
+
+
+interface ICar {
+  car: CarData;
+}
+
+interface HomeListCars {
+  carsList: ICar[];
+}
+
+interface CarBrand {
+  name: string;
+}
+
+interface CarData {
+  [brand: string]: CarBrand[];
+}
+
+const Home: NextPage<CarData> = ({ carsList }) => {
+  const [carsBrands, setCarsBrands] = useState<string[]>([]);
+  const [brand, setBrand] = useState("chevrolet");
+  const [year, setYear] = useState([]);
+  const [choosenYear, setchoosenYear] = useState();
+  const [filterClear, setClearFilter] = useState(false);
+
+  if (filterClear) {
+    window.location.reload();
+    setClearFilter(false);
+  }
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const dataBrand = await getBrand();
+        const data = await getData();
+        const years = data.map((car: { year: any }) => {
+          return car.year;
+        });
+
+        const uniqueYears = years.filter(
+          (year: any, index: any, arr: string | any[]) =>
+            arr.indexOf(year) === index
+        );
+
+        const brandNames = Object.keys(dataBrand);
+
+        setYear(uniqueYears);
+        setCarsBrands(brandNames);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  async function getBrand() {
+    const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
+
+  async function getData() {
+    const res = await fetch(
+      "https://kenzie-kars.herokuapp.com/cars?brand=chevrolet"
+    );
+
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    }
+
+    return res.json();
+  }
+>>>>>>> 1d11eb3306a5d7cad05f194d7f96a58254db66cb
+
   const models = [
     "Civic",
     "Corolla",
@@ -25,11 +109,12 @@ export default function Home() {
     "Porsche 718",
   ];
   const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
-  const years = ["2022", "2021", "2018", "2015", "2013", "2012", "2010"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
+  const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
+<<<<<<< HEAD
       <header>
         <div className={styles.divLeft}>
           <Image src={headerTitle} alt="" />
@@ -39,6 +124,16 @@ export default function Home() {
           <Link href="/register">Cadastrar</Link>
         </div>
       </header>
+=======
+
+      <button onClick={() => setModalOpen(true)}>editar</button>
+      {modalOpen && (
+        <ModalEditUser modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
+      
+      <Header />
+
+>>>>>>> 1d11eb3306a5d7cad05f194d7f96a58254db66cb
 
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />
@@ -50,8 +145,10 @@ export default function Home() {
             <div>
               <h4>Marca</h4>
               <ul>
-                {brands.map((brand) => (
-                  <li key={brand}>{brand}</li>
+                {carsBrands.map((brand) => (
+                  <li key={brand} onClick={() => setBrand(brand)}>
+                    {brand}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -74,8 +171,10 @@ export default function Home() {
             <div>
               <h4>Ano</h4>
               <ul>
-                {years.map((year) => (
-                  <li key={year}>{year}</li>
+                {year.map((year) => (
+                  <li key={year} onClick={() => setchoosenYear(year)}>
+                    {year}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -99,29 +198,24 @@ export default function Home() {
             </div>
           </div>
           <div className={styles.btnCleanFilter}>
-            <button>Limpar Filtros</button>
+            <button onClick={() => setClearFilter(!filterClear)}>
+              Limpar Filtros
+            </button>
           </div>
         </section>
         <section className={styles.listOfCars}>
-          <div>
-            <ul>
-              <CardAdd />
-            </ul>
-          </div>
+          <CardAddNewCar
+            brand={brand}
+            setBrand={setBrand}
+            choosenYear={choosenYear}
+            filterCLear={filterClear}
+            setClearFilter={setClearFilter}
+          />
         </section>
       </div>
-      <footer className={styles.footer}>
-        <div className={styles.footerLeft}>
-          <h2>Motors</h2>
-          <h4>shop</h4>
-        </div>
-        <div className={styles.center}>
-          <h4>@2022 - Todos os direitos reservados</h4>
-        </div>
-        <div className={styles.footerRight}>
-          <button className={styles.btnFooter}>^</button>
-        </div>
-      </footer>
+      <Footer top="" />
     </main>
   );
-}
+};
+
+export default Home;
