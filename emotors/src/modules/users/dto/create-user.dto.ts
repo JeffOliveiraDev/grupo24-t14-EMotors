@@ -1,5 +1,5 @@
 import { hashSync } from 'bcryptjs';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -8,7 +8,9 @@ import {
   MaxLength,
   IsBoolean,
   IsOptional,
+  ValidateNested,
 } from 'class-validator';
+import { CreateAddressDto } from 'src/modules/address/dto/create-address.dto';
 
 export class CreateUserDto {
   @IsString()
@@ -33,7 +35,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  birthdate: string;
+  birthDate: string;
 
   @IsString()
   @IsOptional()
@@ -52,4 +54,8 @@ export class CreateUserDto {
     groups: ['transform'],
   })
   password: string;
+
+  @ValidateNested({ each: true })
+  @Type(() => CreateAddressDto)
+  address: CreateAddressDto;
 }

@@ -1,4 +1,17 @@
 -- CreateTable
+CREATE TABLE "Address" (
+    "id" TEXT NOT NULL,
+    "cep" VARCHAR(8) NOT NULL,
+    "city" VARCHAR(200) NOT NULL,
+    "street" VARCHAR(200) NOT NULL,
+    "homeNumber" VARCHAR(10) NOT NULL,
+    "state" VARCHAR(50) NOT NULL,
+    "reference" VARCHAR(200),
+
+    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -11,6 +24,7 @@ CREATE TABLE "users" (
     "acoountType" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "addressId" TEXT,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -43,5 +57,11 @@ CREATE UNIQUE INDEX "users_cpf_key" ON "users"("cpf");
 -- CreateIndex
 CREATE UNIQUE INDEX "users_telephone_key" ON "users"("telephone");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "users_addressId_key" ON "users"("addressId");
+
 -- AddForeignKey
-ALTER TABLE "Announcement" ADD CONSTRAINT "Announcement_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "users" ADD CONSTRAINT "users_addressId_fkey" FOREIGN KEY ("addressId") REFERENCES "Address"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Announcement" ADD CONSTRAINT "Announcement_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

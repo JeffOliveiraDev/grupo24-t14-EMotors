@@ -24,7 +24,7 @@ export class AnnouncementService {
   async findOne(id: string) {
     const announcement = await this.announcementRepository.findOne(id);
     if (!announcement) {
-      throw new NotFoundException('User not found !');
+      throw new NotFoundException('Announcement not found!');
     }
     return announcement;
   }

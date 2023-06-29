@@ -7,9 +7,15 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registeSchemaComplet } from "./schema";
+import { api } from "@/services/api";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { toast } from "react-toastify";
+import { request } from "axios";
 
 const Register = () => {
   const [radio, setRadio] = useState("");
+  const [load, setLoad] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -35,15 +41,27 @@ const Register = () => {
     reference: errors.reference?.message?.toString(),
     confirmPassword: errors.confirmPassword?.message?.toString(),
   };
-  const registerUser = (data: any) => {
-    console.log(error);
-    console.log(errors);
 
+  const registerUser = async (data: any) => {
+    setLoad((e) => !e);
     data.acoountType = radio;
     if (!data.acoountType) {
       data.acoountType = "comprador";
     }
-    console.log(data);
+
+    setLoad(true);
+
+    try {
+      api
+        .post("/users", {
+          data,
+        })
+        .then((data) => console.log(data));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoad((e) => !e);
+    }
   };
 
   return (
@@ -200,7 +218,7 @@ const Register = () => {
               name="password"
               label="Senha"
               id="password"
-              type="text"
+              type="password"
               register={register("password")}
               placeholder="Digitar senha"
             />
@@ -214,10 +232,12 @@ const Register = () => {
               name="confirmPassword"
               label="Confirmar Senha"
               id="confirmPassword"
-              type="text"
+              type="password"
               placeholder="Digitar senha"
             />
-            <button type="submit">Finalizar cadastro</button>
+            <button type="submit">
+              {!load ? "Finalizar cadastro" : <AiOutlineLoading3Quarters />}
+            </button>
           </div>
         </form>
       </div>
