@@ -5,6 +5,7 @@ import mercedezA200 from "../../assets/MercedesBenzA200.svg";
 import listFotos from "../../assets/listFhotos.svg";
 import Image from "next/image";
 import Tag from "@/components/Tags/tags";
+import CommentItem from "@/components/CommentsItem/commentsItem";
 
 const ProductPage = () => {
   const tags = [{ text: "0Km" }, { text: "2023" }];
@@ -57,6 +58,7 @@ const ProductPage = () => {
               <div className={styles.commentsSection}>
                 <h2>Comentários</h2>
                 <ul className={styles.commentsList}>
+                  <CommentItem />
                   <li className={styles.liComment}>
                     <div className={styles.comment}>
                       <span>CL</span>
