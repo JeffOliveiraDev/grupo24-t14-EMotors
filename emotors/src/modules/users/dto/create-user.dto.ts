@@ -55,6 +55,7 @@ export class CreateUserDto {
   })
   password: string;
 
+  @IsNotEmpty()
   @ValidateNested({ each: true })
   @Type(() => CreateAddressDto)
   address: CreateAddressDto;
