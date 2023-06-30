@@ -1,30 +1,49 @@
 "use client";
-import React from "react";
-import styles from "./styles.module.scss";
-import headerTitle from "../../assets/headerTitle.svg";
-import mercedezA200 from "../../assets/MercedesBenzA200.svg";
-import listFotos from "../../assets/listFhotos.svg";
+import React, { useEffect } from "react";
+import styles from "../styles.module.scss";
+import headerTitle from "../../../assets/headerTitle.svg";
+import mercedezA200 from "../../../assets/MercedesBenzA200.svg";
+import listFotos from "../../../assets/listFhotos.svg";
 import Image from "next/image";
 import Tag from "@/components/Tags/tags";
 import CommentItem from "@/components/CommentsItem/commentsItem";
 import { apiEmotors } from "@/services/api";
+import { Comments } from "@/interfaces";
 
-const ProductPage = ({ announcementId }: { announcementId?: string }) => {
+const ProductPage = ({
+  params,
+}: {
+  params: {
+    announcementId: string;
+  };
+}) => {
   const tags = [{ text: "0Km" }, { text: "2023" }];
-  const [comments, setComments] = React.useState([1, 2, 3, 4]);
+  const [comments, setComments] = React.useState([] as Comments[]);
 
-  React.useEffect(() => {
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiEmotors.get(
-          `/comments?announcementId=${announcementId}`
+        const response = await apiEmotors.get<Comments[]>(
+          `/comments?announcementId`,
+          {
+            params: {
+              announcementId: params.announcementId,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setComments(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
     };
-  }, [announcementId]);
+    fetchData();
+  }, [token, params]);
 
   return (
     <>
@@ -65,18 +84,13 @@ const ProductPage = ({ announcementId }: { announcementId?: string }) => {
               </div>
               <div className={styles.carDescription}>
                 <h2>Descrição</h2>
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Sunt, nesciunt! Non distinctio sunt odio, animi id dolorem
-                  recusandae rem, ipsa nisi, praesentium eum corporis ullam
-                  veniam quis earum ea asperiores!
-                </p>
+                <p></p>
               </div>
               <div className={styles.commentsSection}>
                 <h2>Comentários</h2>
                 <ul className={styles.commentsList}>
                   {comments.map((e, i) => (
-                    <CommentItem key={i} />
+                    <CommentItem comments={e} key={i} />
                   ))}
                 </ul>
               </div>
