@@ -7,13 +7,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registeSchemaComplet } from "./schema";
-import { api } from "@/services/api";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { toast } from "react-toastify";
-import { request } from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { apiEmotors } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
-  const [radio, setRadio] = useState("");
+  const [radio, setRadio] = useState(true);
   const [load, setLoad] = useState(false);
 
   const {
@@ -23,6 +23,8 @@ const Register = () => {
   } = useForm({
     resolver: zodResolver(registeSchemaComplet),
   });
+
+  const router = useRouter();
 
   const error = {
     name: errors.name?.message?.toString(),
@@ -45,27 +47,36 @@ const Register = () => {
   const registerUser = async (data: any) => {
     setLoad((e) => !e);
     data.acoountType = radio;
-    if (!data.acoountType) {
-      data.acoountType = "comprador";
-    }
 
-    setLoad(true);
+    data.address = {
+      ...data,
+    };
 
     try {
-      api
-        .post("/users", {
-          data,
-        })
-        .then((data) => console.log(data));
-    } catch (error) {
+      await apiEmotors.post("/users", data);
+
+      toast("successfully created user", {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "success",
+      });
+
+      router.push("/login");
+    } catch (error: any) {
       console.error(error);
+      toast(error.response.data.message, {
+        hideProgressBar: true,
+        autoClose: 2000,
+        type: "error",
+      });
     } finally {
       setLoad((e) => !e);
     }
   };
 
   return (
-    <>
+    <main>
+      <ToastContainer />
       <Header />
       <div className={styles.conteiner}>
         <form onSubmit={handleSubmit(registerUser)}>
@@ -192,12 +203,8 @@ const Register = () => {
                 id="comprador"
                 value="comprador"
                 label="Comprador"
-                labelClass={
-                  radio === "comprador"
-                    ? styles.labeltBuyer
-                    : styles.labelClassAdd
-                }
-                onChange={(e) => setRadio(e.target.value)}
+                labelClass={radio ? styles.labeltBuyer : styles.labelClassAdd}
+                onChange={() => setRadio(true)}
               />
               <Input
                 register={register("acoountType")}
@@ -207,10 +214,8 @@ const Register = () => {
                 value="anunciante"
                 label="Anunciante"
                 error={error.acoountType}
-                labelClass={
-                  radio === "anunciante" ? styles.selectAdd : styles.labelClass
-                }
-                onChange={(e) => setRadio(e.target.value)}
+                labelClass={radio ? styles.selectAdd : styles.labelClass}
+                onChange={() => setRadio(false)}
               />
             </div>
             <Input
@@ -242,7 +247,7 @@ const Register = () => {
         </form>
       </div>
       <Footer top="register" />
-    </>
+    </main>
   );
 };
 
