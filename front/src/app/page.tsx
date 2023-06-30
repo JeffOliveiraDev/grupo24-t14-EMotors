@@ -3,14 +3,13 @@ import styles from "./styles.module.scss";
 import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
-import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
-import { NextPage } from "next";
+import Link from "next/link";
+import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
 import ModalEditUser from "@/components/modalEditUser";
-import Link from "next/link";
+import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
-
 
 interface ICar {
   car: CarData;
@@ -105,11 +104,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
-
-      
       <Header />
-
-
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />
       </section>
