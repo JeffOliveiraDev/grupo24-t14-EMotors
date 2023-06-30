@@ -9,6 +9,10 @@ import Tag from "@/components/Tags/tags";
 import CommentItem from "@/components/CommentsItem/commentsItem";
 import { apiEmotors } from "@/services/api";
 import { Comments } from "@/interfaces";
+import Header from "@/components/Header/header";
+import { useForm } from "react-hook-form";
+import commentSchema from "./scehma";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const ProductPage = ({
   params,
@@ -20,24 +24,29 @@ const ProductPage = ({
   const tags = [{ text: "0Km" }, { text: "2023" }];
   const [comments, setComments] = React.useState([] as Comments[]);
 
+  const user = JSON.parse(localStorage.getItem("user")!);
   const token = localStorage.getItem("token");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(commentSchema),
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiEmotors.get<Comments[]>(
-          `/comments?announcementId`,
-          {
-            params: {
-              announcementId: params.announcementId,
-            },
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await apiEmotors.get<Comments[]>(`/comments`, {
+          params: {
+            announcementId: params.announcementId,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setComments(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -45,17 +54,26 @@ const ProductPage = ({
     fetchData();
   }, [token, params]);
 
+  const comment = async (data: any) => {
+    try {
+      const response = await apiEmotors.post<Comments>(
+        `/comments/${params.announcementId}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setComments((e) => [...e, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      <header className={styles.header}>
-        <div className={styles.divLeft}>
-          <Image src={headerTitle} alt="" />
-        </div>
-        <div className={styles.divRight}>
-          <h3>Fazer Login</h3>
-          <button>Cadastrar</button>
-        </div>
-      </header>
+      <Header />
       <span className={styles.backgroundBlue}> </span>
       <span className={styles.backgroundGrey}></span>
       <section className={styles.sectionAnnounceAndSocial}>
@@ -94,15 +112,25 @@ const ProductPage = ({
                   ))}
                 </ul>
               </div>
-              <div className={styles.commentBox}>
+              <form
+                onSubmit={handleSubmit(comment)}
+                className={styles.commentBox}
+              >
                 <div className={styles.commentArea}>
                   <div className={styles.textareaWrapper}>
                     <div className={styles.comment}>
-                      <span>CL</span>
-                      <h3>Júlia</h3>
+                      <span>
+                        {user.name[0].toUpperCase() +
+                          user.name[1].toUpperCase()}
+                      </span>
+                      <h3>{user.name}</h3>
                     </div>
-
-                    <textarea placeholder="Carro muito confortável, foi uma ótima experiência de compra..."></textarea>
+                    <textarea
+                      {...register("text")}
+                      name="text"
+                      placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
+                    ></textarea>
+                    <span>{errors.name?.message?.toString()}</span>
                     <button className={styles.submitButtonEnabled}>
                       Enviar
                     </button>
@@ -110,12 +138,12 @@ const ProductPage = ({
                   <div className={styles.tags}>
                     <button className={styles.tagButton}>Gostei Muito!</button>
                     <button className={styles.tagButton}>Incrível</button>
-                    <button className={styles.tagButton}>
+                    <button type="submit" className={styles.tagButton}>
                       Recomendarei para meus amigos!
                     </button>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
 

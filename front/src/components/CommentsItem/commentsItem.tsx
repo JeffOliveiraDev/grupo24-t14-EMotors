@@ -32,7 +32,11 @@ const CommentItem = ({ comments }: { comments: Comments }) => {
         </span>
         <h3>{comments.user?.name}</h3>
         <h5></h5>
-        <h4>{calcularDiasCriacao(newCreatedAt)}</h4>
+        <h4>
+          {calcularDiasCriacao(newCreatedAt) == 0
+            ? "hoje"
+            : calcularDiasCriacao(newCreatedAt)}
+        </h4>
       </div>
       <p>{comments.text}</p>
     </li>
