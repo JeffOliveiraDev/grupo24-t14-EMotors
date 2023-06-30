@@ -6,8 +6,8 @@ import SchemaLogin from "../../schema/index.schema";
 import { toast, ToastContainer } from "react-toastify";
 import Input from "../../../../components/Input/loginModule";
 import { apiEmotors } from "@/services/api";
+import { useRouter } from "next/router";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const FormLogin = () => {
