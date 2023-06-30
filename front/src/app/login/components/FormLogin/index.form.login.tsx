@@ -6,7 +6,7 @@ import SchemaLogin from "../../schema/index.schema";
 import { toast, ToastContainer } from "react-toastify";
 import Input from "../../../../components/Input/loginModule";
 import { apiEmotors } from "@/services/api";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
@@ -27,7 +27,9 @@ const FormLogin = () => {
       setLoading((e) => !e);
       const res = await apiEmotors.post("/login", data);
       localStorage.setItem("token", res.data.token);
-      const get = await apiEmotors.get(`/users/${res.data.userId}`);
+      console.log(res.data);
+      const get = await apiEmotors.get(`/users/${res.data.user_id}`);
+      console.log(get);
       localStorage.setItem("user", JSON.stringify(get.data));
       toast.success(res.data.message, {
         position: "top-right",
@@ -36,7 +38,7 @@ const FormLogin = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
-        progress: undefined,
+        progress: 3000,
       });
       router.push("/");
     } catch (err: any) {
@@ -73,7 +75,7 @@ const FormLogin = () => {
             <Input
               register={register("password")}
               name="password"
-              type="text"
+              type="password"
               id="password"
               placeholder="Digitar senha"
               label="Senha"
