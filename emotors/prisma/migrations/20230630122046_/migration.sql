@@ -18,7 +18,7 @@ CREATE TABLE "users" (
     "email" VARCHAR(50) NOT NULL,
     "cpf" VARCHAR(11) NOT NULL,
     "telephone" VARCHAR(11) NOT NULL,
-    "birthdate" VARCHAR(10) NOT NULL,
+    "birthDate" VARCHAR(10) NOT NULL,
     "description" VARCHAR(250),
     "password" VARCHAR(200) NOT NULL,
     "acoountType" BOOLEAN NOT NULL DEFAULT false,
@@ -48,6 +48,18 @@ CREATE TABLE "Announcement" (
     CONSTRAINT "Announcement_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "comments" (
+    "id" TEXT NOT NULL,
+    "text" VARCHAR(250) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+    "announcementId" TEXT NOT NULL,
+
+    CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -65,3 +77,9 @@ ALTER TABLE "users" ADD CONSTRAINT "users_addressId_fkey" FOREIGN KEY ("addressI
 
 -- AddForeignKey
 ALTER TABLE "Announcement" ADD CONSTRAINT "Announcement_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "comments" ADD CONSTRAINT "comments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "comments" ADD CONSTRAINT "comments_announcementId_fkey" FOREIGN KEY ("announcementId") REFERENCES "Announcement"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
