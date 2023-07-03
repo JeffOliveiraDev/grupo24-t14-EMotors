@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import styles from "../FormLogin/styles.module.scss";
 import { useForm } from "react-hook-form";

@@ -12,6 +12,13 @@
 
     transition: 400ms;
     @include text-style-inputs-buttons-button-big-text;
+
+    width: 130px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .login:hover {
