@@ -25,6 +25,7 @@ class Login {
   password: string;
 }
 
+@ApiTags('Login')
 @Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

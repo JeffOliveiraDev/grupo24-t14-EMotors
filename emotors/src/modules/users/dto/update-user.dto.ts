@@ -10,41 +10,50 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateUserDto {
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MaxLength(50)
   name?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsEmail()
   @MaxLength(50)
   email?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   @MaxLength(11)
   cpf?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   @MaxLength(11)
   telephone?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   birthdate: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   @MaxLength(250)
   description?: string;
 
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   acoountType?: boolean;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   @MinLength(8)
@@ -54,6 +63,7 @@ export class UpdateUserDto {
   })
   password?: string;
 
+  @ApiProperty()
   @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => UpdateAddressDto)
