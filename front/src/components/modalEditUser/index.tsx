@@ -18,7 +18,7 @@ const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
 
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImplYW4zQG1haWwuY29tIiwiaWF0IjoxNjg3NTI0NjQyLCJleHAiOjE2ODc2MTEwNDIsInN1YiI6ImI0NzMzZTM4LTE2NDktNDlkNC05NGU0LWI5Mzg4NTczNDIwMCJ9.dvZDZoSn-zE2wCcfqcfeGjJN2y79JWtZ9iXv0BU324U";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
 
   const closeModal = () => {
     setModalOpen(false);

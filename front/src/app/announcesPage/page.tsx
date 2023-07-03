@@ -24,8 +24,9 @@ const AdminProfilePage = () => {
     async function fetchData() {
       try {
         const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MzgzOTU3LCJleHAiOjE2ODg0NzAzNTcsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.QOwkXTWE6Wi55sUwO74a7TMFADkHN8QW6jYNtWjen7g";
         const data = await getData(token);
+        console.log(data);
         console.log(data[0].user);
         if (data.length > 0) {
           const userId = data[0].user.id;
@@ -44,7 +45,7 @@ const AdminProfilePage = () => {
   }, []);
 
   async function getData(token: string) {
-    const res = await fetch("http://127.0.0.1:3001/announcements", {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -57,7 +58,6 @@ const AdminProfilePage = () => {
     return res.json();
   }
 
-  const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
     <main className={`${styles.boxPage} ${styles.scroolBar}`}>
       <header>
@@ -144,7 +144,14 @@ const AdminProfilePage = () => {
                     >
                       Editar
                     </button>
-                    <button>Ver detalhes</button>
+                    <button
+                      onClick={() => {
+                        setDetailedImage(!detailedImage),
+                          setSelectedAnnounce(announce);
+                      }}
+                    >
+                      Ver detalhes
+                    </button>
                   </div>
                 </li>
               ))}

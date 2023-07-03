@@ -26,7 +26,6 @@ const ModalEditDeleteCar = ({
   };
 
   const onFormSubmit = (formData: any) => {
-    console.log(formData);
     formData.pfipe = !!formData.pfipe;
     formData.sellPrice = parseFloat(formData.sellPrice);
 
@@ -45,9 +44,9 @@ const ModalEditDeleteCar = ({
     detailsImage: string;
     testeerrror: string;
   }) {
-    const url = `http://127.0.0.1:3001/announcements/${announceId}`;
+    const url = `https://m6-emotors.onrender.com/announcements/${announceId}`;
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
 
     const requestOptions = {
       method: "PATCH",

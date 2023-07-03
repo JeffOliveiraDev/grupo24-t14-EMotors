@@ -1,16 +1,14 @@
 "use client";
 import styles from "./styles.module.scss";
-import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import { NextPage } from "next";
+
 import { useEffect, useState } from "react";
-import ModalEditUser from "@/components/modalEditUser";
-import Link from "next/link";
+
 import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
-
 
 interface ICar {
   car: CarData;
@@ -47,7 +45,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
         const years = data.map((car: { year: any }) => {
           return car.year;
         });
-
+        console.log(dataBrand);
         const uniqueYears = years.filter(
           (year: any, index: any, arr: string | any[]) =>
             arr.indexOf(year) === index
@@ -65,8 +63,15 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     fetchData();
   }, []);
 
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4Mzk2MDY5LCJleHAiOjE2ODg0ODI0NjksInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.g23szdK3O8wNy59yjvdoA0gVqNxxNyKqAdym13Xkcvc";
+
   async function getBrand() {
-    const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
@@ -75,6 +80,17 @@ const Home: NextPage<CarData> = ({ carsList }) => {
 
     return res.json();
   }
+
+  // async function getBrand() {
+  //   const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+
+  //   if (!res.ok) {
+  //     // This will activate the closest `error.js` Error Boundary
+  //     throw new Error("Failed to fetch data");
+  //   }
+
+  //   return res.json();
+  // }
 
   async function getData() {
     const res = await fetch(
@@ -102,13 +118,9 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
-  const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
-
-      
       <Header />
-
 
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />

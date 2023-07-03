@@ -27,9 +27,6 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
     setGalleryFields([...galleryFields, ""]);
   };
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
-
   async function handleCreateAnnounce(formData: {
     model: string;
     fuel: string;
@@ -42,9 +39,9 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
     detailsImage: string;
     testeerrror: string;
   }) {
-    const url = "http://127.0.0.1:3001/announcements";
+    const url = "https://m6-emotors.onrender.com/announcements";
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
 
     const requestOptions = {
       method: "POST",
@@ -64,6 +61,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
       const data = await response.json();
       console.log("Anúncio criado com sucesso!", data);
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao criar o anúncio:", error);
     }
