@@ -48,7 +48,6 @@ export class CommentPrismaService implements CommentRepository {
         where: {
           announcementId: query.announcementId,
         },
-        include: { user: true },
       });
 
       return plainToInstance(Comment, comments);
