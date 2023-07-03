@@ -63,6 +63,8 @@ export class CreateUserDto {
   })
   password: string;
 
+
+  @IsNotEmpty()
   @ApiProperty()
   @ValidateNested({ each: true })
   @Type(() => CreateAddressDto)

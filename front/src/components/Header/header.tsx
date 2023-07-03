@@ -1,27 +1,24 @@
 import styles from "../Header/styles.module.scss";
 import logo from "../../assets/headerTitle.svg";
 import Image from "next/image";
-import Link from "next/link";
 import { AiOutlineMenu } from "react-icons/ai";
+import TagOrAncors from "./components/TagOrAncors";
+import { ToastContainer, toast } from "react-toastify";
 
 const Header = () => {
   return (
-    <header id="top" className={styles.conteiner}>
-      <div>
-        <Image src={logo} alt="logotipo motors shop" />
+    <>
+      <header className={styles.conteiner}>
         <div>
-          <Link className={styles.login} href="/login">
-            Fazer Login
-          </Link>
-          <Link className={styles.register} href="/register">
-            Cadastrar
-          </Link>
+          <Image src={logo} alt="logotipo motors shop" />
+          <TagOrAncors />
+          <button>
+            <AiOutlineMenu />
+          </button>
         </div>
-        <button>
-          <AiOutlineMenu />
-        </button>
-      </div>
-    </header>
+      </header>
+      <ToastContainer />
+    </>
   );
 };
 
