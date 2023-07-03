@@ -1,15 +1,12 @@
 "use client";
 import styles from "./styles.module.scss";
-import headerTitle from "../assets/headerTitle.svg";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
-import Link from "next/link";
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import ModalEditUser from "@/components/modalEditUser";
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
-import Footer from "@/components/Footer/footer";
 import Header from "@/components/Header/header";
+import Footer from "@/components/Footer/footer";
 
 interface ICar {
   car: CarData;
