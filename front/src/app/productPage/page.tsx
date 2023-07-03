@@ -1,79 +1,24 @@
-"use client";
-import React, { useEffect } from "react";
-import styles from "../styles.module.scss";
-import headerTitle from "../../../assets/headerTitle.svg";
-import mercedezA200 from "../../../assets/MercedesBenzA200.svg";
-import listFotos from "../../../assets/listFhotos.svg";
+import React from "react";
+import styles from "./styles.module.scss";
+import headerTitle from "../../assets/headerTitle.svg";
+import mercedezA200 from "../../assets/MercedesBenzA200.svg";
+import listFotos from "../../assets/listFhotos.svg";
 import Image from "next/image";
 import Tag from "@/components/Tags/tags";
-import CommentItem from "@/components/CommentsItem/commentsItem";
-import { apiEmotors } from "@/services/api";
-import { Comments } from "@/interfaces";
-import Header from "@/components/Header/header";
-import { useForm } from "react-hook-form";
-import commentSchema from "./scehma";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-const ProductPage = ({
-  params,
-}: {
-  params: {
-    announcementId: string;
-  };
-}) => {
+const ProductPage = () => {
   const tags = [{ text: "0Km" }, { text: "2023" }];
-  const [comments, setComments] = React.useState([] as Comments[]);
-
-  const user = JSON.parse(localStorage.getItem("user")!);
-  const token = localStorage.getItem("token");
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(commentSchema),
-  });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await apiEmotors.get<Comments[]>(`/comments`, {
-          params: {
-            announcementId: params.announcementId,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setComments(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [token, params]);
-
-  const comment = async (data: any) => {
-    try {
-      const response = await apiEmotors.post<Comments>(
-        `/comments/${params.announcementId}`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setComments((e) => [...e, response.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
-      <Header />
+      <header className={styles.header}>
+        <div className={styles.divLeft}>
+          <Image src={headerTitle} alt="" />
+        </div>
+        <div className={styles.divRight}>
+          <h3>Fazer Login</h3>
+          <button>Cadastrar</button>
+        </div>
+      </header>
       <span className={styles.backgroundBlue}> </span>
       <span className={styles.backgroundGrey}></span>
       <section className={styles.sectionAnnounceAndSocial}>
@@ -102,35 +47,57 @@ const ProductPage = ({
               </div>
               <div className={styles.carDescription}>
                 <h2>Descrição</h2>
-                <p></p>
+                <p>
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                  Sunt, nesciunt! Non distinctio sunt odio, animi id dolorem
+                  recusandae rem, ipsa nisi, praesentium eum corporis ullam
+                  veniam quis earum ea asperiores!
+                </p>
               </div>
               <div className={styles.commentsSection}>
                 <h2>Comentários</h2>
                 <ul className={styles.commentsList}>
-                  {comments.map((e, i) => (
-                    <CommentItem comments={e} key={i} />
-                  ))}
+                  <li className={styles.liComment}>
+                    <div className={styles.comment}>
+                      <span>CL</span>
+                      <h3>Júlia</h3>
+                      <h5></h5>
+                      <h4>há 3 dias</h4>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quo ipsam tenetur facere enim dignissimos voluptas illum,
+                      hic sit, asperiores consequuntur culpa architecto autem
+                      pariatur quas quibusdam! Cupiditate itaque distinctio
+                      beatae.
+                    </p>
+                  </li>
+                  <li className={styles.liComment}>
+                    <div className={styles.comment}>
+                      <span>CL</span>
+                      <h3>Júlia</h3>
+                      <h5></h5>
+                      <h4>há 3 dias</h4>
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Quo ipsam tenetur facere enim dignissimos voluptas illum,
+                      hic sit, asperiores consequuntur culpa architecto autem
+                      pariatur quas quibusdam! Cupiditate itaque distinctio
+                      beatae.
+                    </p>
+                  </li>
                 </ul>
               </div>
-              <form
-                onSubmit={handleSubmit(comment)}
-                className={styles.commentBox}
-              >
+              <div className={styles.commentBox}>
                 <div className={styles.commentArea}>
                   <div className={styles.textareaWrapper}>
                     <div className={styles.comment}>
-                      <span>
-                        {user.name[0].toUpperCase() +
-                          user.name[1].toUpperCase()}
-                      </span>
-                      <h3>{user.name}</h3>
+                      <span>CL</span>
+                      <h3>Júlia</h3>
                     </div>
-                    <textarea
-                      {...register("text")}
-                      name="text"
-                      placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
-                    ></textarea>
-                    <span>{errors.name?.message?.toString()}</span>
+
+                    <textarea placeholder="Carro muito confortável, foi uma ótima experiência de compra..."></textarea>
                     <button className={styles.submitButtonEnabled}>
                       Enviar
                     </button>
@@ -138,12 +105,12 @@ const ProductPage = ({
                   <div className={styles.tags}>
                     <button className={styles.tagButton}>Gostei Muito!</button>
                     <button className={styles.tagButton}>Incrível</button>
-                    <button type="submit" className={styles.tagButton}>
+                    <button className={styles.tagButton}>
                       Recomendarei para meus amigos!
                     </button>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
 
