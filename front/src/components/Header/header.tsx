@@ -3,9 +3,11 @@ import logo from "../../assets/headerTitle.svg";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineMenu } from "react-icons/ai";
+import { parseCookies } from "nookies";
 
 const Header = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "null");
+  const cookies = parseCookies();
+  const user = JSON.parse(cookies.user || "null");
 
   return (
     <header id="top" className={styles.conteiner}>
