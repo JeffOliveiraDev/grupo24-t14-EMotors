@@ -10,6 +10,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import ModalEditDeleteCar from "@/components/ModalEditDeleteCar";
 import ModalDelete from "@/components/ModalDelete";
 import ModalImgDetail from "@/components/ModalImgDetail";
+import Header from "@/components/Header/header";
 
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -60,18 +61,7 @@ const AdminProfilePage = () => {
 
   return (
     <main className={`${styles.boxPage} ${styles.scroolBar}`}>
-      <header>
-        <div className={styles.divLeft}>
-          <Image src={headerTitle} alt="" />
-        </div>
-        <div className={styles.divRight}>
-          <span>{announces?.[0]?.user?.name?.slice(0, 2).toUpperCase()}</span>
-          <h3>{announces?.[0]?.user?.name}</h3>
-          <button className={styles.btnBurguer}>
-            <AiOutlineMenu className={styles.burguerMenu} />
-          </button>
-        </div>
-      </header>
+      <Header />
       <div className={styles.blueBackground}></div>
       <section>
         <div className={styles.boxCreateAndList}>

@@ -2,13 +2,12 @@
 import styles from "./styles.module.scss";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
-import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import { NextPage } from "next";
 
 import { useEffect, useState } from "react";
-
-import Footer from "@/components/Footer/footer";
+import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import Header from "@/components/Header/header";
+import Footer from "@/components/Footer/footer";
 
 interface ICar {
   car: CarData;
