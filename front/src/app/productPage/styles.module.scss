@@ -83,6 +83,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 60%;
 }
 
 .boxImgCar {
@@ -325,7 +326,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 40%;
 }
 .photosAndUser {
   width: 80%;
@@ -408,10 +409,9 @@
 .allSectionsComments {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
-  width: 61%;
-  margin-left: 6.1%;
+  width: 60%;
 }
 @media (max-width: 480px) {
   .boxAnnounceAndSocial {
@@ -438,5 +438,8 @@
     flex-direction: column;
     width: 100%;
     margin-left: 0%;
+  }
+  .imgCarAndDescription {
+    width: 100%;
   }
 }
