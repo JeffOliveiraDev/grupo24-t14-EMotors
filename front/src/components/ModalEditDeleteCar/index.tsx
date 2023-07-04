@@ -8,6 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import InputMask from "react-input-mask";
+import { parseCookies } from "nookies";
 
 const ModalEditDeleteCar = ({
   editDeleteModal,
@@ -27,7 +28,6 @@ const ModalEditDeleteCar = ({
 
   const onFormSubmit = (formData: any) => {
     console.log(formData);
-    formData.pfipe = !!formData.pfipe;
     formData.sellPrice = parseFloat(formData.sellPrice);
 
     handleCreateAnnounce(formData);
@@ -35,19 +35,20 @@ const ModalEditDeleteCar = ({
 
   async function handleCreateAnnounce(formData: {
     model: string;
+    brand: string;
     fuel: string;
     mileage: string;
     color: string;
-    pfipe: boolean;
+    pfipe: string;
     sellPrice: number;
     description: string;
     coverImage: string;
     detailsImage: string;
-    testeerrror: string;
   }) {
-    const url = `http://127.0.0.1:3001/announcements/${announceId}`;
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
+    const cookies = parseCookies();
+
+    const token = cookies.token;
+    const url = `https://m6-emotors.onrender.com/announcements/${announceId}`;
 
     const requestOptions = {
       method: "PATCH",
@@ -91,12 +92,13 @@ const ModalEditDeleteCar = ({
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <div className={styles.boxMarca}>
-              {/* <label htmlFor="marca">Marca</label>
+              <label htmlFor="marca">Marca</label>
               <input
+                defaultValue={selectedAnnounce.brand}
                 placeholder="Mercedes Benz"
                 type="text"
-                // {...register("marca")}
-              /> */}
+                {...register("brand")}
+              />
               <label htmlFor="modelo">Modelo</label>
               <input
                 defaultValue={selectedAnnounce.model}
@@ -143,12 +145,11 @@ const ModalEditDeleteCar = ({
               </div>
               <div className={styles.boxFlex}>
                 <label htmlFor="precoFipe">Preço tabela FIPE</label>
-                <InputMask
-                  mask={"false"}
-                  maskChar=""
-                  // defaultValue={selectedAnnounce.mileage}
-                  // placeholder="30.000"
-                  {...register("mileage")}
+                <input
+                  placeholder="10.000"
+                  type="text"
+                  defaultValue={selectedAnnounce.pfipe}
+                  {...register("pfipe")}
                 />
                 {/* <input
                   placeholder="true/false"

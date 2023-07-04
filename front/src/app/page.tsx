@@ -3,10 +3,13 @@ import styles from "./styles.module.scss";
 import backGroundBanner from "../assets/backgroundBanner.svg";
 import Image from "next/image";
 import { NextPage } from "next";
+
 import { useEffect, useState } from "react";
 import CardAddNewCar from "@/components/CardAddNewCar/cardAddNewCar";
 import Header from "@/components/Header/header";
 import Footer from "@/components/Footer/footer";
+import { apiEmotors } from "@/services/api";
+import { parseCookies } from "nookies";
 
 interface ICar {
   car: CarData;
@@ -30,6 +33,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const [year, setYear] = useState([]);
   const [choosenYear, setchoosenYear] = useState();
   const [filterClear, setClearFilter] = useState(false);
+  const [listCars, setListCars] = useState();
 
   if (filterClear) {
     window.location.reload();
@@ -43,7 +47,7 @@ const Home: NextPage<CarData> = ({ carsList }) => {
         const years = data.map((car: { year: any }) => {
           return car.year;
         });
-
+        console.log(dataBrand);
         const uniqueYears = years.filter(
           (year: any, index: any, arr: string | any[]) =>
             arr.indexOf(year) === index
@@ -61,8 +65,31 @@ const Home: NextPage<CarData> = ({ carsList }) => {
     fetchData();
   }, []);
 
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4Mzk2MDY5LCJleHAiOjE2ODg0ODI0NjksInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.g23szdK3O8wNy59yjvdoA0gVqNxxNyKqAdym13Xkcvc";
+
   async function getBrand() {
+<<<<<<< HEAD
+    const cookies = parseCookies();
+
+    const token = cookies.token;
+
+    const get = await apiEmotors.get(`/announcements`, {
+=======
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
+>>>>>>> 3c9111ae4f61a6b4e1ecb143ea7b1cc84e7d25a3
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+<<<<<<< HEAD
+
+    setListCars(get.data);
+    console.log(get, "teste");
+
     const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+=======
+>>>>>>> 3c9111ae4f61a6b4e1ecb143ea7b1cc84e7d25a3
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
@@ -71,6 +98,17 @@ const Home: NextPage<CarData> = ({ carsList }) => {
 
     return res.json();
   }
+
+  // async function getBrand() {
+  //   const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+
+  //   if (!res.ok) {
+  //     // This will activate the closest `error.js` Error Boundary
+  //     throw new Error("Failed to fetch data");
+  //   }
+
+  //   return res.json();
+  // }
 
   async function getData() {
     const res = await fetch(
@@ -98,10 +136,10 @@ const Home: NextPage<CarData> = ({ carsList }) => {
   const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
-  const [modalOpen, setModalOpen] = useState(false);
   return (
     <main className={styles.home}>
       <Header />
+
       <section className={styles.bannerCentral}>
         <Image src={backGroundBanner} alt="" />
       </section>

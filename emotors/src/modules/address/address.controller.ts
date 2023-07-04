@@ -10,6 +10,7 @@ import {
 import { AddressService } from './address.service';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('address')
 export class AddressController {

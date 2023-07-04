@@ -13,7 +13,9 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from '../auth/jwt-guard.auth';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -34,6 +36,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Patch()
   update(@Body() updateUserDto: UpdateUserDto, @Request() req) {
     return this.usersService.update(req.user.id, updateUserDto);
@@ -41,6 +44,7 @@ export class UsersController {
 
   @Delete()
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   remove(@Request() req) {
     return this.usersService.remove(req.user.id);
   }

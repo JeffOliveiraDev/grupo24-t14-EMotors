@@ -33,10 +33,11 @@ CREATE TABLE "users" (
 CREATE TABLE "Announcement" (
     "id" TEXT NOT NULL,
     "model" TEXT NOT NULL,
+    "brand" TEXT NOT NULL,
     "fuel" TEXT NOT NULL,
     "mileage" TEXT NOT NULL,
     "color" TEXT NOT NULL,
-    "pfipe" BOOLEAN NOT NULL,
+    "pfipe" TEXT NOT NULL,
     "sellPrice" DOUBLE PRECISION NOT NULL,
     "description" TEXT NOT NULL,
     "coverImage" TEXT NOT NULL,
