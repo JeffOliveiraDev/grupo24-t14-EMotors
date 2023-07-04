@@ -17,6 +17,12 @@ export class CreateAnnouncementDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
+  @MaxLength(50)
+  brand: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
   fuel: string;
 
   @ApiProperty()
@@ -34,7 +40,7 @@ export class CreateAnnouncementDto {
   @ApiProperty()
   @IsBoolean()
   @IsNotEmpty()
-  pfipe: boolean;
+  pfipe: string;
 
   @ApiProperty()
   @IsNumber()
