@@ -8,6 +8,7 @@ import { User } from 'src/modules/users/entities/user.entity';
 export class Announcement {
   readonly id: string;
   model: string;
+  brand: string;
   fuel: string;
   mileage: string;
   color: string;
