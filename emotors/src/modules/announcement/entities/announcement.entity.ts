@@ -12,7 +12,7 @@ export class Announcement {
   fuel: string;
   mileage: string;
   color: string;
-  pfipe: boolean;
+  pfipe: string;
   sellPrice: number;
   description: string;
   coverImage: string;

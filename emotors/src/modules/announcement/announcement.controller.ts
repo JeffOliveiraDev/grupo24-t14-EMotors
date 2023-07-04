@@ -30,8 +30,6 @@ export class AnnouncementsController {
   }
 
   @Get('')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.announcementService.findAll();
   }

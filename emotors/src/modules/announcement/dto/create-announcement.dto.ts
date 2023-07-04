@@ -38,7 +38,7 @@ export class CreateAnnouncementDto {
   color: string;
 
   @ApiProperty()
-  @IsBoolean()
+  @IsString()
   @IsNotEmpty()
   pfipe: string;
 

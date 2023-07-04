@@ -33,9 +33,8 @@ const AdminProfilePage = () => {
         const data = await getData(token);
 
         if (data.length > 0) {
-          const userId = user.id;
           const filteredData = data.filter(
-            (item: any) => item.user.id === userId
+            (item: any) => item.user.id === user.id
           );
           setAnnounces(filteredData);
           console.log(filteredData);
@@ -62,7 +61,6 @@ const AdminProfilePage = () => {
     return res.json();
   }
 
-  const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
     <main className={`${styles.boxPage} ${styles.scroolBar}`}>
       <Header />
