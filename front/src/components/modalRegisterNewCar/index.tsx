@@ -6,6 +6,7 @@ import {
   registerNewAnnounceSchema,
 } from "@/schemas/cars.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseCookies } from "nookies";
 
 const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +16,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
   const onFormSubmit = (formData: any) => {
     console.log(formData);
-    formData.pfipe = !!formData.pfipe;
+    // formData.pfipe = !!formData.pfipe;
     formData.sellPrice = parseFloat(formData.sellPrice);
 
     handleCreateAnnounce(formData);
@@ -27,24 +28,24 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
     setGalleryFields([...galleryFields, ""]);
   };
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
-
   async function handleCreateAnnounce(formData: {
     model: string;
+    brand: string;
     fuel: string;
     mileage: string;
     color: string;
-    pfipe: boolean;
+    pfipe: string;
     sellPrice: number;
     description: string;
     coverImage: string;
     detailsImage: string;
     testeerrror: string;
   }) {
-    const url = "http://127.0.0.1:3001/announcements";
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg3OTU2NDIzLCJleHAiOjE2ODgwNDI4MjMsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.HUmHe1Cgplt-jHiJsoPC8axbhKXn9_W9F8eFs7bPkYQ";
+    const cookies = parseCookies();
+
+    const token = cookies.token;
+
+    const url = "https://m6-emotors.onrender.com/announcements";
 
     const requestOptions = {
       method: "POST",
@@ -64,6 +65,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
       const data = await response.json();
       console.log("Anúncio criado com sucesso!", data);
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao criar o anúncio:", error);
     }
@@ -84,12 +86,12 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <div className={styles.boxMarca}>
-              {/* <label htmlFor="marca">Marca</label>
+              <label htmlFor="marca">Marca</label>
               <input
                 placeholder="Mercedes Benz"
                 type="text"
-                {...register("marca")}
-              /> */}
+                {...register("brand")}
+              />
               <label htmlFor="modelo">Modelo</label>
               <input
                 placeholder="A 200 CGI"
