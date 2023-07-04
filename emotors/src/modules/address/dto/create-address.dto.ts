@@ -27,6 +27,6 @@ export class CreateAddressDto {
 
   @IsString()
   @IsNotEmpty()
-  @Length(3, 50)
+  @Length(1, 50)
   state: string;
 }

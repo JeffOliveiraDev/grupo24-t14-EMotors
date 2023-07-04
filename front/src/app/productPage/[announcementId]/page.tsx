@@ -13,6 +13,7 @@ import Header from "@/components/Header/header";
 import { useForm } from "react-hook-form";
 import commentSchema from "./scehma";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Footer from "@/components/Footer/footer";
 
 const ProductPage = ({
   params,
@@ -73,95 +74,110 @@ const ProductPage = ({
 
   return (
     <>
-      <Header />
-      <span className={styles.backgroundBlue}> </span>
-      <span className={styles.backgroundGrey}></span>
-      <section className={styles.sectionAnnounceAndSocial}>
-        <div className={styles.boxAnnounceAndSocial}>
-          <div className={styles.boxCarAndSocial}>
-            <div className={styles.carAndSocial}>
-              <div className={styles.boxImgCar}>
-                <Image src={mercedezA200} alt="" />
-              </div>
-              <div className={styles.carNamePrice}>
-                <h2>
-                  Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A 200{" "}
-                </h2>
-                <div className={styles.boxTagsPrice}>
-                  <ul>
-                    {tags.map((e, i) => (
-                      <Tag key={i}>{e.text}</Tag>
-                    ))}
-                  </ul>
-
-                  <span>
-                    <strong>R$ 00.000,00</strong>
-                  </span>
-                </div>
-                <button className={styles.btnBuy}>Comprar</button>
-              </div>
-              <div className={styles.carDescription}>
-                <h2>Descrição</h2>
-                <p></p>
-              </div>
-              <div className={styles.commentsSection}>
-                <h2>Comentários</h2>
-                <ul className={styles.commentsList}>
-                  {comments.map((e, i) => (
-                    <CommentItem comments={e} key={i} />
-                  ))}
-                </ul>
-              </div>
-              <form
-                onSubmit={handleSubmit(comment)}
-                className={styles.commentBox}
-              >
-                <div className={styles.commentArea}>
-                  <div className={styles.textareaWrapper}>
-                    <div className={styles.comment}>
-                      <span>
-                        {user.name[0].toUpperCase() +
-                          user.name[1].toUpperCase()}
-                      </span>
-                      <h3>{user.name}</h3>
+      <div className={styles.allPage}>
+        <Header />
+        <section className={styles.sectionAnnounceAndSocial}>
+          <div className={styles.boxAnnounceAndSocial}>
+            <div className={styles.boxCarAndSocial}>
+              <div className={styles.carAndSocial}>
+                <div className={styles.ImgAndDescription}>
+                  <div className={styles.imgCarAndDescription}>
+                    <div className={styles.boxImgCar}>
+                      <Image src={mercedezA200} alt="" />
                     </div>
-                    <textarea
-                      {...register("text")}
-                      name="text"
-                      placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
-                    ></textarea>
-                    <span>{errors.name?.message?.toString()}</span>
-                    <button className={styles.submitButtonEnabled}>
-                      Enviar
-                    </button>
+                    <div className={styles.carNamePrice}>
+                      <h2>
+                        Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A
+                        200{" "}
+                      </h2>
+                      <div className={styles.boxTagsPrice}>
+                        <ul>
+                          {tags.map((e, i) => (
+                            <Tag key={i}>{e.text}</Tag>
+                          ))}
+                        </ul>
+
+                        <span>
+                          <strong>R$ 00.000,00</strong>
+                        </span>
+                      </div>
+                      <button className={styles.btnBuy}>Comprar</button>
+                    </div>
+                    <div className={styles.carDescription}>
+                      <h2>Descrição</h2>
+                      <p>
+                        Lorem Ipsum is simply dummy text of the printing and
+                        typesetting industry. Lorem Ipsum has been the
+                        industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and
+                        scrambled it to make a type specimen book.
+                      </p>
+                    </div>
                   </div>
-                  <div className={styles.tags}>
-                    <button className={styles.tagButton}>Gostei Muito!</button>
-                    <button className={styles.tagButton}>Incrível</button>
-                    <button type="submit" className={styles.tagButton}>
-                      Recomendarei para meus amigos!
-                    </button>
+                  <div className={styles.boxPhotosAndUser}>
+                    <div className={styles.photosAndUser}>
+                      <h2>Fotos</h2>
+                      <ul className={styles.photosList}>
+                        <Image src={listFotos} alt="" />
+                        <Image src={listFotos} alt="" />
+                        <Image src={listFotos} alt="" />
+                        <Image src={listFotos} alt="" />
+                        <Image src={listFotos} alt="" />
+                        <Image src={listFotos} alt="" />
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </form>
+                <div className={styles.allSectionsComments}>
+                  <div className={styles.commentsSection}>
+                    <h2>Comentários</h2>
+                    <ul className={styles.commentsList}>
+                      {comments.map((e, i) => (
+                        <CommentItem comments={e} key={i} />
+                      ))}
+                    </ul>
+                  </div>
+                  <form
+                    onSubmit={handleSubmit(comment)}
+                    className={styles.commentBox}
+                  >
+                    <div className={styles.commentArea}>
+                      <div className={styles.textareaWrapper}>
+                        <div className={styles.comment}>
+                          <span>
+                            {user.name[0].toUpperCase() +
+                              user.name[1].toUpperCase()}
+                          </span>
+                          <h3>{user.name}</h3>
+                        </div>
+                        <textarea
+                          {...register("text")}
+                          name="text"
+                          placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
+                        ></textarea>
+                        <span>{errors.name?.message?.toString()}</span>
+                        <button className={styles.submitButtonEnabled}>
+                          Enviar
+                        </button>
+                      </div>
+                      <div className={styles.tags}>
+                        <button className={styles.tagButton}>
+                          Gostei Muito!
+                        </button>
+                        <button className={styles.tagButton}>Incrível</button>
+                        <button type="submit" className={styles.tagButton}>
+                          Recomendarei para meus amigos!
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className={styles.boxPhotosAndUser}>
-            <div className={styles.photosAndUser}>
-              <h2>Fotos</h2>
-              <ul className={styles.photosList}>
-                <Image src={listFotos} alt="" />
-                <Image src={listFotos} alt="" />
-                <Image src={listFotos} alt="" />
-                <Image src={listFotos} alt="" />
-                <Image src={listFotos} alt="" />
-                <Image src={listFotos} alt="" />
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
+      <Footer />
     </>
   );
 };

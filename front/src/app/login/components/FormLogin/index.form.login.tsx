@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import styles from "../FormLogin/styles.module.scss";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,7 @@ import { apiEmotors } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { setCookie } from "nookies";
 
 const FormLogin = () => {
   const {
@@ -26,11 +28,14 @@ const FormLogin = () => {
     try {
       setLoading((e) => !e);
       const res = await apiEmotors.post("/login", data);
-      localStorage.setItem("token", res.data.token);
-      console.log(res.data);
+      setCookie(null, "token", res.data.token, {
+        path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+      });
       const get = await apiEmotors.get(`/users/${res.data.user_id}`);
-      console.log(get);
-      localStorage.setItem("user", JSON.stringify(get.data));
+      setCookie(null, "user", JSON.stringify(get.data), {
+        path: "/",
+      });
       toast.success(res.data.message, {
         position: "top-right",
         autoClose: 5000,
