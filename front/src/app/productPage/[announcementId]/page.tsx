@@ -15,6 +15,7 @@ import commentSchema from "./scehma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "@/components/Footer/footer";
 import { userData } from "../../../../utils";
+import { parseCookies } from "nookies";
 
 const ProductPage = ({
   params,
@@ -25,9 +26,11 @@ const ProductPage = ({
 }) => {
   const tags = [{ text: "0Km" }, { text: "2023" }];
   const [comments, setComments] = React.useState([] as Comments[]);
+  const cookies = parseCookies();
 
-  const user = JSON.parse(localStorage.getItem("user")!);
-  const token = localStorage.getItem("token");
+  const token = cookies.token;
+  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : !null;
+  const [user, setUser] = React.useState(userFromCookie);
 
   const {
     register,
@@ -101,7 +104,7 @@ const ProductPage = ({
                       </div>
                       <a
                         className={styles.btnBuy}
-                        href={`https://api.whatsapp.com/send?phone=+55+${userData.whatsappNumber}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20an%C3%BAncio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20produtos`}
+                        href={`https://api.whatsapp.com/send?phone=+55+${user.telephone}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20an%C3%BAncio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20produtos`}
                       >
                         Comprar
                       </a>
