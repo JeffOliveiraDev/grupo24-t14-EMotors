@@ -18,7 +18,7 @@ const registeSchemaComplet = z.object({
     .transform((value: string) => value.replace(/[-.()]/g, "")),
   telephone: z
     .string()
-    .min(13, { message: "O telefone deve ter no mínimo 13 dígitos" })
+    .min(11, { message: "O telefone deve ter 11 dígitos" })
     .transform((value: string) => value.replace(/[-.()]/g, "")),
   birthDate: z
     .string()
@@ -67,7 +67,7 @@ const registeSchemaComplet = z.object({
     .max(200, { message: "A cidade deve ter no máximo 200 caracteres" }),
   state: z
     .string()
-    .min(1, { message: "O estado deve ser informado" })
+    .min(2, { message: "O estado deve ser informado" })
     .max(50, { message: "O estado deve ter no máximo 50 caracteres" }),
   homeNumber: z
     .string()

@@ -25,27 +25,29 @@ const AdminProfilePage = () => {
   const cookies = parseCookies();
 
   const token = cookies.token;
-  const [user, setUser] = React.useState(JSON.parse(cookies.user));
+ const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+ const [user, setUser] = React.useState(userFromCookie);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getData(token);
+  async function fetchData() {
+    try {
+      const data = await getData(token);
 
-        if (data.length > 0) {
-          const filteredData = data.filter(
-            (item: any) => item.user.id === user.id
-          );
-          setAnnounces(filteredData);
-          console.log(filteredData);
-        }
-      } catch (error) {
-        console.error(error);
+      if (data.length > 0) {
+        const filteredData = data.filter((item: any) =>
+          user ? item.user.id === user.id : false
+        );
+
+        setAnnounces(filteredData);
       }
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    fetchData();
-  }, [token, user.id]);
+  fetchData();
+}, [token, user]); 
+
 
   async function getData(token: string) {
     const res = await fetch("https://m6-emotors.onrender.com/announcements", {
@@ -68,13 +70,18 @@ const AdminProfilePage = () => {
       <section>
         <div className={styles.boxCreateAndList}>
           <div className={styles.boxUser}>
-            <span>{user.name.slice(0, 2).toUpperCase()}</span>
+            {user && (
+      <React.Fragment>
+        <span>{user.name.slice(0, 2).toUpperCase()}</span>
 
-            <div className={styles.nameAndTag}>
-              <h3>{user.name}</h3>
-              <Tag>Anunciante</Tag>
-            </div>
-            <p>{user.description ? user.description : null}</p>
+        <div className={styles.nameAndTag}>
+          <h3>{user.name}</h3>
+          <Tag>Anunciante</Tag>
+        </div>
+        <p>{user.description ? user.description : null}</p>
+      </React.Fragment>
+    )}
+            
             {user ? (
               <button
                 className={styles.btnCreateAnnounce}
