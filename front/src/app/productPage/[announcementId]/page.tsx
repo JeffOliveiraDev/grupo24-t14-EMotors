@@ -101,7 +101,7 @@ const ProductPage = ({
                       <button className={styles.btnBuy}>Comprar</button>
                     </div>
                     <div className={styles.carDescription}>
-                      <h2>Descrição</h2>
+                      <h2>Descricão</h2>
                       <p>
                         Lorem Ipsum is simply dummy text of the printing and
                         typesetting industry. Lorem Ipsum has been the
