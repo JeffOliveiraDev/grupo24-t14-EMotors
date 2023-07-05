@@ -9,12 +9,13 @@
   align-items: center;
   top: 0;
   background: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
 }
 
 .modalInterior {
   max-height: 95vh;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 20%;
+  margin-bottom: 10%;
   width: 100%;
   max-width: 462px;
   height: fit-content;
