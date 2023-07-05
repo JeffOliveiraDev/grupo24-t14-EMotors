@@ -98,7 +98,7 @@ const ProductPage = ({
                         </ul>
 
                         <span>
-                          <strong>R$ 00.000,00</strong>
+                          <strong>R$ 0000000</strong>
                         </span>
                       </div>
                       <button className={styles.btnBuy}>Comprar</button>
