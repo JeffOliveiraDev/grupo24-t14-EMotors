@@ -6,6 +6,7 @@ import {
   registerNewAnnounceSchema,
 } from "@/schemas/cars.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseCookies } from "nookies";
 
 const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +16,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
   const onFormSubmit = (formData: any) => {
     console.log(formData);
-    formData.pfipe = !!formData.pfipe;
+    // formData.pfipe = !!formData.pfipe;
     formData.sellPrice = parseFloat(formData.sellPrice);
 
     handleCreateAnnounce(formData);
@@ -29,19 +30,22 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
   async function handleCreateAnnounce(formData: {
     model: string;
+    brand: string;
     fuel: string;
     mileage: string;
     color: string;
-    pfipe: boolean;
+    pfipe: string;
     sellPrice: number;
     description: string;
     coverImage: string;
     detailsImage: string;
     testeerrror: string;
   }) {
+    const cookies = parseCookies();
+
+    const token = cookies.token;
+
     const url = "https://m6-emotors.onrender.com/announcements";
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
 
     const requestOptions = {
       method: "POST",
@@ -82,12 +86,12 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
             onSubmit={handleSubmit(onFormSubmit)}
           >
             <div className={styles.boxMarca}>
-              {/* <label htmlFor="marca">Marca</label>
+              <label htmlFor="marca">Marca</label>
               <input
                 placeholder="Mercedes Benz"
                 type="text"
-                {...register("marca")}
-              /> */}
+                {...register("brand")}
+              />
               <label htmlFor="modelo">Modelo</label>
               <input
                 placeholder="A 200 CGI"

@@ -3,6 +3,8 @@ import Image from "next/image";
 import carImg from "../../assets/imageCar.svg";
 import Tag from "../Tags/tags";
 import { useEffect, useState } from "react";
+import { parseCookies } from "nookies";
+import { apiEmotors } from "@/services/api";
 
 interface ICar {
   id: string;
@@ -51,6 +53,18 @@ const CardAddNewCar = ({
   useEffect(() => {
     async function fetchData() {
       try {
+        const cookies = parseCookies();
+
+        const token = cookies.token;
+
+        const get = await apiEmotors.get(`/announcements`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log(get, "teste");
+
         const data = await getData(brand!);
         setCars(data);
       } catch (error) {

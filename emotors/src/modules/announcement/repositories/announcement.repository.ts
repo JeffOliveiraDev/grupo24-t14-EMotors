@@ -11,6 +11,7 @@ export abstract class AnnouncementRepository {
   ): Promise<Announcement> | Announcement;
   abstract findAll(): Promise<Announcement[]> | Announcement[];
   abstract findOne(id: string): Promise<Announcement> | Announcement;
+  abstract findOneBrand(brand: string): Promise<Announcement> | Announcement;
   abstract update(
     id: string,
     data: UpdateAnnouncementDto,

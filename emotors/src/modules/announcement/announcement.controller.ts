@@ -41,6 +41,13 @@ export class AnnouncementsController {
     return this.announcementService.findOne(id);
   }
 
+  @Get(':brand')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  findOne(@Param('brand') brand: string) {
+    return this.announcementService.findOne(brand);
+  }
+
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)

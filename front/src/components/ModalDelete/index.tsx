@@ -6,10 +6,12 @@ import {
   registerNewAnnounceSchema,
 } from "@/schemas/cars.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { parseCookies } from "nookies";
 
 const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
+  const cookies = parseCookies();
+
+  const token = cookies.token;
 
   const handleDeleteAnnounce = () => {
     fetch(`https://m6-emotors.onrender.com/announcements/${announceId}`, {
