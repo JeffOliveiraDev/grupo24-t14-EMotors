@@ -1,0 +1,92 @@
+@use "../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.filtersAndCars {
+  display: flex;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100%;
+
+  margin-top: 50px;
+
+  > div {
+    width: 95%;
+
+    display: flex;
+    gap: 45px;
+  }
+
+  .filters {
+    width: 30%;
+    display: none;
+
+    @media (min-width: 900px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .filters li {
+    list-style-type: none;
+  }
+
+  .filters div {
+    width: 100%;
+  }
+  .filters h4 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    @include text-style-heading-heading-4-600;
+    line-height: 3.5rem;
+  }
+  .filters li {
+    @include text-style-heading-heading-6-500;
+    color: $color-grey-scale-grey-3;
+    cursor: pointer;
+  }
+  .filters li:hover {
+    scale: 1.1;
+    color: $color-grey-scale-grey-2;
+  }
+
+  .listOfCars {
+    width: 100%;
+    height: 100%;
+  }
+
+  .buttonsKmPrice {
+    display: flex;
+    gap: 10px;
+  }
+  .buttonsKmPrice button {
+    width: 50%;
+    max-width: 100px;
+    height: 37px;
+    background-color: $color-grey-scale-grey-5;
+    border: none;
+    @include text-style-heading-heading-7-600;
+
+    color: $color-grey-scale-grey-3;
+  }
+  .btnCleanFilter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    // height: 100%;
+    margin-top: 79px;
+  }
+  .btnCleanFilter {
+    background-color: $color-brand-brand-2;
+    padding: 12px 28px;
+    border: 1.5px solid #5126ea;
+    border-radius: 4px;
+    width: 90%;
+    height: 48px;
+    @include text-style-inputs-buttons-button-big-text;
+    color: #ffffff;
+    font-weight: 600;
+  }
+}

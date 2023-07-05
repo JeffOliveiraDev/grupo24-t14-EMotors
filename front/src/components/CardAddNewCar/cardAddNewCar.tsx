@@ -1,40 +1,21 @@
+"use client";
 import styles from "../CardAddNewCar/styles.module.scss";
-import Image from "next/image";
-import carImg from "../../assets/imageCar.svg";
-import Tag from "../Tags/tags";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Context } from "@/context/HomeContext";
+import { BrandCars, iCar } from "@/interfaces";
+import CardCar from "../CardCar";
+import Button from "../Button";
+import ModalFilter from "../ModalFilter";
 
-interface ICar {
-  id: string;
-  name: string;
-  brand: string;
-  year: string;
-  fuel: number;
-}
-
-interface Car {
-  name: string;
-}
-
-interface BrandCars {
-  [brand: string]: Car[];
-}
-
-interface CardAddProps {
-  brand: string;
-}
-
-const CardAddNewCar = ({
-  brand,
-  choosenYear,
-  filterClear,
-  setClearFilter,
-}: any) => {
+const CardAddNewCar = ({}: any) => {
   const [cars, setCars] = useState<BrandCars[]>();
   const [filteredCars, setFilteredCars] = useState<BrandCars[]>([]);
   const [itens, setItens] = useState<BrandCars[]>([]);
   const [itensPerPage, setItensPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
+  const [modal, setModal] = useState(false);
+
+  const { brand, filterClear, choosenYear } = useContext(Context);
 
   let pages = 0;
   let startIndex = 0;
@@ -87,33 +68,17 @@ const CardAddNewCar = ({
       {currentItens?.length > 0 && (
         <ul className={styles.boxCars}>
           {currentItens.map((car: any) => (
-            <li className={styles.container} key={car.id}>
-              <div className={styles.boxImage}>
-                <Image alt="image car" width={100} height={100} src={carImg} />
-              </div>
-              <h3>{car.name}</h3>
-              <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem...
-              </p>
-              <div className={styles.boxUser}>
-                <div>
-                  <p className={styles.boxImageOwner}>R</p>
-                </div>
-                <p>rafael</p>
-              </div>
-              <div className={styles.boxTagsPrice}>
-                <ul>
-                  <Tag key={car.year}>{car.year}</Tag>
-                </ul>
-                <span>
-                  <strong>R$ {car.value.toLocaleString()}</strong>
-                </span>
-              </div>
-            </li>
+            <CardCar car={car} key={car.id} />
           ))}
         </ul>
       )}
+      {modal && <ModalFilter setModal={setModal} />}
+      <Button
+        onClick={() => setModal((e) => !e)}
+        className={styles.buttonFilter}
+      >
+        Filtros
+      </Button>
       <div className={styles.btnPages}>
         {pages === 0 ? (
           <h4>
