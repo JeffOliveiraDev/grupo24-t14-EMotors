@@ -87,8 +87,7 @@ const ProductPage = ({
                     </div>
                     <div className={styles.carNamePrice}>
                       <h2>
-                        Mercedes Benz A 200 CGI ADVANCE SEDAN Mercedes Benz A
-                        200
+                        Mercedes Benz A 200
                       </h2>
                       <div className={styles.boxTagsPrice}>
                         <ul>
