@@ -70,12 +70,16 @@ const AdminProfilePage = () => {
       <section>
         <div className={styles.boxCreateAndList}>
           <div className={styles.boxUser}>
-            <span>{user.name.slice(0, 2).toUpperCase()}</span>
+            {user && (
+      <React.Fragment>
+        <span>{user.name.slice(0, 2).toUpperCase()}</span>
 
-            <div className={styles.nameAndTag}>
-              <h3>{user.name}</h3>
-              <Tag>Anunciante</Tag>
-            </div>
+        <div className={styles.nameAndTag}>
+          <h3>{user.name}</h3>
+          <Tag>Anunciante</Tag>
+        </div>
+      </React.Fragment>
+    )}
             <p>{user.description ? user.description : null}</p>
             {user ? (
               <button
