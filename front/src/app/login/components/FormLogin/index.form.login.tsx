@@ -64,6 +64,7 @@ const FormLogin = () => {
       const get = await apiEmotors.get(`/users/${res.data.user_id}`);
       setCookie(null, "user", JSON.stringify(get.data), {
         path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       });
       toast.success(res.data.message, {
         position: "top-right",
@@ -129,3 +130,11 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
+function setCookie(
+  arg0: null,
+  arg1: string,
+  token: any,
+  arg3: { path: string; maxAge: number }
+) {
+  throw new Error("Function not implemented.");
+}
