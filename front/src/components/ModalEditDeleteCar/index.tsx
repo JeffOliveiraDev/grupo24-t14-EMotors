@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import styles from "../ModalEditDeleteCar/styles.module.scss";
 import { useForm } from "react-hook-form";
-import {
-  RegisterNewAnnounceData,
-  registerNewAnnounceSchema,
-} from "@/schemas/cars.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import InputMask from "react-input-mask";
 import { parseCookies } from "nookies";
+import { ContextAnnounces } from "@/context/announcesPage";
+import { createPortal } from "react-dom";
 
-const ModalEditDeleteCar = ({
-  editDeleteModal,
-  setModalEditDelete,
-  announceId,
-  setModalDelete,
-  selectedAnnounce,
-}: any) => {
+const ModalEditDeleteCar = () => {
   const { register, handleSubmit } = useForm();
+  const {
+    editDeleteModal,
+    setModalEditDelete,
+    announceId,
+    setModalDelete,
+    selectedAnnounce,
+  } = useContext(ContextAnnounces);
 
   const [selectedButton, setSelectedButton] = useState(true);
   const [galleryFields, setGalleryFields] = useState([""]);
@@ -75,8 +73,9 @@ const ModalEditDeleteCar = ({
     }
   }
 
-  if (editDeleteModal) {
-    return (
+  return (
+    editDeleteModal &&
+    createPortal(
       <div className={styles.modalBox}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
@@ -94,14 +93,14 @@ const ModalEditDeleteCar = ({
             <div className={styles.boxMarca}>
               <label htmlFor="marca">Marca</label>
               <input
-                defaultValue={selectedAnnounce.brand}
+                defaultValue={selectedAnnounce?.brand?.toString()}
                 placeholder="Mercedes Benz"
                 type="text"
                 {...register("brand")}
               />
               <label htmlFor="modelo">Modelo</label>
               <input
-                defaultValue={selectedAnnounce.model}
+                defaultValue={selectedAnnounce?.model}
                 placeholder="A 200 CGI"
                 type="text"
                 {...register("model")}
@@ -244,9 +243,10 @@ const ModalEditDeleteCar = ({
             </div>
           </form>
         </div>
-      </div>
-    );
-  }
+      </div>,
+      document.body
+    )
+  );
 };
 
 export default ModalEditDeleteCar;

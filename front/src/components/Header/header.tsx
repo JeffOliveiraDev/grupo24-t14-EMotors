@@ -3,14 +3,14 @@ import logo from "../../assets/headerTitle.svg";
 import Image from "next/image";
 import { AiOutlineMenu } from "react-icons/ai";
 import TagOrAncors from "./components/TagOrAncors";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
-const Header = () => {
+const Header = ({ id }: { id?: string }) => {
   return (
     <>
-      <header className={styles.conteiner}>
+      <header id={id} className={styles.conteiner}>
         <div>
-          <Image src={logo} alt="logotipo motors shop" />
+          <Image src={logo} alt="logo tipo motors shop" />
           <TagOrAncors />
           <button>
             <AiOutlineMenu />

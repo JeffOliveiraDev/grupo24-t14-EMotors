@@ -22,7 +22,9 @@
 //   width: 100vw;
 //   height: fit-content;
 // }
-
+body {
+  height: 100vh;
+}
 body,
 main {
   -webkit-font-smoothing: antialised;

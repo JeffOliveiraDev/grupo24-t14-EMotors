@@ -1,14 +1,12 @@
-import React, { useState } from "react";
+"use client";
+import React, { useContext } from "react";
 import styles from "../ModalDelete/styles.module.scss";
-import { useForm } from "react-hook-form";
-import {
-  RegisterNewAnnounceData,
-  registerNewAnnounceSchema,
-} from "@/schemas/cars.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { parseCookies } from "nookies";
+import { ContextAnnounces } from "@/context/announcesPage";
 
-const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
+const ModalDelete = () => {
+  const { modalDelete, setModalDelete, announceId } =
+    useContext(ContextAnnounces);
   const cookies = parseCookies();
 
   const token = cookies.token;

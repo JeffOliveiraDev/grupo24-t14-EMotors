@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import styles from "../modalRegisterNewCar/styles.module.scss";
 import { useForm } from "react-hook-form";
-import {
-  RegisterNewAnnounceData,
-  registerNewAnnounceSchema,
-} from "@/schemas/cars.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { parseCookies } from "nookies";
+import { ContextAnnounces } from "@/context/announcesPage";
 
-const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
+const ModalRegisterCar = () => {
+  const { setModalOpen, modalOpen } = useContext(ContextAnnounces);
+
   const { register, handleSubmit } = useForm();
   // const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
   //   resolver: zodResolver(registerNewAnnounceSchema),
@@ -71,13 +70,13 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
     }
   }
 
-  if (modalOpen) {
-    return (
+  return (
+    modalOpen && (
       <div className={styles.modalBox}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
             <h2>Criar anuncio</h2>
-            <button onClick={() => setModal(!modalOpen)}>X</button>
+            <button onClick={() => setModalOpen((e) => !e)}>X</button>
           </div>
           <h3>Informações do veículo</h3>
 
@@ -182,7 +181,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
             <div className={styles.boxBtnCancelCreate}>
               <button
                 className={styles.btnCancel}
-                onClick={() => setModal(!modalOpen)}
+                onClick={() => setModalOpen((e) => !e)}
               >
                 Cancelar
               </button>
@@ -191,8 +190,8 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
           </form>
         </div>
       </div>
-    );
-  }
+    )
+  );
 };
 
 export default ModalRegisterCar;

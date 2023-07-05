@@ -10,38 +10,9 @@ import { apiEmotors } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { setCookie } from "nookies";
-
+import nookies from "nookies";
 
 const FormLogin = () => {
-  async function handleCreateAnnounce(data: any) {
-    console.log(data);
-    const url = `http://127.0.0.1:3001/login`;
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    };
-
-    try {
-      const response = await fetch(url, requestOptions);
-
-      if (!response.ok) {
-        throw new Error("Failed to login");
-      }
-
-      const data = await response.json();
-      console.log("Logado com sucesso!", data);
-      // window.location.reload();
-      toast.success("Sucesso!");
-    } catch (error) {
-      console.error("Erro ao logar:", error);
-    }
-  }
-
   const {
     register,
     handleSubmit,
@@ -49,6 +20,7 @@ const FormLogin = () => {
   } = useForm({
     resolver: zodResolver(SchemaLogin),
   });
+
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -57,16 +29,16 @@ const FormLogin = () => {
     try {
       setLoading((e) => !e);
       const res = await apiEmotors.post("/login", data);
-      setCookie(null, "token", res.data.token, {
+      nookies.set(null, "token", res.data.token, {
         path: "/",
         maxAge: 1000 * 60 * 60 * 24 * 7,
       });
       const get = await apiEmotors.get(`/users/${res.data.user_id}`);
-      setCookie(null, "user", JSON.stringify(get.data), {
+      nookies.set(null, "user", JSON.stringify(get.data), {
         path: "/",
         maxAge: 1000 * 60 * 60 * 24 * 7,
       });
-      toast.success(res.data.message, {
+      toast.success("Success!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -138,3 +110,31 @@ function setCookie(
 ) {
   throw new Error("Function not implemented.");
 }
+
+// async function handleCreateAnnounce(data: any) {
+//   console.log(data);
+//   const url = `http://127.0.0.1:3001/login`;
+
+//   const requestOptions = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(data),
+//   };
+
+//   try {
+//     const response = await fetch(url, requestOptions);
+
+//     if (!response.ok) {
+//       throw new Error("Failed to login");
+//     }
+
+//     const data = await response.json();
+//     console.log("Logado com sucesso!", data);
+//     // window.location.reload();
+//     toast.success("Sucesso!");
+//   } catch (error) {
+//     console.error("Erro ao logar:", error);
+//   }
+// }

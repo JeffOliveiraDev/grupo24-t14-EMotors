@@ -1,0 +1,325 @@
+@use "../../../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.boxPage {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0px 60px;
+    border-bottom: 2px solid #dee2e6;
+
+    .divLeft {
+      width: 70%;
+    }
+
+    .divRight {
+      width: 30%;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.8rem;
+
+      border-left: 2px solid #dee2e6;
+
+      h3 {
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1.6rem;
+
+        color: $color-grey-scale-grey-2;
+      }
+      span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0px;
+
+        width: 32px;
+        height: 32px;
+
+        font-family: "Inter";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.4rem;
+        line-height: 0px;
+
+        color: #ffffff;
+
+        background: $color-brand-brand-2;
+        border-radius: 150px;
+      }
+      .burguerMenu {
+        display: none;
+      }
+      @media (max-width: 500px) {
+        h3 {
+          display: none;
+        }
+        span {
+          display: none;
+        }
+        .btnBurguer {
+          background: none;
+          border: none;
+        }
+        .burguerMenu {
+          display: flex;
+          font-size: 3rem;
+        }
+        border-left: none;
+      }
+    }
+  }
+  .blueBackground {
+    background: $color-brand-brand-1;
+    width: 100vw;
+    height: 300px;
+  }
+  .boxCreateAndList {
+    display: flex;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+    background: $color-grey-scale-grey-8;
+    border-radius: 8px;
+    flex-direction: column;
+
+    // h2 {
+    //   display: flex;
+    //   align-self: flex-start;
+    // }
+  }
+  .boxUser {
+    width: 70%;
+    height: fit-content;
+    margin-top: -200px;
+    background: $color-grey-scale-grey-10;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+    gap: 2.4rem;
+
+    span {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 90px;
+      height: 90px;
+
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 3.6rem;
+      background: $color-brand-brand-1;
+      border-radius: 104px;
+    }
+    .nameAndTag {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    h3 {
+      @include text-style-heading-heading-6-600;
+      color: $color-grey-scale-grey-1;
+    }
+    p {
+      @include text-style-text-body-1-400;
+      color: $color-grey-scale-grey-2;
+    }
+    .btnCreateAnnounce {
+      @include button-big-text;
+    }
+  }
+  @media (max-width: 688px) {
+    .boxUser {
+      height: fit-content;
+    }
+  }
+  .boxMyCarsList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    align-items: center;
+    padding: 50px 0px;
+    gap: 20px;
+    flex-direction: column;
+    height: fit-content;
+  }
+  h2 {
+    display: flex;
+    align-self: flex-start;
+  }
+
+  .boxMyCarsList ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4.8rem;
+  }
+  .boxMyCarsList li {
+    width: 300px;
+    height: fit-content;
+  }
+  .boxMyCarsList {
+    img {
+      width: 312px;
+      height: 152px;
+
+      background: $color-grey-scale-grey-7;
+
+      border: 2px solid $color-grey-scale-grey-7;
+    }
+  }
+  .boxMyCarsList img:hover {
+    scale: 1;
+
+    outline: 2px solid $color-brand-brand-1;
+  }
+  .cardStyle {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+
+    h3 {
+      color: $color-grey-scale-grey-1;
+      @include text-style-heading-heading-7-600;
+      font-size: 1.6rem;
+      font-family: Lexend;
+      font-weight: 600;
+    }
+    p {
+      color: $color-grey-scale-grey-2;
+      @include text-style-text-body-2-400;
+      font-size: 1.4rem;
+      font-family: Inter;
+      line-height: 2.4rem;
+    }
+  }
+  .userNameLogo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    span {
+      display: flex;
+      width: 3.1rem;
+      height: 3.1rem;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 150px;
+      background: var(--brand-brand-1, #4529e6);
+      color: #ffffff;
+    }
+  }
+  .boxTagsPrice {
+    display: flex;
+
+    align-items: center;
+    gap: 0.8rem;
+    ul {
+      width: 100%;
+      display: flex;
+      gap: 0.8rem;
+      justify-content: space-between;
+      align-items: center;
+      strong {
+        font-size: 1.6rem;
+      }
+      .tags {
+        display: flex;
+        gap: 1rem;
+      }
+    }
+
+    span {
+      @include text-style-heading-heading-7-500;
+      color: $color-grey-scale-grey-1;
+    }
+  }
+}
+.footer {
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  color: #ffffff;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+}
+.footerLeft {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  h3 {
+    font-size: 2rem;
+  }
+  h4 {
+    display: flex;
+    margin-top: 3%;
+    align-items: baseline;
+  }
+}
+
+.footerRight {
+  width: calc(33.33% - 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  width: calc(33.33% - 20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btnFooter {
+  width: 53px;
+  height: 50px;
+
+  background: $color-grey-scale-grey-1;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 16px;
+
+  color: #ffffff;
+}
+
+.boxBtnsEditDetails {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    display: flex;
+    height: 3.8rem;
+    padding: 1.2rem 2rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    border: 1.5px solid $color-grey-scale-grey-1;
+    font-size: 1.4rem;
+    color: $color-grey-scale-grey-1;
+    font-weight: 600;
+    font-family: "Inter";
+  }
+}

@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect, useReducer, createContext } from "react";
-import { ContextAuth } from "../interfaces";
+import { iHomePageContext } from "../interfaces";
 
-const Context = createContext({} as ContextAuth);
+const Context = createContext({} as iHomePageContext);
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   const [carsBrands, setCarsBrands] = useState<string[]>([]);
