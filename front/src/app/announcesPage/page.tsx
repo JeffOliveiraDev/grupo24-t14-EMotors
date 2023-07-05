@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import headerTitle from "../../assets/headerTitle.svg";
@@ -11,6 +11,8 @@ import ModalEditDeleteCar from "@/components/ModalEditDeleteCar";
 import ModalDelete from "@/components/ModalDelete";
 import ModalImgDetail from "@/components/ModalImgDetail";
 import Header from "@/components/Header/header";
+import { parseCookies } from "nookies";
+import nookies from "nookies";
 
 const AdminProfilePage = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -20,32 +22,35 @@ const AdminProfilePage = () => {
   const [modalDelete, setModalDelete] = useState(false);
   const [selectedAnnounce, setSelectedAnnounce] = useState(null);
   const [detailedImage, setDetailedImage] = useState(false);
+  const cookies = parseCookies();
+
+  const token = cookies.token;
+ const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+ const [user, setUser] = React.useState(userFromCookie);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MDQxNDI4LCJleHAiOjE2ODgxMjc4MjgsInN1YiI6IjdjYWMwMjJjLWY5NzItNDYyMC04ZDkzLWQ2OGMxZDc1ZDhiOSJ9.Dj_dXhn1HwKhhWAIwfTKIMPgpmsaTV_s4kwfUs4CL-M";
-        const data = await getData(token);
-        console.log(data[0].user);
-        if (data.length > 0) {
-          const userId = data[0].user.id;
-          const filteredData = data.filter(
-            (item: any) => item.user.id === userId
-          );
-          setAnnounces(filteredData);
-          console.log(filteredData);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  async function fetchData() {
+    try {
+      const data = await getData(token);
 
-    fetchData();
-  }, []);
+      if (data.length > 0) {
+        const filteredData = data.filter((item: any) =>
+          user ? item.user.id === user.id : false
+        );
+
+        setAnnounces(filteredData);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  fetchData();
+}, [token, user]); 
+
 
   async function getData(token: string) {
-    const res = await fetch("http://127.0.0.1:3001/announcements", {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -58,7 +63,6 @@ const AdminProfilePage = () => {
     return res.json();
   }
 
-  const tags = [{ text: "0Km" }, { text: "2023" }];
   return (
     <main className={`${styles.boxPage} ${styles.scroolBar}`}>
       <Header />
@@ -66,24 +70,26 @@ const AdminProfilePage = () => {
       <section>
         <div className={styles.boxCreateAndList}>
           <div className={styles.boxUser}>
-            <span>{announces?.[0]?.user?.name?.slice(0, 2).toUpperCase()}</span>
+            {user && (
+      <React.Fragment>
+        <span>{user.name.slice(0, 2).toUpperCase()}</span>
 
-            <div className={styles.nameAndTag}>
-              <h3>{announces?.[0]?.user?.name}</h3>
-              <Tag>Anunciante</Tag>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem aliquid doloremque obcaecati explicabo laboriosam
-              libero quidem expedita cum. Qui quia obcaecati quae odio
-              cupiditate, ea eos inventore facere tenetur ex.
-            </p>
-            <button
-              className={styles.btnCreateAnnounce}
-              onClick={() => setModalOpen(!modalOpen)}
-            >
-              Criar Anuncio
-            </button>
+        <div className={styles.nameAndTag}>
+          <h3>{user.name}</h3>
+          <Tag>Anunciante</Tag>
+        </div>
+        <p>{user.description ? user.description : null}</p>
+      </React.Fragment>
+    )}
+            
+            {user ? (
+              <button
+                className={styles.btnCreateAnnounce}
+                onClick={() => setModalOpen(!modalOpen)}
+              >
+                Criar Anuncio
+              </button>
+            ) : null}
           </div>
 
           <div className={styles.boxMyCarsList}>
@@ -102,7 +108,7 @@ const AdminProfilePage = () => {
                     }}
                   />
 
-                  <h3>{announce.model}</h3>
+                  <h3>{announce.brand}</h3>
 
                   <p>{announce.description}</p>
 
@@ -134,7 +140,14 @@ const AdminProfilePage = () => {
                     >
                       Editar
                     </button>
-                    <button>Ver detalhes</button>
+                    <button
+                      onClick={() => {
+                        setDetailedImage(!detailedImage),
+                          setSelectedAnnounce(announce);
+                      }}
+                    >
+                      Ver detalhes
+                    </button>
                   </div>
                 </li>
               ))}

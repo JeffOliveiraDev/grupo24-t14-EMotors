@@ -41,10 +41,11 @@ model User {
 model Announcement {
   id           String     @id 
   model        String
+  brand        String
   fuel         String
   mileage      String
   color        String
-  pfipe        Boolean
+  pfipe        String
   sellPrice    Float
   description  String
   coverImage   String

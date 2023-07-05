@@ -2,10 +2,12 @@
 import styles from "../CardAddNewCar/styles.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "@/context/HomeContext";
-import { BrandCars, iCar } from "@/interfaces";
+import { BrandCars } from "@/interfaces";
 import CardCar from "../CardCar";
 import Button from "../Button";
 import ModalFilter from "../ModalFilter";
+import { parseCookies } from "nookies";
+import { apiEmotors } from "@/services/api";
 
 const CardAddNewCar = ({}: any) => {
   const [cars, setCars] = useState<BrandCars[]>();
@@ -32,6 +34,18 @@ const CardAddNewCar = ({}: any) => {
   useEffect(() => {
     async function fetchData() {
       try {
+        const cookies = parseCookies();
+
+        const token = cookies.token;
+
+        const get = await apiEmotors.get(`/announcements`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log(get, "teste");
+
         const data = await getData(brand!);
         setCars(data);
       } catch (error) {

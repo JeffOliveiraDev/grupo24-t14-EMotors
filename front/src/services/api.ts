@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiEmotors = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://m6-emotors.onrender.com",
   timeout: 10000,
 });
 

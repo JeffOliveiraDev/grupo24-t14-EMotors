@@ -1,10 +1,8 @@
 import styles from "./styles.module.scss";
-import backGroundBanner from "../assets/backgroundBanner.svg";
-import Image from "next/image";
 import { NextPage } from "next";
+import SectionContet from "@/components/Aside";
 import Header from "@/components/Header/header";
 import Footer from "@/components/Footer/footer";
-import SectionContet from "@/components/Aside";
 
 interface ICar {
   car: CarData;
@@ -26,6 +24,7 @@ const Home: NextPage<CarData> = () => {
   return (
     <main className={styles.home}>
       <Header />
+
       <section className={styles.bannerCentral}>
         <div>
           <h1>Motors Shop</h1>

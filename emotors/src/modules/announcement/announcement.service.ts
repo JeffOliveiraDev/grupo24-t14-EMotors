@@ -29,6 +29,14 @@ export class AnnouncementService {
     return announcement;
   }
 
+  async findOneBrand(brand: string) {
+    const announcement = await this.announcementRepository.findOne(brand);
+    if (!announcement) {
+      throw new NotFoundException('Announcement not found!');
+    }
+    return announcement;
+  }
+
   async update(
     id: string,
     updateAnnouncementDto: UpdateAnnouncementDto,

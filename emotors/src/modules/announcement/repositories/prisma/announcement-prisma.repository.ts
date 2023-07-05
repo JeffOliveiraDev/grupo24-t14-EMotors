@@ -22,6 +22,7 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
       data: {
         id: announcement.id,
         color: announcement.color,
+        brand: announcement.brand,
         coverImage: announcement.coverImage,
         description: announcement.description,
         detailsImage: announcement.detailsImage,

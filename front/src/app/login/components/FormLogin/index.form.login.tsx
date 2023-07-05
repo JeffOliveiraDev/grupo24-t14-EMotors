@@ -11,8 +11,37 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { setCookie } from "nookies";
+// import { setCookie } from "nookies";
 
 const FormLogin = () => {
+  async function handleCreateAnnounce(data: any) {
+    console.log(data);
+    const url = `http://127.0.0.1:3001/login`;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
+
+      const data = await response.json();
+      console.log("Logado com sucesso!", data);
+      // window.location.reload();
+      toast.success("Sucesso!");
+    } catch (error) {
+      console.error("Erro ao logar:", error);
+    }
+  }
+
   const {
     register,
     handleSubmit,
