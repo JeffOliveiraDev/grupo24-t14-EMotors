@@ -25,7 +25,8 @@ const AdminProfilePage = () => {
   const cookies = parseCookies();
 
   const token = cookies.token;
-  const [user, setUser] = React.useState(JSON.parse(cookies.user));
+ const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+ const [user, setUser] = React.useState(userFromCookie);
 
   useEffect(() => {
     async function fetchData() {
