@@ -34,11 +34,10 @@ const AdminProfilePage = () => {
         const data = await getData(token);
 
         if (data.length > 0) {
-          const filteredData = data.filter(
-            (item: any) => item.user.id === user.id
-          );
+          const filteredData = data.filter((item: any) => (user ? item.user.id === user.id : false));
+
           setAnnounces(filteredData);
-          console.log(filteredData);
+          
         }
       } catch (error) {
         console.error(error);
