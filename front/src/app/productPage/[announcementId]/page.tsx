@@ -14,7 +14,6 @@ import { useForm } from "react-hook-form";
 import commentSchema from "./scehma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "@/components/Footer/footer";
-import { userData } from "../../../../utils";
 import { parseCookies } from "nookies";
 
 const ProductPage = ({
