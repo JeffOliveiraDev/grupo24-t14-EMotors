@@ -12,7 +12,6 @@ import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { setCookie } from "nookies";
 
-
 const FormLogin = () => {
   async function handleCreateAnnounce(data: any) {
     console.log(data);
@@ -130,11 +129,3 @@ const FormLogin = () => {
 };
 
 export default FormLogin;
-function setCookie(
-  arg0: null,
-  arg1: string,
-  token: any,
-  arg3: { path: string; maxAge: number }
-) {
-  throw new Error("Function not implemented.");
-}
