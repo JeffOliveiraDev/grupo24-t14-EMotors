@@ -102,4 +102,12 @@ export class AnnouncementPrismaRepository implements AnnouncementRepository {
       where: { id },
     });
   }
+
+  async findOneBrand(brand: string): Promise<Announcement> {
+    const announcement = await this.prisma.announcement.findFirst({
+      where: { brand: brand },
+    });
+
+    return plainToInstance(Announcement, announcement);
+  }
 }
