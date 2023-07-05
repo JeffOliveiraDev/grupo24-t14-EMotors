@@ -25,29 +25,28 @@ const AdminProfilePage = () => {
   const cookies = parseCookies();
 
   const token = cookies.token;
- const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
- const [user, setUser] = React.useState(userFromCookie);
+  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+  const [user, setUser] = React.useState(userFromCookie);
 
   useEffect(() => {
-  async function fetchData() {
-    try {
-      const data = await getData(token);
+    async function fetchData() {
+      try {
+        const data = await getData(token);
 
-      if (data.length > 0) {
-        const filteredData = data.filter((item: any) =>
-          user ? item.user.id === user.id : false
-        );
+        if (data.length > 0) {
+          const filteredData = data.filter((item: any) =>
+            user ? item.user.id === user.id : false
+          );
 
-        setAnnounces(filteredData);
+          setAnnounces(filteredData);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
     }
-  }
 
-  fetchData();
-}, [token, user]); 
-
+    fetchData();
+  }, [token, user]);
 
   async function getData(token: string) {
     const res = await fetch("https://m6-emotors.onrender.com/announcements", {
@@ -71,17 +70,17 @@ const AdminProfilePage = () => {
         <div className={styles.boxCreateAndList}>
           <div className={styles.boxUser}>
             {user && (
-      <React.Fragment>
-        <span>{user.name.slice(0, 2).toUpperCase()}</span>
+              <React.Fragment>
+                <span>{user.name.slice(0, 2).toUpperCase()}</span>
 
-        <div className={styles.nameAndTag}>
-          <h3>{user.name}</h3>
-          <Tag>Anunciante</Tag>
-        </div>
-        <p>{user.description ? user.description : null}</p>
-      </React.Fragment>
-    )}
-            
+                <div className={styles.nameAndTag}>
+                  <h3>{user.name}</h3>
+                  <Tag>Anunciante</Tag>
+                </div>
+                <p>{user.description ? user.description : null}</p>
+              </React.Fragment>
+            )}
+
             {user ? (
               <button
                 className={styles.btnCreateAnnounce}
