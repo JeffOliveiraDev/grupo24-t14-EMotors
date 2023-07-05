@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import commentSchema from "./scehma";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "@/components/Footer/footer";
+import { parseCookies } from "nookies";
 
 const ProductPage = ({
   params,
@@ -24,9 +25,11 @@ const ProductPage = ({
 }) => {
   const tags = [{ text: "0Km" }, { text: "2023" }];
   const [comments, setComments] = React.useState([] as Comments[]);
+  const cookies = parseCookies();
 
-  const user = JSON.parse(localStorage.getItem("user")!);
-  const token = localStorage.getItem("token");
+  const token = cookies.token;
+  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+  const [user, setUser] = React.useState(userFromCookie);
 
   const {
     register,
