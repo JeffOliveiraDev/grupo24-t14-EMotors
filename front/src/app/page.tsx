@@ -20,7 +20,7 @@ interface CarData {
   [brand: string]: CarBrand[];
 }
 
-const Home: NextPage<CarData> = () => {
+const Home = () => {
   return (
     <main className={styles.home}>
       <Header />
