@@ -145,7 +145,7 @@ const ProductPage = ({
                       <div className={styles.textareaWrapper}>
                         <div className={styles.comment}>
                           <span>
-                            <span>{user.name[0].toUpperCase() + &apos;user.name[1].toUpperCase()&apos;}</span>
+                            <span>{user.name[0].toUpperCase() + user.name[1].toUpperCase()}</span>
                           </span>
                           <h3>{user.name}</h3>
                         </div>
