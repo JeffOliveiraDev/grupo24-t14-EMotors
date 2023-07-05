@@ -173,7 +173,7 @@ const ProductPage = ({
           </div>
         </section>
       </div>
-      <Footer />
+      <Footer top="login" />
     </>
   );
 };
