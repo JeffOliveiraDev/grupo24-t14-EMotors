@@ -29,23 +29,25 @@ const AdminProfilePage = () => {
  const [user, setUser] = React.useState(userFromCookie);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getData(token);
+  async function fetchData() {
+    try {
+      const data = await getData(token);
 
-        if (data.length > 0) {
-          const filteredData = data.filter((item: any) => (user ? item.user.id === user.id : false));
+      if (data.length > 0) {
+        const filteredData = data.filter((item: any) =>
+          user ? item.user.id === user.id : false
+        );
 
-          setAnnounces(filteredData);
-          
-        }
-      } catch (error) {
-        console.error(error);
+        setAnnounces(filteredData);
       }
+    } catch (error) {
+      console.error(error);
     }
+  }
 
-    fetchData();
-  }, [token, user.id]);
+  fetchData();
+}, [user]); 
+
 
   async function getData(token: string) {
     const res = await fetch("https://m6-emotors.onrender.com/announcements", {
