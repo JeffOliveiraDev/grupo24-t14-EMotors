@@ -86,7 +86,7 @@ const ProductPage = ({
                       <Image src={mercedezA200} alt="" />
                     </div>
                     <div className={styles.carNamePrice}>
-                      <h2>Mercedes Benz<h2/>
+                      <h2>Mercedes Benz</h2>
                       <div className={styles.boxTagsPrice}>
                         <ul>
                           {tags.map((e, i) => (
