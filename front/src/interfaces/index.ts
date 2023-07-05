@@ -20,3 +20,24 @@ export interface Comments {
   updatedAt: Date;
   user: Users;
 }
+
+export interface iCar {
+  brand: string;
+  fuel: number;
+  id: string;
+  name: string;
+  value: number;
+  year: string;
+}
+
+export interface Car {
+  name: string;
+}
+
+export interface BrandCars {
+  [brand: string]: Car[];
+}
+
+export interface CardAddProps {
+  brand: string;
+}
