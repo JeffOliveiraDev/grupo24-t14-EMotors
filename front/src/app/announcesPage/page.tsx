@@ -46,7 +46,7 @@ const AdminProfilePage = () => {
   }
 
   fetchData();
-}, [user]); 
+}, [token, user]); 
 
 
   async function getData(token: string) {
