@@ -78,9 +78,10 @@ const AdminProfilePage = () => {
           <h3>{user.name}</h3>
           <Tag>Anunciante</Tag>
         </div>
+        <p>{user.description ? user.description : null}</p>
       </React.Fragment>
     )}
-            <p>{user.description ? user.description : null}</p>
+            
             {user ? (
               <button
                 className={styles.btnCreateAnnounce}
