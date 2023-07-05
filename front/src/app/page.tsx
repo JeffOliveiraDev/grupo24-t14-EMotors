@@ -27,7 +27,7 @@ interface CarData {
   [brand: string]: CarBrand[];
 }
 
-const Home: NextPage<CarData> = ({ carsList }) => {
+const Home = () => {
   const [carsBrands, setCarsBrands] = useState<string[]>([]);
   const [brand, setBrand] = useState("chevrolet");
   const [year, setYear] = useState([]);
