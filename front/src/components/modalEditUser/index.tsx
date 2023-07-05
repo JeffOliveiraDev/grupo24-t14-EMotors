@@ -6,6 +6,7 @@ import { EditUserData, EditUserSchema } from "@/schemas/users.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPortal } from "react-dom";
 import { apiEmotors } from "@/services/api";
+import { parseCookies } from "nookies";
 
 const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
   const {
@@ -17,8 +18,9 @@ const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
   });
 
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
+  const cookies = parseCookies();
+
+  const token = cookies.token;
 
   const closeModal = () => {
     setModalOpen(false);

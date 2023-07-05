@@ -413,6 +413,9 @@
   flex-direction: column;
   width: 60%;
 }
+.btnBuy {
+  @include button-buy-small;
+}
 @media (max-width: 480px) {
   .boxAnnounceAndSocial {
     flex-direction: column;

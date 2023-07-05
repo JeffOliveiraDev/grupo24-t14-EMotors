@@ -31,22 +31,15 @@ const CardAddNewCar = ({}: any) => {
     currentItens = itens.slice(startIndex, endIndex);
   }
 
+  const cookies = parseCookies();
+
+  const token = cookies.token;
+
   useEffect(() => {
     async function fetchData() {
       try {
-        const cookies = parseCookies();
-
-        const token = cookies.token;
-
-        const get = await apiEmotors.get(`/announcements`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        console.log(get, "teste");
-
-        const data = await getData(brand!);
+        const data = await getData(token);
+        setItens(data);
         setCars(data);
       } catch (error) {
         console.error(error);
@@ -54,21 +47,14 @@ const CardAddNewCar = ({}: any) => {
     }
 
     fetchData();
-  }, [brand]);
+  }, [token]);
 
-  useEffect(() => {
-    if (choosenYear) {
-      const filteredCars = cars?.filter((car) => car.year === choosenYear);
-      setItens(filteredCars || []);
-    } else {
-      setItens(cars || []);
-    }
-  }, [choosenYear, cars]);
-
-  async function getData(brand: string) {
-    const res = await fetch(
-      `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`
-    );
+  async function getData(token: string) {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -76,6 +62,50 @@ const CardAddNewCar = ({}: any) => {
 
     return res.json();
   }
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const cookies = parseCookies();
+
+  //       const token = cookies.token;
+
+  //       const get = await apiEmotors.get(`/announcements`, {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       });
+
+  //       // const data = await getData(brand!);
+  //       // setCars(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, [brand]);
+
+  // useEffect(() => {
+  //   if (choosenYear) {
+  //     const filteredCars = cars?.filter((car) => car.year === choosenYear);
+  //     setItens(filteredCars || []);
+  //   } else {
+  //     setItens(cars || []);
+  //   }
+  // }, [choosenYear, cars]);
+
+  // async function getData(brand: string) {
+  //   const res = await fetch(
+  //     `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`
+  //   );
+
+  //   if (!res.ok) {
+  //     throw new Error("Failed to fetch data");
+  //   }
+
+  //   return res.json();
+  // }
 
   return (
     <div className={styles.boxUl}>
