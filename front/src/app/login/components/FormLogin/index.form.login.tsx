@@ -14,8 +14,7 @@ import { setCookie } from "nookies";
 
 const FormLogin = () => {
   async function handleCreateAnnounce(data: any) {
-    console.log(data);
-    const url = `http://127.0.0.1:3001/login`;
+    const url = `https://m6-emotors.onrender.com/login`;
 
     const requestOptions = {
       method: "POST",
