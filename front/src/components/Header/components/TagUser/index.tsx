@@ -78,8 +78,8 @@ const TagUser = ({ name }: { name: string | null }) => {
       )}
       {modalAdressOpen && (
         <ModalEditAdress
-          editDeleteModal={modalAdressOpen}
-          setModalEditDelete={setModalAdressOpen}
+          modalOpen={modalAdressOpen}
+          setModalOpen={setModalAdressOpen}
         />
       )}
     </div>

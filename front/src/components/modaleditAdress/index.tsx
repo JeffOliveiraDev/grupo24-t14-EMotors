@@ -29,6 +29,42 @@ const ModalEditAdress = ({ modalOpen, setModalOpen }: any) => {
     setModalOpen(false);
   };
 
+  const handleEscapeKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (e: any) => {
+      if (!e.target.closest(`.${styles.modalInterior}`)) {
+        closeModal();
+      }
+    };
+
+    const handleEscapeKeyPress = (e: any) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick, false);
+    document.addEventListener("keydown", handleEscapeKeyPress, false);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick, false);
+      document.removeEventListener("keydown", handleEscapeKeyPress, false);
+    };
+  }, []);
+
+  const handleModalClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const handleOverlayClick = () => {
+    closeModal();
+  };
+
   function removerChavesVazias(objeto: { [key: string]: any }): {
     [key: string]: any;
   } {
@@ -59,37 +95,17 @@ const ModalEditAdress = ({ modalOpen, setModalOpen }: any) => {
       });
   };
 
-  const handleEscapeKeyPress = (e: KeyboardEvent) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleEscapeKeyPress, false);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeKeyPress, false);
-    };
-  }, []);
-
-  const handleModalClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  const handleOverlayClick = () => {
-    closeModal();
-  };
-
   return createPortal(
     <div
       className={`${styles.modal} ${modalOpen ? styles.open : ""}`}
-      onClick={handleOverlayClick}
+      onKeyDown={handleEscapeKeyPress}
     >
       <div className={styles.modalInterior} onClick={handleModalClick}>
         <div className={styles.tittleAndClose}>
           <h3>Editar Endereço</h3>
-          <button onClick={closeModal}>X</button>
+          <button type="button" onClick={closeModal}>
+            X
+          </button>
         </div>
         <div className={styles.title2}>
           <h3> Informações de Endereço</h3>
