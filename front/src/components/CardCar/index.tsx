@@ -3,30 +3,38 @@ import styles from "./styles.module.scss";
 import { iCar } from "@/interfaces";
 import carImg from "../../assets/imageCar.svg";
 import Tag from "../Tags/tags";
+import Link from "next/link";
 
-const CardCar = ({ car }: { car: iCar }) => {
+const CardCar = ({ car }: any) => {
+  console.log(car);
   return (
     <li className={styles.container} key={car.id}>
-      <div className={styles.boxImage}>
-        <Image alt="image car" width={100} height={100} src={carImg} />
-      </div>
-      <h3>{car.name}</h3>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem...
-      </p>
+      <Link href={`/productPage/${car.id}`}>
+        <div className={styles.boxImage}>
+          <Image
+            alt="image car"
+            width={100}
+            height={100}
+            src={car.coverImage}
+          />
+        </div>
+        <h3>{car.model}</h3>
+        <p>{car.description}..</p>
+      </Link>
       <div className={styles.boxUser}>
         <div>
-          <p className={styles.boxImageOwner}>R</p>
+          <p className={styles.boxImageOwner}>
+            {car.user.name.slice(0, 2).toUpperCase()}
+          </p>
         </div>
-        <p>rafael</p>
+        <p>{car.user.name}</p>
       </div>
       <div className={styles.boxTagsPrice}>
         <ul>
-          <Tag key={car.year}>{car.year}</Tag>
+          <Tag key={car.mileage}>{car.mileage} KM</Tag>
         </ul>
         <span>
-          <strong>R$ {car.value.toLocaleString()}</strong>
+          <strong>R$ {car.sellPrice.toLocaleString()}</strong>
         </span>
       </div>
     </li>

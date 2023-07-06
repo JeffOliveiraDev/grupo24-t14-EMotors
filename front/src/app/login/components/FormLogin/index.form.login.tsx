@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { setCookie } from "nookies";
-// import { setCookie } from "nookies";
 
 const FormLogin = () => {
   async function handleCreateAnnounce(data: any) {
@@ -63,6 +62,7 @@ const FormLogin = () => {
       const get = await apiEmotors.get(`/users/${res.data.user_id}`);
       setCookie(null, "user", JSON.stringify(get.data), {
         path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       });
       toast.success(res.data.message, {
         position: "top-right",
