@@ -1,75 +1,64 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "../ModalEditAdress/styles.module.scss";
+import styles from "../modalEditUser/styles.module.scss";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPortal } from "react-dom";
 import { apiEmotors } from "@/services/api";
-import { EditAdressData, EditAdressSchema } from "@/schemas/editAdress.shema";
 import { parseCookies } from "nookies";
-import { toast } from "react-toastify";
+import { EditAdressData, EditAdressSchema } from "@/schemas/editAdress.shema";
 
-const ModalEditAdress = ({
-  closeModal,
+const ModalEditAdress = ({ modalOpen, setModalOpen }: any) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EditAdressData>({
+    resolver: zodResolver(EditAdressSchema),
+  });
 
-  userId,
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  setModalEditDelete,
-  editDeleteModal,
-}: any) => {
-  const { register, handleSubmit } = useForm();
+  const cookies = parseCookies();
+  const token = cookies.token;
+  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+  const [user, setUser] = useState(userFromCookie);
 
-  const [galleryFields, setGalleryFields] = useState([""]);
-
-  const handleAddGalleryField = () => {
-    setGalleryFields([...galleryFields, ""]);
+  const closeModal = () => {
+    setModalOpen(false);
   };
 
-  const onFormSubmit = (formData: any) => {
-    console.log(formData);
-    formData.sellPrice = parseFloat(formData.sellPrice);
+  function removerChavesVazias(objeto: { [key: string]: any }): {
+    [key: string]: any;
+  } {
+    const novoObjeto = { ...objeto };
 
-    handleCreateAdress(formData);
-  };
-
-  async function handleCreateAdress(formData: {
-    cep: string;
-    estado: string;
-    cidade: string;
-    rua: string;
-    numero: string;
-    complemento: string;
-  }) {
-    const cookies = parseCookies();
-
-    const token = cookies.token;
-    const url = `https://m6-emotors.onrender.com/users`;
-
-    const requestOptions = {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(formData),
-    };
-
-    try {
-      const response = await fetch(url, requestOptions);
-
-      if (!response.ok) {
-        throw new Error("Failed to edit announcement");
+    Object.keys(novoObjeto).forEach((chave) => {
+      if (novoObjeto[chave] === "") {
+        delete novoObjeto[chave];
       }
+    });
 
-      const data = await response.json();
-      console.log("Endereço editado com sucesso!", data);
-      window.location.reload();
-      toast.success("Sucesso!");
-    } catch (error) {
-      console.error("Erro ao editar o endereço:", error);
-    }
+    return novoObjeto;
   }
+
+  const onFormSubmit = (formData: EditAdressData) => {
+    const data = { address: removerChavesVazias(formData) };
+    console.log(formData);
+    apiEmotors
+      .patch("/users", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log("Endereço atualizado com sucesso:", response.data);
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Erro ao atualizar o endereço:", error);
+      });
+  };
+
   const handleEscapeKeyPress = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
       closeModal();
@@ -84,72 +73,82 @@ const ModalEditAdress = ({
     };
   }, []);
 
-  if (!closeModal) {
-    return (
-      <div className={styles.modalBox}>
-        <div className={styles.modalInterior}>
-          <div className={styles.tittleAndClose}>
-            <h2>Editar Endereço</h2>
-            <button onClick={() => setModalEditDelete(closeModal)}>X</button>
-          </div>
-          <h3>Informações do veículo</h3>
+  const handleModalClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
 
-          <form
-            className={styles.formBox}
-            onSubmit={handleSubmit(onFormSubmit)}
-          >
-            <div className={styles.box}>
-              <label htmlFor="cep">CEP</label>
-              <input placeholder="00000.000" type="text" {...register("cep")} />
-            </div>
-            <div className={styles.box}>
-              <label htmlFor="estado">Estado</label>
-              <input placeholder="Paraná" type="text" {...register("estado")} />
-            </div>
-            <div className={styles.box}>
-              <label htmlFor="cidade">Cidade</label>
-              <input
-                placeholder="Curitiba"
-                type="text"
-                {...register("cidade")}
-              />
-            </div>
-            <div className={styles.box}>
-              <label htmlFor="rua">Rua</label>
-              <input
-                placeholder="Rua do paraná"
-                type="text"
-                {...register("rua")}
-              />
-            </div>
-            <div className={styles.box}>
-              <label htmlFor="numero">Número</label>
-              <input placeholder="1525" type="text" {...register("numero")} />
-            </div>
-            <div className={styles.box}>
-              <label htmlFor="complemento">Complemento</label>
-              <input
-                placeholder="Apart 12"
-                type="text"
-                {...register("complemento")}
-              />
-            </div>
-            <div className={styles.boxBtnCancelCreate}>
-              <button
-                className={styles.btnCancel}
-                onClick={() => {
-                  closeModal(true), setModalEditDelete(false);
-                }}
-              >
-                Exluir anúncio
-              </button>
-              <button className={styles.btnCreate}>Salvar alterações</button>
-            </div>
-          </form>
+  const handleOverlayClick = () => {
+    closeModal();
+  };
+
+  return createPortal(
+    <div
+      className={`${styles.modal} ${modalOpen ? styles.open : ""}`}
+      onClick={handleOverlayClick}
+    >
+      <div className={styles.modalInterior} onClick={handleModalClick}>
+        <div className={styles.tittleAndClose}>
+          <h3>Editar Endereço</h3>
+          <button onClick={closeModal}>X</button>
         </div>
+        <div className={styles.title2}>
+          <h3> Informações de Endereço</h3>
+        </div>
+        <form className={styles.formBox} onSubmit={handleSubmit(onFormSubmit)}>
+          <div className={styles.box}>
+            <label htmlFor="cep">CEP</label>
+            <input placeholder="00000.000" type="text" {...register("cep")} />
+          </div>
+          <div className={styles.box}>
+            <label htmlFor="estado">Estado</label>
+            <input placeholder="Paraná" type="text" {...register("state")} />
+          </div>
+          <div className={styles.box}>
+            <label htmlFor="cidade">Cidade</label>
+            <input placeholder="Curitiba" type="text" {...register("city")} />
+          </div>
+          <div className={styles.box}>
+            <label htmlFor="rua">Rua</label>
+            <input
+              placeholder="Rua do Paraná"
+              type="text"
+              {...register("street")}
+            />
+          </div>
+          <div className={styles.box}>
+            <label htmlFor="numero">Número</label>
+            <input placeholder="851" type="text" {...register("homeNumber")} />
+          </div>
+          <div className={styles.box}>
+            <label htmlFor="complemento">Complemento</label>
+            <input
+              placeholder="Apartamento 12"
+              type="text"
+              {...register("reference")}
+            />
+          </div>
+          {/* {errors && (
+            <p className={styles.error}>
+              Erro(s) no preenchimento do formulário.
+            </p>
+          )} */}
+          <div className={styles.buttonsGeral}>
+            <button
+              className={styles.buttonCancelar}
+              type="button"
+              onClick={closeModal}
+            >
+              Cancelar
+            </button>
+            <button className={styles.buttonSalvar} type="submit">
+              Salvar Informações
+            </button>
+          </div>
+        </form>
       </div>
-    );
-  }
+    </div>,
+    document.body
+  );
 };
 
 export default ModalEditAdress;

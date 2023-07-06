@@ -6,8 +6,17 @@ import { EditUserData, EditUserSchema } from "@/schemas/users.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPortal } from "react-dom";
 import { apiEmotors } from "@/services/api";
+import { parseCookies, setCookie } from "nookies";
 
-const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
+const ModalEditUser = ({
+  modalOpen,
+  setModalOpen,
+  setUserCookie,
+}: {
+  setUserCookie: React.Dispatch<React.SetStateAction<string>>;
+  modalOpen: boolean;
+  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const {
     register,
     handleSubmit,
@@ -17,19 +26,42 @@ const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
   });
 
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlQG1haWwuY29tIiwiaWF0IjoxNjg4MTM5NjM0LCJleHAiOjE2ODgyMjYwMzQsInN1YiI6IjFmNzlkZjM5LTg2YjctNDhjOC1iN2U4LTU4OGQ1YTc4ZjhmMCJ9.-gUT3Iy2HxiewsgOtF8S1PSAWvMBSiXsXQX4XYleQDY";
+
+  const cookies = parseCookies();
+  const token = cookies.token;
+  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : null;
+  const [user, setUser] = useState(userFromCookie);
 
   const closeModal = () => {
     setModalOpen(false);
   };
+
+  function removerChavesVazias(objeto: { [key: string]: any }): {
+    [key: string]: any;
+  } {
+    const novoObjeto = { ...objeto };
+
+    Object.keys(novoObjeto).forEach((chave) => {
+      if (novoObjeto[chave] === "") {
+        delete novoObjeto[chave];
+      }
+    });
+
+    return novoObjeto;
+  }
   const onFormSubmit = (formData: EditUserData) => {
+    const data = removerChavesVazias(formData);
+    console.log(data);
     apiEmotors
-      .patch("/users", formData, {
+      .patch("/users", data, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         console.log("Usuário atualizado com sucesso:", response.data);
+        setCookie(null, "user", JSON.stringify(response.data), {
+          path: "/",
+        });
+        setUserCookie(JSON.stringify(response.data));
         closeModal();
       })
       .catch((error) => {
@@ -121,7 +153,7 @@ const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
             <input
               placeholder="Samuel Leão Silva"
               type="text"
-              {...register("nome")}
+              {...register("name")}
             />
           </div>
           <div className={styles.box}>
@@ -145,20 +177,20 @@ const ModalEditUser = ({ modalOpen, setModalOpen }: any) => {
             <input
               placeholder="(084) 90909-9092"
               type="text"
-              {...register("celular")}
+              {...register("telephone")}
             />
           </div>
           <div className={styles.box}>
             <label placeholder="09/12/99" htmlFor="dataDeNascimento">
               Data de Nascimento
             </label>
-            <input type="date" {...register("dataDeNascimento")} />
+            <input type="date" {...register("birthDate")} />
           </div>
           <div className={styles.box}>
             <label htmlFor="descricao">Descrição</label>
             <textarea
               placeholder="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-              {...register("descrição")}
+              {...register("description")}
             />
           </div>
           {/* {errors && (

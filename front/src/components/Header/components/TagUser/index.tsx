@@ -1,12 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.scss";
 import ModalEditUser from "@/components/modalEditUser";
-import ModalEditAdress from "@/components/modaleditAdress";
+import ModalEditAdress from "@/components/modalEditAdress";
+import { parseCookies, setCookie, destroyCookie } from "nookies";
+import { useRouter } from "next/navigation";
 
 const TagUser = ({ name }: { name: string | null }) => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
   const [modalAdressOpen, setModalAdressOpen] = useState(false);
+  const router = useRouter();
+  const nookies = parseCookies();
+  const [userCookie, setUserCookie] = useState(nookies.user);
+
+  name = JSON.parse(userCookie).name;
+
   const openModal = () => {
     setModalOpen(true);
     setMenuOpen(false);
@@ -40,10 +48,21 @@ const TagUser = ({ name }: { name: string | null }) => {
             <li className={styles.menuItem} onClick={openAdressModal}>
               Editar endereço
             </li>
+            {userCookie && JSON.parse(userCookie).acoountType && (
+              <li
+                className={styles.menuItem}
+                onClick={() => router.push("/announcesPage")}
+              >
+                Meus Anúncios
+              </li>
+            )}
             <li
               className={styles.menuItem}
-              to="/"
-              onClick={() => localStorage.clear()}
+              onClick={() => {
+                destroyCookie(null, "token");
+                destroyCookie(null, "user");
+                router.push("/login");
+              }}
             >
               Sair
             </li>
@@ -51,12 +70,16 @@ const TagUser = ({ name }: { name: string | null }) => {
         </div>
       )}
       {modalOpen && (
-        <ModalEditUser modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <ModalEditUser
+          modalOpen={modalOpen}
+          setModalOpen={setModalOpen}
+          setUserCookie={setUserCookie}
+        />
       )}
       {modalAdressOpen && (
         <ModalEditAdress
-          modalOpen={modalAdressOpen}
-          setModalOpen={setModalAdressOpen}
+          editDeleteModal={modalAdressOpen}
+          setModalEditDelete={setModalAdressOpen}
         />
       )}
     </div>
