@@ -22,3 +22,28 @@
     color: $color-grey-scale-grey-1;
   }
 }
+
+.btnEditDelete {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+
+  .btnDelete {
+    height: 3.8rem;
+    padding: 1.2rem 2.8rem;
+    border-radius: 0.4rem;
+    border: 1.5px solid #fdd8d8;
+    background: #fdd8d8;
+    color: #cd2b31;
+  }
+  .btnEdit {
+    height: 3.8rem;
+    padding: 1.2rem 2rem;
+    border-radius: 0.4rem;
+    border: 1.5px solid $color-grey-scale-grey-1;
+    font-size: 1.4rem;
+    font-style: normal;
+    font-weight: 600;
+    background: none;
+  }
+}

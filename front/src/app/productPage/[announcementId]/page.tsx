@@ -9,10 +9,11 @@ import { apiEmotors } from "@/services/api";
 import { Comments } from "@/interfaces";
 import Header from "@/components/Header/header";
 import { useForm } from "react-hook-form";
-import commentSchema from "./scehma";
+// import commentSchema from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "@/components/Footer/footer";
 import { parseCookies } from "nookies";
+import ModalDeleteComment from "@/components/ModalDeleteComment";
 
 const ProductPage = ({
   params,
@@ -40,8 +41,6 @@ const ProductPage = ({
             return item.id === params.announcementId;
           })
         );
-        console.log(data);
-        console.log(announce);
       } catch (error) {
         console.error(error);
       }
@@ -68,14 +67,20 @@ const ProductPage = ({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(commentSchema),
-  });
+  } = useForm();
+
+  const onFormSubmit = (formData: any) => {
+    console.log(formData);
+    // formData.pfipe = !!formData.pfipe;
+    formData.sellPrice = parseFloat(formData.sellPrice);
+
+    comment(formData);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiEmotors.get<Comments[]>(`/comments`, {
+        const response = await apiEmotors.get(`/comments`, {
           params: {
             announcementId: params.announcementId,
           },
@@ -83,6 +88,7 @@ const ProductPage = ({
             Authorization: `Bearer ${token}`,
           },
         });
+        // console.log(response);
         setComments(response.data);
       } catch (error) {
         console.error(error);
@@ -181,7 +187,7 @@ const ProductPage = ({
                     </ul>
                   </div>
                   <form
-                    onSubmit={handleSubmit(comment)}
+                    onSubmit={handleSubmit(onFormSubmit)}
                     className={styles.commentBox}
                   >
                     <div className={styles.commentArea}>
