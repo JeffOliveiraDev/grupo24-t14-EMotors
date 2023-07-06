@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./styles.module.scss";
 import ModalEditUser from "@/components/modalEditUser";
-import ModalEditAdress from "@/components/modalEditAdress";
+import ModaleditAdress from "@/components/modalEditAdress";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { useRouter } from "next/navigation";
 
