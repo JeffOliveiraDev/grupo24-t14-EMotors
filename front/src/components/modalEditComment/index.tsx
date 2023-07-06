@@ -9,7 +9,6 @@ import { apiEmotors } from "@/services/api";
 import { parseCookies } from "nookies";
 
 const ModalEditComment = ({ modalEdit, setModalEdit, commentToEdit }: any) => {
-  // console.log(modalEdit);
   const {
     register,
     handleSubmit,

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../ModalDelete/styles.module.scss";
+import styles from "../ModalDeleteComment/styles.module.scss";
 import { useForm } from "react-hook-form";
 import {
   RegisterNewAnnounceData,
@@ -14,7 +14,6 @@ const ModalDeleteComment = ({
   setModalDelete,
   commentId,
 }: any) => {
-  console.log(commentId);
   const cookies = parseCookies();
 
   const token = cookies.token;

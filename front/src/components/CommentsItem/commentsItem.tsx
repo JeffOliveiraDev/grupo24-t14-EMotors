@@ -18,7 +18,7 @@ const CommentItem = ({ comments }: { comments: Comments }) => {
   const [commentToDelete, setCommentTodelete] = useState<string>();
   const [modalEdit, setModalEdit] = useState(false);
   const [commentToEdit, setCommentToEdit] = useState<string>();
-  console.log(modalEdit);
+
   const newCreatedAt = new Date(comments.createdAt);
 
   function calcularDiasCriacao(dataCriacao: Date) {

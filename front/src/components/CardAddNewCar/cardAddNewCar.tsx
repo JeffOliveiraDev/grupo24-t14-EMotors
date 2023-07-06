@@ -63,58 +63,16 @@ const CardAddNewCar = ({}: any) => {
     return res.json();
   }
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const cookies = parseCookies();
-
-  //       const token = cookies.token;
-
-  //       const get = await apiEmotors.get(`/announcements`, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-
-  //       // const data = await getData(brand!);
-  //       // setCars(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, [brand]);
-
-  // useEffect(() => {
-  //   if (choosenYear) {
-  //     const filteredCars = cars?.filter((car) => car.year === choosenYear);
-  //     setItens(filteredCars || []);
-  //   } else {
-  //     setItens(cars || []);
-  //   }
-  // }, [choosenYear, cars]);
-
-  // async function getData(brand: string) {
-  //   const res = await fetch(
-  //     `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`
-  //   );
-
-  //   if (!res.ok) {
-  //     throw new Error("Failed to fetch data");
-  //   }
-
-  //   return res.json();
-  // }
-
   return (
     <div className={styles.boxUl}>
-      {currentItens?.length > 0 && (
+      {currentItens?.length > 0 ? (
         <ul className={styles.boxCars}>
           {currentItens.map((car: any) => (
             <CardCar car={car} key={car.id} />
           ))}
         </ul>
+      ) : (
+        <h2>Sem anúncios</h2>
       )}
       {modal && <ModalFilter setModal={setModal} />}
       <Button

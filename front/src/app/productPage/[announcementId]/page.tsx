@@ -30,24 +30,36 @@ const ProductPage = ({
   const userFromCookie = cookies.user ? JSON.parse(cookies.user) : !null;
   const [user, setUser] = React.useState(userFromCookie);
   const [announce, setAnnounce] = useState<any>([]);
+  const [userAnnounce, setUserAnnounce] = useState<any>();
 
   useEffect(() => {
     async function fetchData() {
       try {
         const data = await getData(token);
 
-        setAnnounce(
-          data.filter((item: any) => {
-            return item.id === params.announcementId;
-          })
-        );
+        {
+          data
+            ? setUserAnnounce(
+                data.filter((item: any) => {
+                  return item.id == params.announcementId;
+                })
+              )
+            : null;
+        }
+        console.log(userAnnounce);
+
+        if (params.announcementId == data[0].id) {
+          setAnnounce(data[0]);
+          return console.log(true);
+        }
+        console.log(announce);
       } catch (error) {
         console.error(error);
       }
     }
 
     fetchData();
-  }, [token, user]);
+  }, [token]);
 
   async function getData(token: string) {
     const res = await fetch("https://m6-emotors.onrender.com/announcements", {
@@ -70,8 +82,6 @@ const ProductPage = ({
   } = useForm();
 
   const onFormSubmit = (formData: any) => {
-    console.log(formData);
-    // formData.pfipe = !!formData.pfipe;
     formData.sellPrice = parseFloat(formData.sellPrice);
 
     comment(formData);
@@ -133,16 +143,20 @@ const ProductPage = ({
                       />
                     </div>
                     <div className={styles.carNamePrice}>
-                      {/* <h2>{announce.}</h2> */}
+                      {announce ? <h2>{announce.model}</h2> : null}
                       <div className={styles.boxTagsPrice}>
                         <ul>
-                          {tags.map((e, i) => (
+                          <Tag>{`${announce.color} `}</Tag>
+
+                          {/* {tags.map((e, i) => (
                             <Tag key={i}>{e.text}</Tag>
-                          ))}
+                          ))} */}
                         </ul>
 
                         <span>
-                          <strong>0000000</strong>
+                          <strong>
+                            {announce ? `R$ ${announce.sellPrice}` : null}
+                          </strong>
                         </span>
                       </div>
                       <a
@@ -154,25 +168,49 @@ const ProductPage = ({
                     </div>
                     <div className={styles.carDescription}>
                       <h2>Descricão</h2>
-                      <p>
-                        Lorem Ipsum is simply dummy text of the printing and
-                        typesetting industry. Lorem Ipsum has been the
-                        industry's standard dummy text ever since the 1500s,
-                        when an unknown printer took a galley of type and
-                        scrambled it to make a type specimen book.
-                      </p>
+                      <p>{announce.description}</p>
                     </div>
                   </div>
                   <div className={styles.boxPhotosAndUser}>
                     <div className={styles.photosAndUser}>
                       <h2>Fotos</h2>
                       <ul className={styles.photosList}>
-                        <Image src={listFotos} alt="" />
-                        <Image src={listFotos} alt="" />
-                        <Image src={listFotos} alt="" />
-                        <Image src={listFotos} alt="" />
-                        <Image src={listFotos} alt="" />
-                        <Image src={listFotos} alt="" />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
+                        <Image
+                          src={announce.coverImage}
+                          width={200}
+                          height={200}
+                          alt=""
+                        />
                       </ul>
                     </div>
                   </div>
