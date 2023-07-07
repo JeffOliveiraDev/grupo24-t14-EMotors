@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 const ListYear = () => {
   const { year } = useContext(Context);
-  // onClick={() => setchoosenYear(year)}
+
   return (
     <ul>
       {year.map((year) => (

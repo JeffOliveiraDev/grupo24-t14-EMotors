@@ -3,11 +3,19 @@ import { Context } from "@/context/HomeContext";
 import { useContext } from "react";
 
 const ListModels = () => {
-  const { models } = useContext(Context);
+  const { models, setFilter, setFilterType } = useContext(Context);
+
   return (
     <ul>
       {models.map((model) => (
-        <li key={model}>{model}</li>
+        <li
+          key={model}
+          onClick={() => {
+            setFilter(model), setFilterType("model");
+          }}
+        >
+          {model}
+        </li>
       ))}
     </ul>
   );

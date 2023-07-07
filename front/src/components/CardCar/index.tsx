@@ -29,11 +29,13 @@ const CardCar = ({ car }: any) => {
             {car.user.name.slice(0, 2).toUpperCase()}
           </p>
         </div>
-        <p>{car.user.name}</p>
+        <Link href={`/announcesPage`}>
+          <p>{car.user.name}</p>
+        </Link>
       </div>
       <div className={styles.boxTagsPrice}>
         <ul>
-          <Tag key={car.mileage}>{car.mileage} KM</Tag>
+          <Tag key={car.mileage}>{car.mileage}</Tag>
         </ul>
         <span>
           <strong>R$ {car.sellPrice.toLocaleString()}</strong>

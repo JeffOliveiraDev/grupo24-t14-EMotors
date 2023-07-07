@@ -17,7 +17,14 @@ const CardAddNewCar = ({}: any) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [modal, setModal] = useState(false);
 
-  const { filterClear, choosenYear } = useContext(Context);
+  const {
+    filterClear,
+    filterType,
+    setFilterType,
+    filter,
+    setFilter,
+    setClearFilter,
+  } = useContext(Context);
 
   let pages = 0;
   let startIndex = 0;
@@ -36,11 +43,33 @@ const CardAddNewCar = ({}: any) => {
   const token = cookies.token;
 
   useEffect(() => {
+    setCars(itens);
+
+    {
+      filterType
+        ? setItens(
+            itens.filter((item: any) => {
+              if (item[filterType] === filter) {
+                console.log(item);
+                return item;
+              }
+              return false;
+            })
+          )
+        : null;
+    }
+  }, [filterType, filter]);
+
+  useEffect(() => {
+    if (filterClear) {
+      setClearFilter(false);
+      window.location.reload;
+    }
+
     async function fetchData() {
       try {
         const data = await getData(token);
         setItens(data);
-        setCars(data);
       } catch (error) {
         console.error(error);
       }

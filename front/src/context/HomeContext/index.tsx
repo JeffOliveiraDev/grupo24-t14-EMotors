@@ -104,15 +104,8 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
           return item.color;
         });
 
-        // setColors(colorCar);
-        // setFuel(fuelCar);
         setKm(kmCar);
         setPrice(priceCar);
-        // setModels(modelNames);
-        // const brandNames = Object.keys(dataBrand);
-
-        // setYear(uniqueYears);
-        // setCarsBrands(brandNames);
       } catch (error) {
         console.error(error);
       }
@@ -137,7 +130,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
     filterClear,
     setClearFilter,
   };
-  console.log(filter, filterType);
+
   return <Context.Provider value={props}>{children}</Context.Provider>;
 };
 
