@@ -43,40 +43,39 @@ const CardAddNewCar = ({}: any) => {
   const token = cookies.token;
 
   useEffect(() => {
-    setCars(itens);
-
-    {
-      filterType
-        ? setItens(
-            itens.filter((item: any) => {
-              if (item[filterType] === filter) {
-                console.log(item);
-                return item;
-              }
-              return false;
-            })
-          )
-        : null;
-    }
-  }, [filterType, filter]);
-
-  useEffect(() => {
     if (filterClear) {
       setClearFilter(false);
-      window.location.reload;
-    }
-
-    async function fetchData() {
-      try {
-        const data = await getData(token);
-        setItens(data);
-      } catch (error) {
-        console.error(error);
-      }
+      window.location.reload();
     }
 
     fetchData();
-  }, [token]);
+  }, [token, filterType, filter]);
+
+  async function fetchData() {
+    try {
+      const data = await getData(token);
+      setCars(data);
+      applyFilter(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  function applyFilter(data: BrandCars[]) {
+    let filteredData = data;
+
+    if (filterType) {
+      filteredData = data.filter((item: BrandCars) => {
+        if (item[filterType] === filter) {
+          console.log(item);
+          return true;
+        }
+        return false;
+      });
+    }
+
+    setItens(filteredData);
+  }
 
   async function getData(token: string) {
     const res = await fetch("https://m6-emotors.onrender.com/announcements", {
