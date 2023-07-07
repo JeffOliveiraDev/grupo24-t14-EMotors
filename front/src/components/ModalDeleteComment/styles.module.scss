@@ -1,16 +1,16 @@
 @use "../../scss/abstracts/" as *;
 
-.modalBox {
+.modal {
   display: flex;
-  width: 100vw;
-  height: 100%;
-  position: fixed;
   justify-content: center;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
   align-items: center;
   top: 0;
+  left: 0;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.5);
-  // overflow: auto;
-  // overflow-y: auto;
 }
 .modalInterior {
   max-height: 95vh;

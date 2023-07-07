@@ -13,7 +13,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
   // const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
   //   resolver: zodResolver(registerNewAnnounceSchema),
   // });
-  
+
   const onFormSubmit = (formData: any) => {
     console.log(formData);
     // formData.pfipe = !!formData.pfipe;
@@ -73,7 +73,7 @@ const ModalRegisterCar = ({ modalOpen, setModal }: any) => {
 
   if (modalOpen) {
     return (
-      <div className={styles.modalBox}>
+      <div className={styles.modal}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
             <h2>Criar anuncio</h2>

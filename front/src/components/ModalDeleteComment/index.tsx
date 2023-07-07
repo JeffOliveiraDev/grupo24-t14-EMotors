@@ -43,7 +43,7 @@ const ModalDeleteComment = ({
 
   if (modalDelete) {
     return (
-      <div className={styles.modalBox}>
+      <div className={styles.modal}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
             <h2>Excluir comentário</h2>

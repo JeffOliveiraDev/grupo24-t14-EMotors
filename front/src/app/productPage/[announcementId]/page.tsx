@@ -31,6 +31,7 @@ const ProductPage = ({
   const [user, setUser] = React.useState(userFromCookie);
   const [announce, setAnnounce] = useState<any>([]);
   const [userAnnounce, setUserAnnounce] = useState<any>({});
+  const [isLoggedIn, setIsLoggedIn] = useState(cookies.user);
 
   // useEffect(() => {
   //   async function fetchData() {
@@ -276,37 +277,39 @@ const ProductPage = ({
                     onSubmit={handleSubmit(onFormSubmit)}
                     className={styles.commentBox}
                   >
-                    <div className={styles.commentArea}>
-                      <div className={styles.textareaWrapper}>
-                        <div className={styles.comment}>
-                          <span>
+                    {isLoggedIn && (
+                      <div className={styles.commentArea}>
+                        <div className={styles.textareaWrapper}>
+                          <div className={styles.comment}>
                             <span>
-                              {user.name[0].toUpperCase() +
-                                user.name[1].toUpperCase()}
+                              <span>
+                                {user.name[0].toUpperCase() +
+                                  user.name[1].toUpperCase()}
+                              </span>
                             </span>
-                          </span>
-                          <h3>{user.name}</h3>
+                            <h3>{user.name}</h3>
+                          </div>
+                          <textarea
+                            {...register("text")}
+                            name="text"
+                            placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
+                          ></textarea>
+                          <span>{errors.name?.message?.toString()}</span>
+                          <button className={styles.submitButtonEnabled}>
+                            Enviar
+                          </button>
                         </div>
-                        <textarea
-                          {...register("text")}
-                          name="text"
-                          placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
-                        ></textarea>
-                        <span>{errors.name?.message?.toString()}</span>
-                        <button className={styles.submitButtonEnabled}>
-                          Enviar
-                        </button>
+                        <div className={styles.tags}>
+                          <button className={styles.tagButton}>
+                            Gostei Muito!
+                          </button>
+                          <button className={styles.tagButton}>Incrível</button>
+                          <button type="submit" className={styles.tagButton}>
+                            Recomendarei para meus amigos!
+                          </button>
+                        </div>
                       </div>
-                      <div className={styles.tags}>
-                        <button className={styles.tagButton}>
-                          Gostei Muito!
-                        </button>
-                        <button className={styles.tagButton}>Incrível</button>
-                        <button type="submit" className={styles.tagButton}>
-                          Recomendarei para meus amigos!
-                        </button>
-                      </div>
-                    </div>
+                    )}
                   </form>
                 </div>
               </div>
