@@ -3,13 +3,12 @@ import { Context } from "@/context/HomeContext";
 import { useContext } from "react";
 
 const ListYear = () => {
-  const { year, setchoosenYear } = useContext(Context);
+  const { year } = useContext(Context);
+  // onClick={() => setchoosenYear(year)}
   return (
     <ul>
       {year.map((year) => (
-        <li key={year} onClick={() => setchoosenYear(year)}>
-          {year}
-        </li>
+        <li key={year}>{year}</li>
       ))}
     </ul>
   );

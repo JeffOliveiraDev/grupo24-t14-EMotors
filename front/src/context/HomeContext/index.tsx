@@ -6,11 +6,14 @@ const Context = createContext({} as ContextAuth);
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
   // const [carsBrands, setCarsBrands] = useState<string[]>([]);
-  const [brand, setBrand] = useState();
-  // const [year, setYear] = useState([]);
+  const [brand, setBrand] = useState<string[]>([]);
+  const [years, setYear] = useState([]);
   const [choosenYear, setchoosenYear] = useState();
   const [filterClear, setClearFilter] = useState(false);
+  const [filter, setFilter] = useState<any>();
+  const [filterType, setFilterType] = useState<any>();
   // const [models, setModels] = useState<string[]>([]);
+  const [getBrand, setGetBrand] = useState();
 
   const [km, setKm] = useState<string[]>([]);
   const [price, setPrice] = useState<string[]>([]);
@@ -119,20 +122,22 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const props = {
+    filterType,
+    setFilterType,
+    filter,
+    setFilter,
     models,
     colors,
     fuels,
-    brand,
     carsBrands,
     year,
     price,
     km,
-    setBrand,
     choosenYear,
     filterClear,
     setClearFilter,
   };
-
+  console.log(filter, filterType);
   return <Context.Provider value={props}>{children}</Context.Provider>;
 };
 

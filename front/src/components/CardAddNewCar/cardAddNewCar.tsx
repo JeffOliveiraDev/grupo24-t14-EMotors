@@ -17,7 +17,7 @@ const CardAddNewCar = ({}: any) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [modal, setModal] = useState(false);
 
-  const { brand, filterClear, choosenYear } = useContext(Context);
+  const { filterClear, choosenYear } = useContext(Context);
 
   let pages = 0;
   let startIndex = 0;
