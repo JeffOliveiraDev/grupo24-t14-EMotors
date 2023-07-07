@@ -30,43 +30,64 @@ const ProductPage = ({
   const userFromCookie = cookies.user ? JSON.parse(cookies.user) : !null;
   const [user, setUser] = React.useState(userFromCookie);
   const [announce, setAnnounce] = useState<any>([]);
-  const [userAnnounce, setUserAnnounce] = useState<any>();
+  const [userAnnounce, setUserAnnounce] = useState<any>({});
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const data = await getData();
+  //       console.log(params.announcementId);
+
+  //       {
+  //         data
+  //           ? setUserAnnounce(
+  //               data.filter((item: any) => {
+  //                 return item.id == params.announcementId;
+  //               })
+  //             )
+  //           : null;
+  //       }
+
+  //       if (params.announcementId == data[0].id) {
+  //         setAnnounce(data[0]);
+  //         return console.log(true);
+  //       }
+
+  //       console.log(announce);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
+
+  //   fetchData();
+  // }, [token]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
-        const data = await getData(token);
+        const data = await getData();
+        console.log(params.announcementId);
 
-        {
-          data
-            ? setUserAnnounce(
-                data.filter((item: any) => {
-                  return item.id == params.announcementId;
-                })
-              )
-            : null;
-        }
-        console.log(userAnnounce);
+        const filteredData = data.filter(
+          (item: any) => item.id === params.announcementId
+        );
 
-        if (params.announcementId == data[0].id) {
+        setUserAnnounce(filteredData[0]);
+
+        if (params.announcementId === data[0].id) {
           setAnnounce(data[0]);
-          return console.log(true);
+          console.log(true);
         }
-        console.log(announce);
       } catch (error) {
         console.error(error);
       }
-    }
+    };
 
     fetchData();
   }, [token]);
 
-  async function getData(token: string) {
-    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async function getData() {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements");
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -135,18 +156,27 @@ const ProductPage = ({
                 <div className={styles.ImgAndDescription}>
                   <div className={styles.imgCarAndDescription}>
                     <div className={styles.boxImgCar}>
+                      {userAnnounce ? (
+                        <Image
+                          src={userAnnounce.coverImage}
+                          width={312}
+                          height={152}
+                          alt=""
+                        />
+                      ) : null}
+                      {/* 
                       <Image
-                        src={announce.coverImage}
+                        src={userAnnounce.coverImage}
                         width={312}
                         height={152}
                         alt=""
-                      />
+                      /> */}
                     </div>
                     <div className={styles.carNamePrice}>
-                      {announce ? <h2>{announce.model}</h2> : null}
+                      {userAnnounce ? <h2>{userAnnounce.model}</h2> : null}
                       <div className={styles.boxTagsPrice}>
                         <ul>
-                          <Tag>{`${announce.color} `}</Tag>
+                          {userAnnounce && <Tag>{userAnnounce.color}</Tag>}
 
                           {/* {tags.map((e, i) => (
                             <Tag key={i}>{e.text}</Tag>
@@ -155,7 +185,9 @@ const ProductPage = ({
 
                         <span>
                           <strong>
-                            {announce ? `R$ ${announce.sellPrice}` : null}
+                            {userAnnounce
+                              ? `R$ ${userAnnounce.sellPrice}`
+                              : null}
                           </strong>
                         </span>
                       </div>
@@ -168,49 +200,65 @@ const ProductPage = ({
                     </div>
                     <div className={styles.carDescription}>
                       <h2>Descricão</h2>
-                      <p>{announce.description}</p>
+                      <p>{userAnnounce ? userAnnounce.description : null}</p>
                     </div>
                   </div>
                   <div className={styles.boxPhotosAndUser}>
                     <div className={styles.photosAndUser}>
                       <h2>Fotos</h2>
                       <ul className={styles.photosList}>
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
-                        <Image
-                          src={announce.coverImage}
-                          width={200}
-                          height={200}
-                          alt=""
-                        />
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
+
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
+
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
+
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
+
+                        {userAnnounce ? (
+                          <Image
+                            src={userAnnounce.coverImage}
+                            width={200}
+                            height={200}
+                            alt=""
+                          />
+                        ) : null}
                       </ul>
                     </div>
                   </div>

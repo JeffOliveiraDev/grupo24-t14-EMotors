@@ -31,7 +31,7 @@ const AdminProfilePage = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await getData(token);
+        const data = await getData();
 
         if (data.length > 0) {
           const filteredData = data.filter((item: any) =>
@@ -48,12 +48,8 @@ const AdminProfilePage = () => {
     fetchData();
   }, [token, user]);
 
-  async function getData(token: string) {
-    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  async function getData() {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements");
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");

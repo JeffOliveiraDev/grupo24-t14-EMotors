@@ -334,13 +334,15 @@
 }
 .photosAndUser {
   width: 80%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 3%;
-  gap: 3.2rem;
-  height: fit-content;
+  padding: 2rem;
+
+  gap: 2rem;
+
   background: #fdfdfd;
   border-radius: 4px;
 }
@@ -351,12 +353,12 @@
   gap: 2rem;
   justify-content: center;
   align-items: center;
-  padding: 3%;
+  padding: 2rem;
 }
 .photosList img {
-  width: 30%;
-  height: 30%;
-  padding: 3%;
+  width: 70px;
+  height: 70px;
+  padding: 0.2rem;
   background: #e9ecef;
   border-radius: 4px;
 }

@@ -4,6 +4,8 @@ import { iCar } from "@/interfaces";
 import carImg from "../../assets/imageCar.svg";
 import Tag from "../Tags/tags";
 import Link from "next/link";
+import { useContext } from "react";
+import { Context } from "@/context/HomeContext";
 
 const CardCar = ({ car }: any) => {
   console.log(car);
