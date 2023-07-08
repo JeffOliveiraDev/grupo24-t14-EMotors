@@ -21,6 +21,7 @@ const ModalDelete = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Anúncio excluído com sucesso!", data);
+
         window.location.reload();
       })
       .catch((error) => {

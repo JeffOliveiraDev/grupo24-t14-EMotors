@@ -13,6 +13,33 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import nookies from "nookies";
 
 const FormLogin = () => {
+  async function handleCreateAnnounce(data: any) {
+    const url = `https://m6-emotors.onrender.com/login`;
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+
+    try {
+      const response = await fetch(url, requestOptions);
+
+      if (!response.ok) {
+        throw new Error("Failed to login");
+      }
+
+      const data = await response.json();
+      console.log("Logado com sucesso!", data);
+      // window.location.reload();
+      toast.success("Sucesso!");
+    } catch (error) {
+      console.error("Erro ao logar:", error);
+    }
+  }
+
   const {
     register,
     handleSubmit,
@@ -100,41 +127,3 @@ const FormLogin = () => {
     </>
   );
 };
-
-export default FormLogin;
-function setCookie(
-  arg0: null,
-  arg1: string,
-  token: any,
-  arg3: { path: string; maxAge: number }
-) {
-  throw new Error("Function not implemented.");
-}
-
-// async function handleCreateAnnounce(data: any) {
-//   console.log(data);
-//   const url = `http://127.0.0.1:3001/login`;
-
-//   const requestOptions = {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(data),
-//   };
-
-//   try {
-//     const response = await fetch(url, requestOptions);
-
-//     if (!response.ok) {
-//       throw new Error("Failed to login");
-//     }
-
-//     const data = await response.json();
-//     console.log("Logado com sucesso!", data);
-//     // window.location.reload();
-//     toast.success("Sucesso!");
-//   } catch (error) {
-//     console.error("Erro ao logar:", error);
-//   }
-// }

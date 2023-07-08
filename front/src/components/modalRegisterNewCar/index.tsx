@@ -12,7 +12,7 @@ const ModalRegisterCar = () => {
   // const { register, handleSubmit } = useForm<RegisterNewAnnounceData>({
   //   resolver: zodResolver(registerNewAnnounceSchema),
   // });
-
+  
   const onFormSubmit = (formData: any) => {
     console.log(formData);
     // formData.pfipe = !!formData.pfipe;
