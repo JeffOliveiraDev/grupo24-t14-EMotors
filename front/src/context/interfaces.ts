@@ -1,3 +1,5 @@
+import { Comments } from "@/interfaces";
+
 export interface ContextAuth {
   // setchoosenYear: React.Dispatch<React.SetStateAction<undefined>>;
   models: string[];
@@ -15,4 +17,21 @@ export interface ContextAuth {
   setFilter: React.Dispatch<React.SetStateAction<string | number>>;
   filterType: any;
   setFilterType: React.Dispatch<React.SetStateAction<string | number>>;
+}
+
+export interface ContextProduct {
+  comment: (data: any) => Promise<void>;
+  onFormSubmit: (formData: any) => void;
+  getData(): Promise<any>;
+  tags: {
+    text: string;
+  }[];
+  userFromCookie: any;
+  user: any;
+  setUser: React.Dispatch<any>;
+  announce: any;
+  setAnnounce: React.Dispatch<any>;
+  setUserAnnounce: React.Dispatch<any>;
+  userAnnounce: any;
+  comments: Comments[];
 }
