@@ -11,12 +11,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { setCookie } from "nookies";
-// import { setCookie } from "nookies";
 
 const FormLogin = () => {
   async function handleCreateAnnounce(data: any) {
-    console.log(data);
-    const url = `http://127.0.0.1:3001/login`;
+    const url = `https://m6-emotors.onrender.com/login`;
 
     const requestOptions = {
       method: "POST",
@@ -64,6 +62,7 @@ const FormLogin = () => {
       const get = await apiEmotors.get(`/users/${res.data.user_id}`);
       setCookie(null, "user", JSON.stringify(get.data), {
         path: "/",
+        maxAge: 1000 * 60 * 60 * 24 * 7,
       });
       toast.success(res.data.message, {
         position: "top-right",

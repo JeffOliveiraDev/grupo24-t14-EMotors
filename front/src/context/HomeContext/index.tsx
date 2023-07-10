@@ -5,45 +5,58 @@ import { ContextAuth } from "../interfaces";
 const Context = createContext({} as ContextAuth);
 
 const Provider = ({ children }: { children: React.ReactNode }) => {
-  const [carsBrands, setCarsBrands] = useState<string[]>([]);
-  const [brand, setBrand] = useState("chevrolet");
-  const [year, setYear] = useState([]);
+  // const [carsBrands, setCarsBrands] = useState<string[]>([]);
+  const [brand, setBrand] = useState<string[]>([]);
+  const [years, setYear] = useState([]);
   const [choosenYear, setchoosenYear] = useState();
   const [filterClear, setClearFilter] = useState(false);
+  const [filter, setFilter] = useState<any>();
+  const [filterType, setFilterType] = useState<any>();
+  // const [models, setModels] = useState<string[]>([]);
+  const [getBrand, setGetBrand] = useState();
+
+  const [km, setKm] = useState<string[]>([]);
+  const [price, setPrice] = useState<string[]>([]);
 
   if (filterClear) {
     window.location.reload();
     setClearFilter(false);
   }
 
+  const year = [2022, 2021, 2020, 2019];
   const models = [
-    "Civic",
-    "Corolla",
-    "Cruze",
-    "Fit",
-    "Gol",
-    "Ka",
-    "Onix",
-    "Porsche 718",
+    "Chevrolet Onix",
+    "Hyundai HB20",
+    "Ford Ka",
+    "Volkswagen Gol",
+    "Fiat Strada",
+    "Fiat Argo",
+    "Volkswagen T-Cross",
+    "Fiat Toro",
+    "Jeep Renegade",
+    "Toyota Corolla",
   ];
-  const colors = ["Azul", "Branca", "Cinza", "Prata", "Preta", "Verde"];
+
+  const carsBrands = [
+    "Chevrolet",
+    "Citroën",
+    "Fiat",
+    "Ford",
+    "Honda",
+    "Hyundai",
+    "Nissan",
+    "Peugeot",
+    "Renault",
+    "Toyota",
+    "Volkswagen",
+    "Mercedes",
+  ];
+
+  const colors = ["Azul", "Branco", "Cinza", "Prata", "Preta", "Vermelho"];
   const fuels = ["Diesel", "Etanol", "Gasolina", "Flex"];
 
   async function getData() {
-    const res = await fetch(
-      "https://kenzie-kars.herokuapp.com/cars?brand=chevrolet"
-    );
-
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    }
-
-    return res.json();
-  }
-
-  async function getBrand() {
-    const res = await fetch("https://kenzie-kars.herokuapp.com/cars");
+    const res = await fetch("https://m6-emotors.onrender.com/announcements");
 
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
@@ -56,7 +69,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const dataBrand = await getBrand();
+        // const dataBrand = await getBrand();
         const data = await getData();
         const years = data.map((car: { year: any }) => {
           return car.year;
@@ -67,10 +80,32 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
             arr.indexOf(year) === index
         );
 
-        const brandNames = Object.keys(dataBrand);
+        const brandNames = data.map((item: { brand: any }) => {
+          return item.brand;
+        });
 
-        setYear(uniqueYears);
-        setCarsBrands(brandNames);
+        const modelNames = data.map((item: { model: any }) => {
+          return item.model;
+        });
+
+        const fuelCar = data.map((item: { fuel: any }) => {
+          return item.fuel;
+        });
+
+        const kmCar = data.map((item: { mileage: any }) => {
+          return item.mileage;
+        });
+
+        const priceCar = data.map((item: { sellPrice: any }) => {
+          return item.sellPrice;
+        });
+
+        const colorCar = data.map((item: { color: any }) => {
+          return item.color;
+        });
+
+        setKm(kmCar);
+        setPrice(priceCar);
       } catch (error) {
         console.error(error);
       }
@@ -80,16 +115,17 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const props = {
-    setchoosenYear,
-    getBrand,
+    filterType,
+    setFilterType,
+    filter,
+    setFilter,
     models,
     colors,
     fuels,
-    setBrand,
-    brand,
     carsBrands,
     year,
-    setYear,
+    price,
+    km,
     choosenYear,
     filterClear,
     setClearFilter,

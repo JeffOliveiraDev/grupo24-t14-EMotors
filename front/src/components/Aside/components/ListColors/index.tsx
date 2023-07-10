@@ -3,11 +3,19 @@ import { Context } from "@/context/HomeContext";
 import { useContext } from "react";
 
 const ListColors = () => {
-  const { colors } = useContext(Context);
+  const { colors, setFilter, setFilterType } = useContext(Context);
+
   return (
     <ul>
       {colors.map((color) => (
-        <li key={color}>{color}</li>
+        <li
+          key={color}
+          onClick={() => {
+            setFilter(color), setFilterType("color");
+          }}
+        >
+          {color}
+        </li>
       ))}
     </ul>
   );

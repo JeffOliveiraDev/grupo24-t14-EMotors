@@ -1,3 +1,5 @@
+"use client";
+import { useContext } from "react";
 import ListCarsBrands from "../Aside/components/ListCarBrands";
 import ListColors from "../Aside/components/ListColors";
 import ListFuel from "../Aside/components/ListFuel";
@@ -6,6 +8,7 @@ import ListYear from "../Aside/components/ListYear";
 import Button from "../Button";
 import styles from "./styled.module.scss";
 import { AiOutlineClose } from "react-icons/ai";
+import { Context } from "@/context/HomeContext";
 
 const Filters = ({
   close,
@@ -14,6 +17,8 @@ const Filters = ({
   close?: boolean;
   setModal?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const { setClearFilter } = useContext(Context);
+
   return (
     <>
       {close && setModal && (
@@ -57,7 +62,12 @@ const Filters = ({
         </div>
       </div>
       <div className={styles.CleanFilter}>
-        <Button className={styles.btnCleanFilter}>Limpar Filtros</Button>
+        <Button
+          className={styles.btnCleanFilter}
+          onClick={() => setClearFilter(true)}
+        >
+          Limpar Filtros
+        </Button>
       </div>
     </>
   );

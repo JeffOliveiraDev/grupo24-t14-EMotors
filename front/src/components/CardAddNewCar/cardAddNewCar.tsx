@@ -17,7 +17,14 @@ const CardAddNewCar = ({}: any) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [modal, setModal] = useState(false);
 
-  const { brand, filterClear, choosenYear } = useContext(Context);
+  const {
+    filterClear,
+    filterType,
+    setFilterType,
+    filter,
+    setFilter,
+    setClearFilter,
+  } = useContext(Context);
 
   let pages = 0;
   let startIndex = 0;
@@ -31,44 +38,51 @@ const CardAddNewCar = ({}: any) => {
     currentItens = itens.slice(startIndex, endIndex);
   }
 
+  const cookies = parseCookies();
+
+  const token = cookies.token;
+
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const cookies = parseCookies();
-
-        const token = cookies.token;
-
-        const get = await apiEmotors.get(`/announcements`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        console.log(get, "teste");
-
-        const data = await getData(brand!);
-        setCars(data);
-      } catch (error) {
-        console.error(error);
-      }
+    if (filterClear) {
+      setClearFilter(false);
+      window.location.reload();
     }
 
     fetchData();
-  }, [brand]);
+  }, [token, filterType, filter]);
 
-  useEffect(() => {
-    if (choosenYear) {
-      const filteredCars = cars?.filter((car) => car.year === choosenYear);
-      setItens(filteredCars || []);
-    } else {
-      setItens(cars || []);
+  async function fetchData() {
+    try {
+      const data = await getData(token);
+      setCars(data);
+      applyFilter(data);
+    } catch (error) {
+      console.error(error);
     }
-  }, [choosenYear, cars]);
+  }
 
-  async function getData(brand: string) {
-    const res = await fetch(
-      `https://kenzie-kars.herokuapp.com/cars?brand=${brand}`
-    );
+  function applyFilter(data: BrandCars[]) {
+    let filteredData = data;
+
+    if (filterType) {
+      filteredData = data.filter((item: BrandCars) => {
+        if (item[filterType] === filter) {
+          console.log(item);
+          return true;
+        }
+        return false;
+      });
+    }
+
+    setItens(filteredData);
+  }
+
+  async function getData(token: string) {
+    const res = await fetch("https://m6-emotors.onrender.com/announcements", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (!res.ok) {
       throw new Error("Failed to fetch data");
@@ -79,12 +93,14 @@ const CardAddNewCar = ({}: any) => {
 
   return (
     <div className={styles.boxUl}>
-      {currentItens?.length > 0 && (
+      {currentItens?.length > 0 ? (
         <ul className={styles.boxCars}>
           {currentItens.map((car: any) => (
             <CardCar car={car} key={car.id} />
           ))}
         </ul>
+      ) : (
+        <h2>Sem anúncios</h2>
       )}
       {modal && <ModalFilter setModal={setModal} />}
       <Button

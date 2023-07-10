@@ -10,6 +10,9 @@ import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class AnnouncementPrismaRepository implements AnnouncementRepository {
   constructor(private prisma: PrismaService) {}
+  findOneBrand(brand: string): Announcement | Promise<Announcement> {
+    throw new Error('Method not implemented.');
+  }
   async create(
     data: CreateAnnouncementDto,
     userId: string,

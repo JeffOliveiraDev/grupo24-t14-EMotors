@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import styles from "./styles.module.scss";
 
 const FormRegister = () => {
-  const [radio, setRadio] = useState(true);
+  const [radio, setRadio] = useState(false);
   const [load, setLoad] = useState(false);
 
   const {
@@ -197,7 +197,7 @@ const FormRegister = () => {
             value="comprador"
             label="Comprador"
             labelClass={radio ? styles.labeltBuyer : styles.labelClassAdd}
-            onChange={() => setRadio(true)}
+            onChange={() => setRadio(false)}
           />
           <Input
             register={register("acoountType")}
@@ -208,7 +208,7 @@ const FormRegister = () => {
             label="Anunciante"
             error={error.acoountType}
             labelClass={radio ? styles.selectAdd : styles.labelClass}
-            onChange={() => setRadio(false)}
+            onChange={() => setRadio(true)}
           />
         </div>
         <Input
