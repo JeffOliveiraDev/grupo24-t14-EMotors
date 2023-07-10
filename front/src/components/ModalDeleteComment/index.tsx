@@ -8,6 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
+import { createPortal } from "react-dom";
 
 const ModalDeleteComment = ({
   modalDelete,
@@ -42,7 +43,7 @@ const ModalDeleteComment = ({
   };
 
   if (modalDelete) {
-    return (
+    return createPortal(
       <div className={styles.modalBox}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
@@ -71,7 +72,8 @@ const ModalDeleteComment = ({
 
           <form className={styles.formBox}></form>
         </div>
-      </div>
+      </div>,
+      document.body
     );
   }
 };

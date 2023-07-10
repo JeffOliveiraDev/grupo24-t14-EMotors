@@ -1,0 +1,137 @@
+@use "../../../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  h3 {
+    @include text-style-text-body-2-500;
+    color: $color-grey-scale-grey-1;
+  }
+}
+
+.commentBox {
+  background-color: $color-grey-scale-grey-10;
+  margin-top: 16px;
+  width: 80%;
+  padding: 3%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.8rem;
+  border-radius: 4px;
+}
+
+.commentArea {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.textareaWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.textareaWrapper textarea {
+  margin-top: 1.5rem;
+  width: 100%;
+  height: 120px;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+.textareaWrapper .submitButton {
+  bottom: 10px;
+  right: 30px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+}
+.submitButtonEnabled {
+  bottom: 10px;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  width: 108px;
+  height: 38px;
+  background: $color-brand-brand-1;
+  border: 0.4rem solid $color-brand-brand-1;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.imgAndDescription {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+}
+
+.submitButtonDisabled {
+  bottom: 10px;
+  right: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  width: 108px;
+  height: 38px;
+  background: $color-grey-scale-grey-5;
+  border: 0.4rem solid $color-grey-scale-grey-5;
+  border-radius: 4px;
+  color: #ffffff;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.commentArea .tags {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.commentArea .tags .tagButton {
+  padding: 6px 12px;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  border: none;
+  color: $color-grey-scale-grey-3;
+  font-family: inter;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  h3 {
+    @include text-style-text-body-2-500;
+    color: $color-grey-scale-grey-1;
+  }
+  span {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 1.4rem;
+    background: #e34d8c;
+    border-radius: 150px;
+  }
+}

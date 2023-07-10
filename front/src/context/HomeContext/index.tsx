@@ -58,6 +58,7 @@ const Provider = ({ children }: { children: React.ReactNode }) => {
   async function getData() {
     const res = await fetch("https://m6-emotors.onrender.com/announcements");
 
+    console.log(res);
     if (!res.ok) {
       // This will activate the closest `error.js` Error Boundary
       throw new Error("Failed to fetch data");

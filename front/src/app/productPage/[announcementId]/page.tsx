@@ -1,19 +1,12 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import styles from "../styles.module.scss";
-import listFotos from "../../../assets/listFhotos.svg";
-import Image from "next/image";
-import Tag from "@/components/Tags/tags";
-import CommentItem from "@/components/CommentsItem/commentsItem";
-import { apiEmotors } from "@/services/api";
-import { Comments } from "@/interfaces";
 import Header from "@/components/Header/header";
-import { useForm } from "react-hook-form";
-// import commentSchema from "./schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Footer from "@/components/Footer/footer";
-import { parseCookies } from "nookies";
-import ModalDeleteComment from "@/components/ModalDeleteComment";
+import ImageAndDescription from "../components/ImageAndDescription";
+import BoxPhotosAndUser from "../components/BoxPhotosAndUser";
+import CommentSection from "../components/CommentSection";
+import { ProductPageProvider } from "@/context/ProductPageContext";
+import Form from "../components/Form";
 
 const ProductPage = ({
   params,
@@ -22,131 +15,8 @@ const ProductPage = ({
     announcementId: string;
   };
 }) => {
-  const tags = [{ text: "0Km" }, { text: "2023" }];
-  const [comments, setComments] = React.useState([] as Comments[]);
-  const cookies = parseCookies();
-
-  const token = cookies.token;
-  const userFromCookie = cookies.user ? JSON.parse(cookies.user) : !null;
-  const [user, setUser] = React.useState(userFromCookie);
-  const [announce, setAnnounce] = useState<any>([]);
-  const [userAnnounce, setUserAnnounce] = useState<any>({});
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const data = await getData();
-  //       console.log(params.announcementId);
-
-  //       {
-  //         data
-  //           ? setUserAnnounce(
-  //               data.filter((item: any) => {
-  //                 return item.id == params.announcementId;
-  //               })
-  //             )
-  //           : null;
-  //       }
-
-  //       if (params.announcementId == data[0].id) {
-  //         setAnnounce(data[0]);
-  //         return console.log(true);
-  //       }
-
-  //       console.log(announce);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, [token]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getData();
-        console.log(params.announcementId);
-
-        const filteredData = data.filter(
-          (item: any) => item.id === params.announcementId
-        );
-
-        setUserAnnounce(filteredData[0]);
-
-        if (params.announcementId === data[0].id) {
-          setAnnounce(data[0]);
-          console.log(true);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  async function getData() {
-    const res = await fetch("https://m6-emotors.onrender.com/announcements");
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch data");
-    }
-
-    return res.json();
-  }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onFormSubmit = (formData: any) => {
-    formData.sellPrice = parseFloat(formData.sellPrice);
-
-    comment(formData);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await apiEmotors.get(`/comments`, {
-          params: {
-            announcementId: params.announcementId,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        // console.log(response);
-        setComments(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [token, params]);
-
-  const comment = async (data: any) => {
-    try {
-      const response = await apiEmotors.post<Comments>(
-        `/comments/${params.announcementId}`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setComments((e) => [...e, response.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
-    <>
+    <ProductPageProvider>
       <div className={styles.allPage}>
         <Header />
         <section className={styles.sectionAnnounceAndSocial}>
@@ -154,160 +24,12 @@ const ProductPage = ({
             <div className={styles.boxCarAndSocial}>
               <div className={styles.carAndSocial}>
                 <div className={styles.ImgAndDescription}>
-                  <div className={styles.imgCarAndDescription}>
-                    <div className={styles.boxImgCar}>
-                      {userAnnounce ? (
-                        <Image
-                          src={userAnnounce.coverImage}
-                          width={312}
-                          height={152}
-                          alt=""
-                        />
-                      ) : null}
-                      {/* 
-                      <Image
-                        src={userAnnounce.coverImage}
-                        width={312}
-                        height={152}
-                        alt=""
-                      /> */}
-                    </div>
-                    <div className={styles.carNamePrice}>
-                      {userAnnounce ? <h2>{userAnnounce.model}</h2> : null}
-                      <div className={styles.boxTagsPrice}>
-                        <ul>
-                          {userAnnounce && <Tag>{userAnnounce.color}</Tag>}
-
-                          {/* {tags.map((e, i) => (
-                            <Tag key={i}>{e.text}</Tag>
-                          ))} */}
-                        </ul>
-
-                        <span>
-                          <strong>
-                            {userAnnounce
-                              ? `R$ ${userAnnounce.sellPrice}`
-                              : null}
-                          </strong>
-                        </span>
-                      </div>
-                      <a
-                        className={styles.btnBuy}
-                        href={`https://api.whatsapp.com/send?phone=+55+${user.telephone}&text=Ol%C3%A1%2C%20venho%20por%20meio%20do%20seu%20an%C3%BAncio%20na%20internet%2C%20gostaria%20de%20conhecer%20melhor%20seus%20produtos`}
-                      >
-                        Comprar
-                      </a>
-                    </div>
-                    <div className={styles.carDescription}>
-                      <h2>Descricão</h2>
-                      <p>{userAnnounce ? userAnnounce.description : null}</p>
-                    </div>
-                  </div>
-                  <div className={styles.boxPhotosAndUser}>
-                    <div className={styles.photosAndUser}>
-                      <h2>Fotos</h2>
-                      <ul className={styles.photosList}>
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-
-                        {userAnnounce ? (
-                          <Image
-                            src={userAnnounce.coverImage}
-                            width={200}
-                            height={200}
-                            alt=""
-                          />
-                        ) : null}
-                      </ul>
-                    </div>
-                  </div>
+                  <ImageAndDescription />
+                  <BoxPhotosAndUser />
                 </div>
                 <div className={styles.allSectionsComments}>
-                  <div className={styles.commentsSection}>
-                    <h2>Comentários</h2>
-                    <ul className={styles.commentsList}>
-                      {comments.map((e, i) => (
-                        <CommentItem comments={e} key={i} />
-                      ))}
-                    </ul>
-                  </div>
-                  <form
-                    onSubmit={handleSubmit(onFormSubmit)}
-                    className={styles.commentBox}
-                  >
-                    <div className={styles.commentArea}>
-                      <div className={styles.textareaWrapper}>
-                        <div className={styles.comment}>
-                          <span>
-                            <span>
-                              {user.name[0].toUpperCase() +
-                                user.name[1].toUpperCase()}
-                            </span>
-                          </span>
-                          <h3>{user.name}</h3>
-                        </div>
-                        <textarea
-                          {...register("text")}
-                          name="text"
-                          placeholder="Carro muito confortável, foi uma ótima experiência de compra..."
-                        ></textarea>
-                        <span>{errors.name?.message?.toString()}</span>
-                        <button className={styles.submitButtonEnabled}>
-                          Enviar
-                        </button>
-                      </div>
-                      <div className={styles.tags}>
-                        <button className={styles.tagButton}>
-                          Gostei Muito!
-                        </button>
-                        <button className={styles.tagButton}>Incrível</button>
-                        <button type="submit" className={styles.tagButton}>
-                          Recomendarei para meus amigos!
-                        </button>
-                      </div>
-                    </div>
-                  </form>
+                  <CommentSection />
+                  <Form />
                 </div>
               </div>
             </div>
@@ -315,7 +37,7 @@ const ProductPage = ({
         </section>
       </div>
       <Footer top="login" />
-    </>
+    </ProductPageProvider>
   );
 };
 

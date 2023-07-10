@@ -1,0 +1,75 @@
+@use "../../../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.boxPhotosAndUser {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+}
+
+.photosAndUser {
+  width: 80%;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+
+  gap: 2rem;
+
+  background: #fdfdfd;
+  border-radius: 4px;
+}
+
+.photosList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.photosList img {
+  width: 70px;
+  height: 70px;
+  padding: 0.2rem;
+  background: #e9ecef;
+  border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+  .boxAnnounceAndSocial {
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 25%;
+  }
+  .photosAndUser {
+    gap: 1rem;
+  }
+  .boxPhotosAndUser {
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .ImgAndDescription {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .allSectionsComments {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 0%;
+  }
+  .imgCarAndDescription {
+    width: 100%;
+  }
+}
