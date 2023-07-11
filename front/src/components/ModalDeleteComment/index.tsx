@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styles from "../ModalDeleteComment/styles.module.scss";
 import { useForm } from "react-hook-form";
 import {
@@ -9,12 +9,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { parseCookies } from "nookies";
 import { toast } from "react-toastify";
 import { createPortal } from "react-dom";
+import { apiEmotors } from "@/services/api";
+import { ProductPageContext } from "@/context/ProductPageContext";
 
 const ModalDeleteComment = ({
   modalDelete,
   setModalDelete,
   commentId,
 }: any) => {
+  const { setComments, comments } = useContext(ProductPageContext);
   const cookies = parseCookies();
 
   const token = cookies.token;
@@ -23,23 +26,25 @@ const ModalDeleteComment = ({
     setModalDelete(false);
   };
 
-  const handleDeleteComment = () => {
-    fetch(`https://m6-emotors.onrender.com/comments/${commentId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Comentário excluído com sucesso!", data);
-        toast.success("Comentário Exluido!");
-        closeModal();
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Erro ao excluir o comentário:", error);
+  const removeIten = (id: string) => {
+    const filtered = comments.filter((e) => e.id !== id);
+    setComments(filtered);
+  };
+
+  const handleDeleteComment = async () => {
+    try {
+      await apiEmotors.delete(`/comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+
+      closeModal();
+      removeIten(commentId + "");
+      toast.success("Comentário excluído com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao excluir o comentário");
+    }
   };
 
   if (modalDelete) {

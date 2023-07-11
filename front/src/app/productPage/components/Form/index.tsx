@@ -19,10 +19,10 @@ const Form = () => {
         <div className={styles.textareaWrapper}>
           <div className={styles.comment}>
             <span>
-              {user?.name.toString()[0].toUpperCase() +
-                user.name[1].toUpperCase()}
+              {user?.name?.toString()[0]?.toUpperCase() +
+                user?.name?.toString()[0]?.toUpperCase()}
             </span>
-            <h3>{user?.name}</h3>
+            <h3>{user?.name?.toString()}</h3>
           </div>
           <textarea
             {...register("text")}

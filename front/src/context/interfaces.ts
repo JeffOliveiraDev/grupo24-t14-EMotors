@@ -34,4 +34,5 @@ export interface ContextProduct {
   setUserAnnounce: React.Dispatch<any>;
   userAnnounce: any;
   comments: Comments[];
+  setComments: React.Dispatch<React.SetStateAction<Comments[]>>;
 }

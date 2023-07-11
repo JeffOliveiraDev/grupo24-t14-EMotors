@@ -6,6 +6,8 @@ import { apiEmotors } from "@/services/api";
 import { parseCookies } from "nookies";
 import React from "react";
 import { useParams } from "next/navigation";
+import { request } from "axios";
+import { ToastContainer } from "react-toastify";
 
 const ProductPageContext = createContext({} as ContextProduct);
 
@@ -54,31 +56,6 @@ const ProductPageProvider = ({ children }: { children: React.ReactNode }) => {
     return res.json();
   }
 
-  const onFormSubmit = (formData: any) => {
-    formData.sellPrice = parseFloat(formData.sellPrice);
-
-    comment(formData);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await apiEmotors.get(`/comments`, {
-          params: {
-            announcementId: params.announcementId,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        setComments(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, [token, params]);
-
   const comment = async (data: any) => {
     try {
       const response = await apiEmotors.post<Comments>(
@@ -90,31 +67,65 @@ const ProductPageProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
       );
+
       setComments((e) => [...e, response.data]);
     } catch (error) {
       console.error(error);
+      return;
     }
   };
 
+  const onFormSubmit = (formData: any) => {
+    formData.sellPrice = parseFloat(formData.sellPrice);
+
+    comment(formData);
+  };
+
+  const announcementId = params.announcementId;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await apiEmotors.get(`/comments`, {
+          params: {
+            announcementId: announcementId,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setComments(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [token, announcementId]);
+
   return (
-    <ProductPageContext.Provider
-      value={{
-        user,
-        setUser,
-        setUserAnnounce,
-        setAnnounce,
-        comment,
-        getData,
-        tags,
-        userFromCookie,
-        announce,
-        userAnnounce,
-        onFormSubmit,
-        comments,
-      }}
-    >
-      {children}
-    </ProductPageContext.Provider>
+    <>
+      <ToastContainer />
+      <ProductPageContext.Provider
+        value={{
+          user,
+          setUser,
+          setUserAnnounce,
+          setAnnounce,
+          comment,
+          getData,
+          tags,
+          userFromCookie,
+          announce,
+          userAnnounce,
+          onFormSubmit,
+          comments,
+          setComments,
+        }}
+      >
+        {children}
+      </ProductPageContext.Provider>
+    </>
   );
 };
 

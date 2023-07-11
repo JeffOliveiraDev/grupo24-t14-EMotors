@@ -7,6 +7,9 @@ import {
 } from "@/schemas/cars.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { parseCookies } from "nookies";
+import { createPortal } from "react-dom";
+import { apiEmotors } from "@/services/api";
+import { toast } from "react-toastify";
 
 const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
   const cookies = parseCookies();
@@ -14,25 +17,21 @@ const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
   const token = cookies.token;
 
   const handleDeleteAnnounce = () => {
-    fetch(`https://m6-emotors.onrender.com/announcements/${announceId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Anúncio excluído com sucesso!", data);
-
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Erro ao excluir o anúncio:", error);
+    try {
+      apiEmotors.delete(`/announcements/${announceId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
+      toast.success("Excluido com sucesso!");
+    } catch (err) {
+      toast.error("Error ao excluir!");
+      console.log(err);
+    }
   };
 
   if (modalDelete) {
-    return (
+    return createPortal(
       <div className={styles.modalBox}>
         <div className={styles.modalInterior}>
           <div className={styles.tittleAndClose}>
@@ -61,7 +60,8 @@ const ModalDelete = ({ modalDelete, setModalDelete, announceId }: any) => {
 
           <form className={styles.formBox}></form>
         </div>
-      </div>
+      </div>,
+      document.body
     );
   }
 };
