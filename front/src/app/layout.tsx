@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${lexend.className} `}>
-        <Provider>{children}</Provider>
+        {children}
       </body>
       <ToastContainer />
     </html>

@@ -88,6 +88,8 @@ const CardAddNewCar = ({}: any) => {
       throw new Error("Failed to fetch data");
     }
 
+    console.log(res, "ooo")
+
     return res.json();
   }
 

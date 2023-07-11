@@ -1,0 +1,18 @@
+@use "../../../../scss/abstracts/" as *;
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@300;400;500;600;700;800;900&display=swap");
+
+.boxImgCar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-grey-scale-grey-10;
+  width: 80%;
+  height: 80%;
+  border-radius: 4px;
+  img {
+    width: 80%;
+    height: 80%;
+  }
+}
